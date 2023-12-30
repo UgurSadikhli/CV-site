@@ -11,19 +11,21 @@ const App = () => {
                         <img src="/assets/img/avaz-min-logo.png" alt="logo"/>
                     </div>
                     <div className="aui-gc-hc-center">
-                        <h1>Avaz CV module</h1>
+                        <span>Avaz CV module</span>
                     </div>
                     <div className="aui-gc-hc-right">
+                        <span>AU</span>
+                        <h1>UI</h1>
                         <img src="/assets/img/user-icon.png" alt="user-icon"/>
                     </div>
                 </div>
                 <div className="aui-gc-body-container">
                     <div className="aui-gc-bc-left">
                         <div className="sidebar-header">
-                            <div>
-                                Menu
+                            <div className="sh-menu">
+                                <span>Menu</span>
                             </div>
-                            <div>
+                            <div className="sh-btn-bars">
                                 <i className="pi pi-bars"></i>
                             </div>
                         </div>
