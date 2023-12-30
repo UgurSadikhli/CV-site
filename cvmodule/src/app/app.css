@@ -1,0 +1,71 @@
+.aui-global-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: darkslategray;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    font-family: 'Poppins', sans-serif;
+
+
+    & .aui-gc-header-container {
+        /*flex: 1;*/
+        display: flex;
+        background-color: brown;
+        height: 10vh;
+
+        & .aui-gc-hc-left {
+            width: 15vw;
+            background-color: #5f6a79;
+            & img {
+                width: 50px;
+            }
+        }
+        & .aui-gc-hc-center {
+            width: 70vw;
+        }
+        & .aui-gc-hc-right {
+            width: 15vw;
+            background-color: #4296f1;
+            & img {
+                width: 50px;
+            }
+        }
+    }
+
+    & .aui-gc-body-container {
+        /*flex: 10;*/
+        height: 87vh;
+        display: flex;
+        width: 100%;
+        /*height: 100%;*/
+        flex-direction: row;
+        background-color: chocolate;
+
+        & .aui-gc-bc-left {
+            display: flex;
+            flex-direction: column;
+            width: 15vw;
+            height: 100%;
+            background-color: blueviolet;
+            & .sidebar-header {
+                display: flex;
+                height: 5vh;
+                background-color: aquamarine;
+            }
+            & .sidebar-body {}
+            & .sidebar-footer {}
+        }
+
+        & .aui-gc-bc-right {
+            width: 85vw;
+            background-color: chartreuse;
+        }
+    }
+
+    & .aui-gc-footer-container {
+        /*flex: 1;*/
+        height: 3vh;
+        background-color: cadetblue;
+    }
+}

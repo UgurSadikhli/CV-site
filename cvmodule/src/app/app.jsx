@@ -20,7 +20,12 @@ const App = () => {
                 <div className="aui-gc-body-container">
                     <div className="aui-gc-bc-left">
                         <div className="sidebar-header">
-
+                            <div>
+                                Menu
+                            </div>
+                            <div>
+                                <i className="pi pi-bars"></i>
+                            </div>
                         </div>
                         <aside className="sidebar-body">
                             <NavLink to="/">Dashboard</NavLink>
@@ -29,13 +34,14 @@ const App = () => {
                             <NavLink to="/">Item3</NavLink>
                         </aside>
                         <div className="sidebar-footer">
-
                         </div>
                     </div>
-                    <div className="aui-gc-bc-right"></div>
+                    <div className="aui-gc-bc-right">
+                        <div>Dashboard</div>
+                    </div>
                 </div>
                 <div className="aui-gc-footer-container">
-
+                    <div>Copyright</div>
                 </div>
             </div>
         </>
