@@ -122,6 +122,8 @@ const Login = () => {
   const handleClick2 = () => {
     navigate("/CV");
   };
+
+
   return (
     <Container>
       <Main>
@@ -164,7 +166,7 @@ const Login = () => {
       </Main>
 
       <Footer>
-        &copy; 2024 Avaz
+        &copy; 2024 AvazDG
         <br />
       </Footer>
     </Container>
