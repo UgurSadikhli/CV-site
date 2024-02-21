@@ -1,0 +1,60 @@
+body {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #2f72be;
+}
+
+.SubmitButton {
+  margin-left: 470px;
+}
+
+.Gender,
+.mariageStatus {
+  width: 150px;
+  height: 50px;
+  margin-bottom: 15px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 40px;
+}
+.buttonDiv {
+  margin-left: 155px;
+}
+.DefaultImage {
+  height: 500px;
+  width: 700px;
+  margin-left: 200px;
+}
+.DefaultImage2 {
+  height: 50px;
+  width: 70px;
+}
+.typewriter h1 {
+  overflow: hidden;
+  border-right: 0.15em solid rgb(206, 35, 35);
+  white-space: nowrap;
+  margin-left: 200px;
+  letter-spacing: 0.15em;
+  animation: typing 4s steps(20, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #2f72be;
+  }
+}

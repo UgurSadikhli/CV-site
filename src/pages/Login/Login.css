@@ -1,0 +1,16 @@
+.button-like-link {
+  font-size: 12px;
+  color: #3300ff;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  margin-top: 15px;
+}
+
+.img-fluid {
+  height: 60px;
+}
+.H1LOG {
+  margin-top: -2px;
+}
