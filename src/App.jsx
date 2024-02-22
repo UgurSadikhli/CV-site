@@ -27,16 +27,21 @@ function App() {
           <Route index element={<Login onLogin={handleLogin} />} />
           <Route path="login" element={<Login onLogin={handleLogin} />} />
           <Route path="logup" element={<Logup />} />
+          <Route path="*" element={
+            <div>Page not found</div>
+          } />
+
           <Route
             path="CV"
             element={
               isAuthenticated ? (
-                <CV onLogout={handleLogout} />
+                <CV/>
               ) : (
                 <Navigate to="/" />
               )
             }
           />
+
         </Route>
       </Routes>
     </Router>
