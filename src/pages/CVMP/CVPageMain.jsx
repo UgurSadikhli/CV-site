@@ -113,26 +113,27 @@ to {
   transform: translateX(0);
 }
 `;
+// border-bottom: 2px solid ${(props) => (props.active ? '#fff' : '#333')};
+// color: ${(props) => (props.active ? '#B3B3B3' : 'white')};
 const Button = styled.button`
   padding: 10px;
   background-color: transparent;
   border: none;
-  border-bottom: 2px solid ${(props) => (props.active ? '#fff' : '#333')};
   cursor: pointer;
   font-size: 17px;
   margin-top: 55px;
-  color: white;
   animation: ${slideIn} 0.5s ease;
+  border-bottom: ${(props) =>
+    props.active ? "2px solid black" : "2px solid white"};
+  color: ${(props) => (props.active ? " white" : "#B3B3B3")};
   transition: border-bottom 0.3s ease, color 0.3s ease;
   &:hover {
     border-bottom: 2.5px solid white;
   }
   &:focus {
-    outline: none; 
-    color: #B3B3B3 ;
+    outline: none;
+    color: #b3b3b3;
   }
-
-  ${(props) => props.active && `color: #B3B3B3e;`}
 `;
 
 const CVPageMain = () => {
@@ -164,8 +165,9 @@ const CVPageMain = () => {
   };
   const [activeCategory, setActiveCategory] = useState(null);
 
-  const handleCategoryClick = (category) => {
+  const handleCategoryClick = (category, index) => {
     setActiveCategory(category);
+    handleButtonClick(index);
   };
 
   const renderInputs = () => {
@@ -425,48 +427,38 @@ const CVPageMain = () => {
           src={"./assets/img/Avaz-Logo.png"}
           alt="Default"
         />
+
         <Button
-          onClick={() => {
-            handleCategoryClick("personalInfo");
-            handleButtonClick(0);
-          }}
-          active={activeButton === 0}
+          onClick={() => handleCategoryClick("personalInfo", 0)}
+          active={activeButton === 0 ? "true" : "false"}
         >
           Şəxsi Məlumatlar
         </Button>
+
         <Button
-          onClick={() => {
-            handleCategoryClick("Education");
-            handleButtonClick(1);
-          }}
-          active={activeButton === 1}
+          onClick={() => handleCategoryClick("Education", 1)}
+          active={activeButton === 1 ? "true" : "false"}
         >
           Təhsil
         </Button>
+
         <Button
-          onClick={() => {
-            handleCategoryClick("Language");
-            handleButtonClick(2);
-          }}
-          active={activeButton === 2}
+          onClick={() => handleCategoryClick("Language", 2)}
+          active={activeButton === 2 ? "true" : "false"}
         >
           Komputer/Dil Bilikləri
         </Button>
+
         <Button
-          onClick={() => {
-            handleCategoryClick("workExperience");
-            handleButtonClick(3);
-          }}
-          active={activeButton === 3}
+          onClick={() => handleCategoryClick("workExperience", 3)}
+          active={activeButton === 3 ? "true" : "false"}
         >
           İş Təcrübəsi
         </Button>
+
         <Button
-          onClick={() => {
-            handleCategoryClick("Finish");
-            handleButtonClick(4);
-          }}
-          active={activeButton === 4}
+          onClick={() => handleCategoryClick("Finish", 4)}
+          active={activeButton === 4 ? "true" : "false"}
         >
           Təstiqləmək
         </Button>

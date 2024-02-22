@@ -10,7 +10,7 @@ import Login from "./pages/Login/LoginPageCV";
 import CV from "./pages/CVMP/CVPageMain";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   const handleLogin = () => {
     setIsAuthenticated(true);
@@ -27,21 +27,18 @@ function App() {
           <Route index element={<Login onLogin={handleLogin} />} />
           <Route path="login" element={<Login onLogin={handleLogin} />} />
           <Route path="logup" element={<Logup />} />
-          <Route path="*" element={
-            <div>Page not found</div>
-          } />
+          <Route path="*" element={<div>Page not found</div>} />
 
           <Route
             path="CV"
             element={
               isAuthenticated ? (
-                <CV/>
+                <CV onLogout={handleLogout} />
               ) : (
                 <Navigate to="/" />
               )
             }
           />
-
         </Route>
       </Routes>
     </Router>
