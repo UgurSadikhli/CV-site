@@ -27,7 +27,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #2f72be; /* Blue tone background color */
+  background-color: #2f72be;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -123,7 +123,6 @@ const Login = () => {
     navigate("/CV");
   };
 
-
   return (
     <Container>
       <Main>
@@ -160,7 +159,7 @@ const Login = () => {
           </Button>
 
           <button className="button-like-link" onClick={handleClick}>
-            Yeni hesab yaradın
+            Yeni hesab yarat
           </button>
         </LoginContainer>
       </Main>

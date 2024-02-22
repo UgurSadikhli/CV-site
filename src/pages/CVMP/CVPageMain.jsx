@@ -117,18 +117,19 @@ const Button = styled.button`
   padding: 10px;
   background-color: transparent;
   border: none;
-  border-bottom: 2.5px solid #333;
+  border-bottom: 2px solid ${(props) => (props.active ? '#fff' : '#333')};
   cursor: pointer;
-  transition: border-bottom 0.3s ease;
   font-size: 17px;
   margin-top: 55px;
   color: white;
-  animation: ${slideIn} 0.5s ease; /* Add animation property */
+  animation: ${slideIn} 0.5s ease;
+  transition: border-bottom 0.3s ease, color 0.3s ease;
   &:hover {
     border-bottom: 2.5px solid white;
   }
   &:focus {
-    outline: none;
+    outline: none; 
+    color: #B3B3B3 ;
   }
 
   ${(props) => props.active && `color: #B3B3B3e;`}
@@ -411,13 +412,6 @@ const CVPageMain = () => {
           <>
             <div class="typewriter">
               <h1>Avaz ilə CV yarat</h1>
-            </div>
-            <div>
-              <img
-                className="DefaultImage"
-                src={"./assets/img/portfolio/resume.jpg"}
-                alt="Default"
-              />
             </div>
           </>
         );
