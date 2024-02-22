@@ -13,21 +13,19 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleLogin = () => {
-    // Simulate a successful login
-    setIsAuthenticated(false);
+    setIsAuthenticated(true);
   };
 
   const handleLogout = () => {
-    // Simulate a logout
-    setIsAuthenticated(true);
+    setIsAuthenticated(false);
   };
 
   return (
     <Router>
       <Routes>
         <Route path="/">
-          <Route index element={<Login />} />
-          <Route path="login" element={<Login />} />
+          <Route index element={<Login onLogin={handleLogin} />} />
+          <Route path="login" element={<Login onLogin={handleLogin} />} />
           <Route path="logup" element={<Logup />} />
           <Route
             path="CV"

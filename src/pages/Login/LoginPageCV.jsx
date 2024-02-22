@@ -92,7 +92,7 @@ const Footer = styled.footer`
   font-size: 14px;
 `;
 
-const Login = () => {
+const Login = ({ onLogin })  => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -110,6 +110,7 @@ const Login = () => {
       });
 
       if (response.ok) {
+        onLogin();
         navigate("/CV");
       } else {
         console.error("Authentication failed");
