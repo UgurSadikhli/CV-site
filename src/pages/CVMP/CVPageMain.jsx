@@ -410,7 +410,7 @@ const CVPageMain = () => {
       default:
         return (
           <>
-            <div class="typewriter">
+            <div className="typewriter">
               <h1>Avaz ilə CV yarat</h1>
             </div>
           </>
