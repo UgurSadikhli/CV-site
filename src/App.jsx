@@ -10,7 +10,7 @@ import Login from "./pages/Login/LoginPageCV";
 import CV from "./pages/CVMP/CVPageMain";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleLogin = () => {
     setIsAuthenticated(true);
