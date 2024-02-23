@@ -251,6 +251,51 @@ const CVPageMain = () => {
       placeholder: "Əlavə məlumat",
     },
   ];
+  const initialLanguageFieldTemplate = [
+    { key: 1, className: "languageName", placeholder: "Dil adı" },
+    { key: 2, className: "languageLevel", placeholder: "Dil səviyyəti" },
+    {
+      key: 3,
+      className: "languageCertificateId",
+      placeholder: "Dil sertifikatının ID-si",
+    },
+    {
+      key: 4,
+      className: "computerKnowledgeName",
+      placeholder: "Komputer bacarığı adı",
+    },
+    {
+      key: 5,
+      className: "computerKnowledgeLevel",
+      placeholder: "Komputer bacarığı səviyyəti",
+    },
+    {
+      key: 6,
+      className: "computerKnowledgeCertificateId",
+      placeholder: "Komputer bacarığı sertifikatının ID-si",
+    },
+  ];
+
+
+  const initialWorkExperienceFieldTemplate = [
+    { key: 1, className: "companyName", placeholder: "Şirkət adı" },
+    { key: 2, className: "typeOfBusiness", placeholder: "Biznesin növü" },
+    { key: 3, className: "jobTitle", placeholder: "Vəzifə adı" },
+    { key: 4, className: "typeOfPosition", placeholder: "Vəzifənin növü" },
+    { key: 5, className: "courseOfAction", placeholder: "Tədbirin növü" },
+    { key: 6, className: "keyJobResponsibilities", placeholder: "Əsas vəzifə və cavabdehliklər" },
+    { key: 7, className: "startDate", placeholder: "Başlama tarixi" },
+    { key: 8, className: "endDate", placeholder: "Bitmə tarixi" },
+    { key: 9, className: "reasonForSeparation", placeholder: "Ayrılma səbəbi" },
+    { key: 10, className: "recommendationSurname", placeholder: "Tövsiyə verənın soyadı" },
+    { key: 11, className: "recommendationPosition", placeholder: "Tövsiyə verənın vəzifəsi" },
+    { key: 12, className: "recommendationPhone", placeholder: "Tövsiyə verənın telefonu" },
+    { key: 13, className: "recommendationEmail", placeholder: "Tövsiyə verənın emaili" },
+    { key: 14, className: "additionalInformation", placeholder: "Əlavə məlumat" },
+  ];
+
+  
+
   const [educationSets, setEducationSets] = useState([
     { name: "Təhsil forma", fields: initialFieldTemplate },
   ]);
@@ -278,17 +323,80 @@ const CVPageMain = () => {
     const updatedSets = educationSets.filter((set) => set.id !== id);
     setEducationSets(updatedSets);
   };
+  //---------------------------------------
+  const [languageSets, setLanguageSets] = useState([
+    { name: "Biliklər forması", fields: initialLanguageFieldTemplate },
+  ]);
+  const addLanguageSet = () => {
+    const newSetId = generateUniqueId();
+    const newSetName = `Biliklər forma`;
+    const newSetFields = initialLanguageFieldTemplate.map((field) => ({
+      key: field.key,
+      className: `${field.className}`,
+      placeholder: `${field.placeholder}`,
+    }));
+
+    setLanguageSets([
+      ...languageSets,
+      { id: newSetId, name: newSetName, fields: newSetFields },
+    ]);
+  };
+
+  const deleteLanguageSet = (id) => {
+    const updatedSets = languageSets.filter((set) => set.id !== id);
+    setLanguageSets(updatedSets);
+  };
+
+  //---------------------------------------
+
+
+  const [workExperienceSets, setworkExperienceSets] = useState([
+    { name: "Is forması", fields: initialWorkExperienceFieldTemplate },
+  ]);
+  const addworkExperienceSet = () => {
+    const newSetId = generateUniqueId();
+    const newSetName = `Is forma`;
+    const newSetFields = initialWorkExperienceFieldTemplate.map((field) => ({
+      key: field.key,
+      className: `${field.className}`,
+      placeholder: `${field.placeholder}`,
+    }));
+
+    setworkExperienceSets([
+      ...workExperienceSets,
+      { id: newSetId, name: newSetName, fields: newSetFields },
+    ]);
+  };
+
+  const deleteworkExperienceSet = (id) => {
+    const updatedSets = workExperienceSets.filter((set) => set.id !== id);
+    setworkExperienceSets(updatedSets);
+  };
+
 
   //--------------------------------------------------------------- DB fetch
 
   const [formData, setFormData] = useState({
     personalInfo: {
-      image: null,
+      image: "@///url/test",
       name: "",
+      surname: "",
+      gender: "",
+      marriageStatus: "",
+      citizenship: "",
+      militaryStatus: "",
+      email: "",
+      driverLicense: "",
+      city: "",
+      address: "",
+      cityPhone: "",
+      telephone: "",
+      linkedin: "",
+      aboutMe: "",
     },
     education: { educationSets },
-    language: {},
-    workExperience: {},
+    language: {languageSets},
+    workExperience: {workExperienceSets},
   });
 
   const handleInputChange = (category, fieldName, value) => {
@@ -360,34 +468,122 @@ const CVPageMain = () => {
                 handleInputChange("personalInfo", "name", e.target.value)
               }
             />
-            <Input className={"SurNameInput"} type="text" placeholder="Soyad" />
-            <Input className={"EmailInput"} type="email" placeholder="Email" />
-            <Input className={"TelInput"} type="tel" placeholder="Telefon" />
-            <Input className={"AdressInput"} type="text" placeholder="Adres" />
-            <Input className={"CitizenShip"} type="text" placeholder="Ölkə" />
+            <Input
+              className={"SurNameInput"}
+              type="text"
+              placeholder="Soyad"
+              value={formData.personalInfo.surname}
+              onChange={(e) =>
+                handleInputChange("personalInfo", "surname", e.target.value)
+              }
+            />
+            <Input
+              className={"EmailInput"}
+              type="email"
+              placeholder="Email"
+              value={formData.personalInfo.email}
+              onChange={(e) =>
+                handleInputChange("personalInfo", "email", e.target.value)
+              }
+            />
+            <Input
+              className={"TelInput"}
+              type="tel"
+              placeholder="Telefon"
+              value={formData.personalInfo.telephone}
+              onChange={(e) =>
+                handleInputChange("personalInfo", "telephone", e.target.value)
+              }
+            />
+            <Input
+              className={"AdressInput"}
+              type="text"
+              placeholder="Adres"
+              value={formData.personalInfo.address}
+              onChange={(e) =>
+                handleInputChange("personalInfo", "address", e.target.value)
+              }
+            />
+            <Input
+              className={"CitizenShip"}
+              type="text"
+              placeholder="Ölkə"
+              value={formData.personalInfo.citizenship}
+              onChange={(e) =>
+                handleInputChange("personalInfo", "citizenship", e.target.value)
+              }
+            />
             <Input
               className={"LinePhone"}
               type="text"
               placeholder="Şəhər telefonu"
+              value={formData.personalInfo.cityPhone}
+              onChange={(e) =>
+                handleInputChange("personalInfo", "cityPhone", e.target.value)
+              }
             />
             <Input
               className={"Military"}
               type="text"
               placeholder="Əsgərlik statusu"
+              value={formData.personalInfo.militaryStatus}
+              onChange={(e) =>
+                handleInputChange(
+                  "personalInfo",
+                  "militaryStatus",
+                  e.target.value
+                )
+              }
             />
             <Input
               className={"DriverLicense"}
               type="text"
               placeholder="Sürücülük vəsiqəsi"
+              value={formData.personalInfo.driverLicense}
+              onChange={(e) =>
+                handleInputChange(
+                  "personalInfo",
+                  "driverLicense",
+                  e.target.value
+                )
+              }
             />
-            <Input className={"City"} type="text" placeholder="Şəhər" />
             <Input
-              className={"About Me"}
+              className={"City"}
+              type="text"
+              placeholder="Şəhər"
+              value={formData.personalInfo.city}
+              onChange={(e) =>
+                handleInputChange("personalInfo", "city", e.target.value)
+              }
+            />
+            <Input
+              className={"AboutMe"}
               type="text"
               placeholder="Mənim hakqımda"
+              value={formData.personalInfo.aboutMe}
+              onChange={(e) =>
+                handleInputChange("personalInfo", "aboutMe", e.target.value)
+              }
             />
-            <Input className={"Linkedin"} type="text" placeholder="Linkedin" />
-            <select className={"Gender"} id="gender" name="gender">
+            <Input
+              className={"Linkedin"}
+              type="text"
+              placeholder="Linkedin"
+              value={formData.personalInfo.linkedin}
+              onChange={(e) =>
+                handleInputChange("personalInfo", "linkedin", e.target.value)
+              }
+            />
+            <select
+              className={"Gender"}
+              id="gender"
+              name="gender"
+              value={formData.personalInfo.gender}
+              onChange={(e) =>
+                handleInputChange("personalInfo", "gender", e.target.value)
+              }
+            >
               <option value="">Cins</option>
               <option value="male">Qadın</option>
               <option value="female">Kişi</option>
@@ -396,6 +592,14 @@ const CVPageMain = () => {
               className={"mariageStatus"}
               id="mariageStatus"
               name="mariegeStatus"
+              value={formData.personalInfo.marriageStatus}
+              onChange={(e) =>
+                handleInputChange(
+                  "personalInfo",
+                  "marriageStatus",
+                  e.target.value
+                )
+              }
             >
               <option value="">Ailə vəziyyəti</option>
               <option value="married">Evli</option>
@@ -413,7 +617,7 @@ const CVPageMain = () => {
                 <h2>{set.name}</h2>
                 {set.fields.map((field) => (
                   <Input
-                    key={field.key}
+                    key={field.id}
                     className={field.className}
                     type="text"
                     placeholder={field.placeholder}
@@ -430,7 +634,7 @@ const CVPageMain = () => {
       case "Language":
         return (
           <>
-            <Input className="languageName" type="text" placeholder="Dil adı" />
+            {/* <Input className="languageName" type="text" placeholder="Dil adı" />
             <Input
               className="languageLevel"
               type="text"
@@ -455,13 +659,30 @@ const CVPageMain = () => {
               className="computerKnowledgeCertificateId"
               type="text"
               placeholder="Komputer bacarığı sertifikatının ID-si"
-            />
+            /> */}
+            {languageSets.map((set) => (
+              <FadeInGridItem key={set.id}>
+                <h2>{set.name}</h2>
+                {set.fields.map((field) => (
+                  <Input
+                    key={field.id}
+                    className={field.className}
+                    type="text"
+                    placeholder={field.placeholder}
+                  />
+                ))}
+                <DeleteButton onClick={() => deleteworkExperienceSet(set.id)}>
+                  sil
+                </DeleteButton>
+              </FadeInGridItem>
+            ))}
+            <AddButton onClick={addworkExperienceSet}>Əlavə et</AddButton>
           </>
         );
       case "workExperience":
         return (
           <>
-            <Input
+            {/* <Input
               className="companyName"
               type="text"
               placeholder="Şirkət adı"
@@ -522,7 +743,25 @@ const CVPageMain = () => {
               className="additionalInformation"
               type="text"
               placeholder="Əlavə məlumat"
-            />
+            /> */}
+
+            {workExperienceSets.map((set) => (
+              <FadeInGridItem key={set.id}>
+                <h2>{set.name}</h2>
+                {set.fields.map((field) => (
+                  <Input
+                    key={field.id}
+                    className={field.className}
+                    type="text"
+                    placeholder={field.placeholder}
+                  />
+                ))}
+                <DeleteButton onClick={() => deleteworkExperienceSet(set.id)}>
+                  sil
+                </DeleteButton>
+              </FadeInGridItem>
+            ))}
+            <AddButton onClick={addworkExperienceSet}>Əlavə et</AddButton>
           </>
         );
 
