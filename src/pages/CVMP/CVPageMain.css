@@ -58,3 +58,20 @@ body {
     border-color: #2f72be;
   }
 }
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #555;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: black;
+}
+

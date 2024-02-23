@@ -13,17 +13,14 @@ const Container = styled.div`
   background-color: #fff;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0.2, 0, 0, 0.5);
-  border-top-left-radius: 35px;
-  border-top-right-radius: 35px;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 4 columns */
-  grid-auto-rows: minmax(
-    80px,
-    auto
-  ); /* Auto rows with a minimum of 100px height */
-  gap: 10px; /* Adjust the size of the gap between grid items */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: minmax(80px, auto);
+  gap: 10px;
   justify-content: space-around;
   align-items: center;
+  overflow: auto;
 `;
 
 const bounce = keyframes`
@@ -37,6 +34,7 @@ const bounce = keyframes`
     transform: translateY(-15px);
   }
 `;
+
 const BouncingImage = styled.img`
   animation: ${bounce} 2s 1;
 `;
@@ -50,6 +48,7 @@ const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 40px;
 `;
+
 const ImageUploadContainer = styled.div`
   width: 150px;
   height: 200px;
@@ -105,6 +104,7 @@ const SubmitButton = styled.button`
     color: #white;
   }
 `;
+
 const slideIn = keyframes`
 from {
   transform: translateX(170%);
@@ -113,8 +113,7 @@ to {
   transform: translateX(0);
 }
 `;
-// border-bottom: 2px solid ${(props) => (props.active ? '#fff' : '#333')};
-// color: ${(props) => (props.active ? '#B3B3B3' : 'white')};
+
 const Button = styled.button`
   padding: 10px;
   background-color: transparent;
@@ -136,11 +135,68 @@ const Button = styled.button`
   }
 `;
 
+const DeleteButton = styled.button`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 8px 16px;
+  background-color: #ff4d4d;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #d14848;
+  }
+`;
+
+const AddButton = styled.button`
+  margin-top: 20px;
+  padding: 12px 24px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #45a049;
+  }
+`;
+
+const GridItem = styled.div`
+  border: 1px solid #ddd;
+  padding: 10px;
+  position: relative;
+`;
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(25px); 
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const FadeInGridItem = styled(GridItem)`
+  animation: ${fadeIn} 0.4s ease-in-out;
+`;
+
 const CVPageMain = () => {
+  //-----------------------
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const fileInputRef = useRef(null);
-  //----------------
+  //----------------------
   const [activeButton, setActiveButton] = useState(null);
 
   const handleButtonClick = (index) => {
@@ -160,16 +216,121 @@ const CVPageMain = () => {
     }
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
+  //------------------------------------------------------------------------- Education info duplication
+  const initialFieldTemplate = [
+    { key: 1, className: "institutionName", placeholder: "İnstitut adı" },
+    { key: 2, className: "facultyName", placeholder: "Fakültə adı" },
+    { key: 3, className: "specialization", placeholder: "İxtisas" },
+    { key: 4, className: "educationLevel", placeholder: "Təhsil səviyyəsi" },
+    { key: 5, className: "educationForm", placeholder: "Təhsil forması" },
+    { key: 6, className: "educationStatus", placeholder: "Təhsil vəziyyəti" },
+    {
+      key: 7,
+      className: "educationStartDate",
+      placeholder: "Təhsilin başlama tarixi",
+    },
+    {
+      key: 8,
+      className: "educationEndDate",
+      placeholder: "Təhsilin bitmə tarixi",
+    },
+    { key: 9, className: "graduationWork", placeholder: "Diplom işi" },
+    {
+      key: 10,
+      className: "graduationWorkTheme",
+      placeholder: "Diplom işinin mövzusu",
+    },
+    {
+      key: 11,
+      className: "graduationWorkDescription",
+      placeholder: "Diplom işinin təsviri",
+    },
+    {
+      key: 12,
+      className: "additionalInformation",
+      placeholder: "Əlavə məlumat",
+    },
+  ];
+  const [educationSets, setEducationSets] = useState([
+    { name: "Təhsil forma", fields: initialFieldTemplate },
+  ]);
+
+  const generateUniqueId = () => {
+    return new Date().getTime();
   };
+
+  const addEducationSet = () => {
+    const newSetId = generateUniqueId();
+    const newSetName = `Təhsil forma`;
+    const newSetFields = initialFieldTemplate.map((field) => ({
+      key: field.key,
+      className: `${field.className}`,
+      placeholder: `${field.placeholder}`,
+    }));
+
+    setEducationSets([
+      ...educationSets,
+      { id: newSetId, name: newSetName, fields: newSetFields },
+    ]);
+  };
+
+  const deleteEducationSet = (id) => {
+    const updatedSets = educationSets.filter((set) => set.id !== id);
+    setEducationSets(updatedSets);
+  };
+
+  //--------------------------------------------------------------- DB fetch
+
+  const [formData, setFormData] = useState({
+    personalInfo: {
+      image: null,
+      name: "",
+    },
+    education: { educationSets },
+    language: {},
+    workExperience: {},
+  });
+
+  const handleInputChange = (category, fieldName, value) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [category]: {
+        ...prevFormData[category],
+        [fieldName]: value,
+      },
+    }));
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const endpointUrl = "http://avazdg.tech:5201/api/CV/create-cv";
+      const response = await fetch(endpointUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ formData }),
+      });
+
+      if (response.ok) {
+        console.log("Request successful");
+      } else {
+        console.error("Request failed");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  //---------------------------------------------------------------------------------
   const [activeCategory, setActiveCategory] = useState(null);
 
   const handleCategoryClick = (category, index) => {
     setActiveCategory(category);
     handleButtonClick(index);
   };
-
+  //---------------------------------------------------------------------------------
   const renderInputs = () => {
     switch (activeCategory) {
       case "personalInfo":
@@ -190,7 +351,15 @@ const CVPageMain = () => {
                 onChange={handleImageUpload}
               />
             </ImageUploadContainer>
-            <Input className={"NameInput"} type="text" placeholder="Ad" />
+            <Input
+              className={"NameInput"}
+              type="text"
+              placeholder="Ad"
+              value={formData.personalInfo.name}
+              onChange={(e) =>
+                handleInputChange("personalInfo", "name", e.target.value)
+              }
+            />
             <Input className={"SurNameInput"} type="text" placeholder="Soyad" />
             <Input className={"EmailInput"} type="email" placeholder="Email" />
             <Input className={"TelInput"} type="tel" placeholder="Telefon" />
@@ -220,9 +389,8 @@ const CVPageMain = () => {
             <Input className={"Linkedin"} type="text" placeholder="Linkedin" />
             <select className={"Gender"} id="gender" name="gender">
               <option value="">Cins</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="non-binary">Non-Binary</option>
+              <option value="male">Qadın</option>
+              <option value="female">Kişi</option>
             </select>
             <select
               className={"mariageStatus"}
@@ -240,66 +408,23 @@ const CVPageMain = () => {
       case "Education":
         return (
           <>
-            <Input
-              className="institutionName"
-              type="text"
-              placeholder="İnstitut adı"
-            />
-            <Input
-              className="facultyName"
-              type="text"
-              placeholder="Fakültə adı"
-            />
-            <Input
-              className="specialization"
-              type="text"
-              placeholder="İxtisas"
-            />
-            <Input
-              className="educationLevel"
-              type="text"
-              placeholder="Təhsil səviyyəsi"
-            />
-            <Input
-              className="educationForm"
-              type="text"
-              placeholder="Təhsil forması"
-            />
-            <Input
-              className="educationStatus"
-              type="text"
-              placeholder="Təhsil vəziyyəti"
-            />
-            <Input
-              className="educationStartDate"
-              type="text"
-              placeholder="Təhsilin başlama tarixi"
-            />
-            <Input
-              className="educationEndDate"
-              type="text"
-              placeholder="Təhsilin bitmə tarixi"
-            />
-            <Input
-              className="graduationWork"
-              type="text"
-              placeholder="Diplom işi"
-            />
-            <Input
-              className="graduationWorkTheme"
-              type="text"
-              placeholder="Diplom işinin mövzusu"
-            />
-            <Input
-              className="graduationWorkDescription"
-              type="text"
-              placeholder="Diplom işinin təsviri"
-            />
-            <Input
-              className="additionalInformation"
-              type="text"
-              placeholder="Əlavə məlumat"
-            />
+            {educationSets.map((set) => (
+              <FadeInGridItem key={set.id}>
+                <h2>{set.name}</h2>
+                {set.fields.map((field) => (
+                  <Input
+                    key={field.key}
+                    className={field.className}
+                    type="text"
+                    placeholder={field.placeholder}
+                  />
+                ))}
+                <DeleteButton onClick={() => deleteEducationSet(set.id)}>
+                  sil
+                </DeleteButton>
+              </FadeInGridItem>
+            ))}
+            <AddButton onClick={addEducationSet}>Əlavə et</AddButton>
           </>
         );
       case "Language":
@@ -419,6 +544,7 @@ const CVPageMain = () => {
         );
     }
   };
+  //---------------------------------------------------------------------------------
   return (
     <>
       <div className="buttonDiv">

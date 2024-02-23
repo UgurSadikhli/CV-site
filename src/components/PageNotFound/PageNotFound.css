@@ -1,0 +1,44 @@
+.error-container1 {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-size: cover;
+  font-family: "Arial", sans-serif;
+}
+
+.error-container {
+  text-align: center;
+  color: #fff;
+}
+
+.error-message {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 10px;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.message444 {
+  font-size: 5em;
+  margin: 0;
+}
+
+.messagep {
+  font-size: 1.5em;
+  margin: 10px 0 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
