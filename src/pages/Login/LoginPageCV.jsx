@@ -101,7 +101,7 @@ const Login = ({ onLogin })  => {
   };
   const handleClick3 = async () => {
     try {
-      const response = await fetch("http://avazdg.com:5201/api/Auth/login", {
+      const response = await fetch("http://avazdg.tech:5201/api/Auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
