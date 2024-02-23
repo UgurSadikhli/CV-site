@@ -10,17 +10,17 @@ const Container = styled.div`
   transform: translate(-50%, -50%);
   width: 1250px;
   height: 600px;
-  background-color: #fff;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0.2, 0, 0, 0.5);
+  background-color: #8cb9bd;
+  padding: 1.1%;
+  box-shadow: 0 4px 10px rgba(0.6, 0, 0, 0.6);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   grid-template-columns: repeat(6, 1fr);
-  grid-auto-rows: minmax(80px, auto);
-  gap: 10px;
+
   justify-content: space-around;
   align-items: center;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 const bounce = keyframes`
@@ -41,14 +41,18 @@ const BouncingImage = styled.img`
 
 const Input = styled.input`
   width: 170px;
-  height: 50px;
-  margin-bottom: 15px;
-  padding: 10px;
+  height: 35px;
+  margin-bottom: 1%;
+  padding: 2%;
   box-sizing: border-box;
   border: 1px solid #ccc;
-  border-radius: 40px;
+  border-radius: 2px;
+  font-family: "Open Sans", sans-serif;
+  transition: border-color 0.3s ease;
+  &:hover {
+    border-color: #004e64;
+  }
 `;
-
 const ImageUploadContainer = styled.div`
   width: 150px;
   height: 200px;
@@ -120,18 +124,19 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   font-size: 17px;
-  margin-top: 55px;
+  font-family: Verdana;
+  margin-top: 4%;
   animation: ${slideIn} 0.5s ease;
   border-bottom: ${(props) =>
-    props.active ? "2px solid black" : "2px solid white"};
-  color: ${(props) => (props.active ? " white" : "#B3B3B3")};
+    props.active ? "2.4px solid white" : "2.4px solid #004e64"};
+  color: ${(props) => (props.active ? "#004e64" : "#004e64")};
   transition: border-bottom 0.3s ease, color 0.3s ease;
   &:hover {
-    border-bottom: 2.5px solid white;
+    border-bottom: 2.4px solid #8cb9bd;
   }
   &:focus {
     outline: none;
-    color: #b3b3b3;
+    color: #0b666a;
   }
 `;
 
@@ -155,7 +160,8 @@ const DeleteButton = styled.button`
 `;
 
 const AddButton = styled.button`
-  margin-top: 20px;
+  margin-top: 1%;
+  margin-left: 90%;
   padding: 12px 24px;
   background-color: #4caf50;
   color: #fff;
@@ -192,17 +198,17 @@ const FadeInGridItem = styled(GridItem)`
 `;
 
 const CVPageMain = () => {
-  //-----------------------
-  const navigate = useNavigate();
+  //----------------------------------------------------------------------------------------------------
+
   const [image, setImage] = useState(null);
   const fileInputRef = useRef(null);
-  //----------------------
+  //-----------------------------------------------------------------------------------------------------
   const [activeButton, setActiveButton] = useState(null);
 
   const handleButtonClick = (index) => {
     setActiveButton(index);
   };
-  //-----------------------
+  //-----------------------------------------------------------------------------------------------------
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -251,50 +257,6 @@ const CVPageMain = () => {
       placeholder: "Əlavə məlumat",
     },
   ];
-  const initialLanguageFieldTemplate = [
-    { key: 1, className: "languageName", placeholder: "Dil adı" },
-    { key: 2, className: "languageLevel", placeholder: "Dil səviyyəti" },
-    {
-      key: 3,
-      className: "languageCertificateId",
-      placeholder: "Dil sertifikatının ID-si",
-    },
-    {
-      key: 4,
-      className: "computerKnowledgeName",
-      placeholder: "Komputer bacarığı adı",
-    },
-    {
-      key: 5,
-      className: "computerKnowledgeLevel",
-      placeholder: "Komputer bacarığı səviyyəti",
-    },
-    {
-      key: 6,
-      className: "computerKnowledgeCertificateId",
-      placeholder: "Komputer bacarığı sertifikatının ID-si",
-    },
-  ];
-
-
-  const initialWorkExperienceFieldTemplate = [
-    { key: 1, className: "companyName", placeholder: "Şirkət adı" },
-    { key: 2, className: "typeOfBusiness", placeholder: "Biznesin növü" },
-    { key: 3, className: "jobTitle", placeholder: "Vəzifə adı" },
-    { key: 4, className: "typeOfPosition", placeholder: "Vəzifənin növü" },
-    { key: 5, className: "courseOfAction", placeholder: "Tədbirin növü" },
-    { key: 6, className: "keyJobResponsibilities", placeholder: "Əsas vəzifə və cavabdehliklər" },
-    { key: 7, className: "startDate", placeholder: "Başlama tarixi" },
-    { key: 8, className: "endDate", placeholder: "Bitmə tarixi" },
-    { key: 9, className: "reasonForSeparation", placeholder: "Ayrılma səbəbi" },
-    { key: 10, className: "recommendationSurname", placeholder: "Tövsiyə verənın soyadı" },
-    { key: 11, className: "recommendationPosition", placeholder: "Tövsiyə verənın vəzifəsi" },
-    { key: 12, className: "recommendationPhone", placeholder: "Tövsiyə verənın telefonu" },
-    { key: 13, className: "recommendationEmail", placeholder: "Tövsiyə verənın emaili" },
-    { key: 14, className: "additionalInformation", placeholder: "Əlavə məlumat" },
-  ];
-
-  
 
   const [educationSets, setEducationSets] = useState([
     { name: "Təhsil forma", fields: initialFieldTemplate },
@@ -323,10 +285,37 @@ const CVPageMain = () => {
     const updatedSets = educationSets.filter((set) => set.id !== id);
     setEducationSets(updatedSets);
   };
-  //---------------------------------------
+  //------------------------------------------------------------------------- Language info duplication
+
+  const initialLanguageFieldTemplate = [
+    { key: 1, className: "languageName", placeholder: "Dil adı" },
+    { key: 2, className: "languageLevel", placeholder: "Dil səviyyəti" },
+    {
+      key: 3,
+      className: "languageCertificateId",
+      placeholder: "Dil sertifikatının ID-si",
+    },
+    {
+      key: 4,
+      className: "computerKnowledgeName",
+      placeholder: "Komputer bacarığı adı",
+    },
+    {
+      key: 5,
+      className: "computerKnowledgeLevel",
+      placeholder: "Komputer bacarığı səviyyəti",
+    },
+    {
+      key: 6,
+      className: "computerKnowledgeCertificateId",
+      placeholder: "Komputer bacarığı sertifikatının ID-si",
+    },
+  ];
+
   const [languageSets, setLanguageSets] = useState([
     { name: "Biliklər forması", fields: initialLanguageFieldTemplate },
   ]);
+
   const addLanguageSet = () => {
     const newSetId = generateUniqueId();
     const newSetName = `Biliklər forma`;
@@ -347,8 +336,48 @@ const CVPageMain = () => {
     setLanguageSets(updatedSets);
   };
 
-  //---------------------------------------
+  //------------------------------------------------------------------------- WorkExperience info duplication
 
+  const initialWorkExperienceFieldTemplate = [
+    { key: 1, className: "companyName", placeholder: "Şirkət adı" },
+    { key: 2, className: "typeOfBusiness", placeholder: "Biznesin növü" },
+    { key: 3, className: "jobTitle", placeholder: "Vəzifə adı" },
+    { key: 4, className: "typeOfPosition", placeholder: "Vəzifənin növü" },
+    { key: 5, className: "courseOfAction", placeholder: "Tədbirin növü" },
+    {
+      key: 6,
+      className: "keyJobResponsibilities",
+      placeholder: "Əsas vəzifə və cavabdehliklər",
+    },
+    { key: 7, className: "startDate", placeholder: "Başlama tarixi" },
+    { key: 8, className: "endDate", placeholder: "Bitmə tarixi" },
+    { key: 9, className: "reasonForSeparation", placeholder: "Ayrılma səbəbi" },
+    {
+      key: 10,
+      className: "recommendationSurname",
+      placeholder: "Tövsiyə verənın soyadı",
+    },
+    {
+      key: 11,
+      className: "recommendationPosition",
+      placeholder: "Tövsiyə verənın vəzifəsi",
+    },
+    {
+      key: 12,
+      className: "recommendationPhone",
+      placeholder: "Tövsiyə verənın telefonu",
+    },
+    {
+      key: 13,
+      className: "recommendationEmail",
+      placeholder: "Tövsiyə verənın emaili",
+    },
+    {
+      key: 14,
+      className: "additionalInformation",
+      placeholder: "Əlavə məlumat",
+    },
+  ];
 
   const [workExperienceSets, setworkExperienceSets] = useState([
     { name: "Is forması", fields: initialWorkExperienceFieldTemplate },
@@ -373,8 +402,7 @@ const CVPageMain = () => {
     setworkExperienceSets(updatedSets);
   };
 
-
-  //--------------------------------------------------------------- DB fetch
+  //------------------------------------------------------------------------------ DB fetch
 
   const [formData, setFormData] = useState({
     personalInfo: {
@@ -395,8 +423,8 @@ const CVPageMain = () => {
       aboutMe: "",
     },
     education: { educationSets },
-    language: {languageSets},
-    workExperience: {workExperienceSets},
+    language: { languageSets },
+    workExperience: { workExperienceSets },
   });
 
   const handleInputChange = (category, fieldName, value) => {
@@ -407,6 +435,60 @@ const CVPageMain = () => {
         [fieldName]: value,
       },
     }));
+  };
+
+  const handleEducationSetInputChange = (setId, fieldName, value) => {
+    setEducationSets((prevSets) => {
+      return prevSets.map((set) => {
+        if (set.id === setId) {
+          const updatedFields = set.fields.map((field) => {
+            if (field.className === fieldName) {
+              return { ...field, value };
+            }
+            return field;
+          });
+
+          return { ...set, fields: updatedFields };
+        }
+        return set;
+      });
+    });
+  };
+  // Function to handle changes in Language Sets
+  const handleLanguageSetInputChange = (setId, fieldName, value) => {
+    setLanguageSets((prevSets) => {
+      return prevSets.map((set) => {
+        if (set.id === setId) {
+          const updatedFields = set.fields.map((field) => {
+            if (field.className === fieldName) {
+              return { ...field, value };
+            }
+            return field;
+          });
+
+          return { ...set, fields: updatedFields };
+        }
+        return set;
+      });
+    });
+  };
+  // Function to handle changes in Work Experience Sets
+  const handleWorkExperienceSetInputChange = (setId, fieldName, value) => {
+    setworkExperienceSets((prevSets) => {
+      return prevSets.map((set) => {
+        if (set.id === setId) {
+          const updatedFields = set.fields.map((field) => {
+            if (field.className === fieldName) {
+              return { ...field, value };
+            }
+            return field;
+          });
+
+          return { ...set, fields: updatedFields };
+        }
+        return set;
+      });
+    });
   };
 
   const handleFormSubmit = async (e) => {
@@ -431,14 +513,24 @@ const CVPageMain = () => {
     }
   };
 
-  //---------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------- Button active modification
   const [activeCategory, setActiveCategory] = useState(null);
 
   const handleCategoryClick = (category, index) => {
     setActiveCategory(category);
     handleButtonClick(index);
   };
-  //---------------------------------------------------------------------------------
+
+  //----------------------------------------------------------------------------------------------------- Check initialzation
+  // const logFormData = () => {
+  //   for (const educationSet of languageSets) {
+  //     for (const field of educationSet.fields) {
+  //       console.log(`${field.placeholder}:`, field.value);
+  //     }
+  //   }
+  // };
+
+  //-----------------------------------------------------------------------------------------------------
   const renderInputs = () => {
     switch (activeCategory) {
       case "personalInfo":
@@ -585,8 +677,8 @@ const CVPageMain = () => {
               }
             >
               <option value="">Cins</option>
-              <option value="male">Qadın</option>
-              <option value="female">Kişi</option>
+              <option value="female">Qadın</option>
+              <option value="male">Kişi</option>
             </select>
             <select
               className={"mariageStatus"}
@@ -617,10 +709,18 @@ const CVPageMain = () => {
                 <h2>{set.name}</h2>
                 {set.fields.map((field) => (
                   <Input
-                    key={field.id}
+                    key={field.key}
                     className={field.className}
                     type="text"
                     placeholder={field.placeholder}
+                    value={field.value || ""}
+                    onChange={(e) =>
+                      handleEducationSetInputChange(
+                        set.id,
+                        field.className,
+                        e.target.value
+                      )
+                    }
                   />
                 ))}
                 <DeleteButton onClick={() => deleteEducationSet(set.id)}>
@@ -634,6 +734,8 @@ const CVPageMain = () => {
       case "Language":
         return (
           <>
+            {/*------------------------------------------------Just in case------------------------------------------*/}
+
             {/* <Input className="languageName" type="text" placeholder="Dil adı" />
             <Input
               className="languageLevel"
@@ -660,28 +762,40 @@ const CVPageMain = () => {
               type="text"
               placeholder="Komputer bacarığı sertifikatının ID-si"
             /> */}
+            {/*-----------------------------------------------------------------------------------------------------*/}
+
             {languageSets.map((set) => (
               <FadeInGridItem key={set.id}>
                 <h2>{set.name}</h2>
                 {set.fields.map((field) => (
                   <Input
-                    key={field.id}
+                    key={field.key}
                     className={field.className}
                     type="text"
                     placeholder={field.placeholder}
+                    value={field.value || ""}
+                    onChange={(e) =>
+                      handleLanguageSetInputChange(
+                        set.id,
+                        field.className,
+                        e.target.value
+                      )
+                    }
                   />
                 ))}
-                <DeleteButton onClick={() => deleteworkExperienceSet(set.id)}>
+                <DeleteButton onClick={() => deleteLanguageSet(set.id)}>
                   sil
                 </DeleteButton>
               </FadeInGridItem>
             ))}
-            <AddButton onClick={addworkExperienceSet}>Əlavə et</AddButton>
+            <AddButton onClick={addLanguageSet}>Əlavə et</AddButton>
           </>
         );
       case "workExperience":
         return (
           <>
+            {/*------------------------------------------------Just in case------------------------------------------*/}
+
             {/* <Input
               className="companyName"
               type="text"
@@ -744,16 +858,25 @@ const CVPageMain = () => {
               type="text"
               placeholder="Əlavə məlumat"
             /> */}
+            {/*-------------------------------------------------------------------------------------------------*/}
 
             {workExperienceSets.map((set) => (
               <FadeInGridItem key={set.id}>
                 <h2>{set.name}</h2>
                 {set.fields.map((field) => (
                   <Input
-                    key={field.id}
+                    key={field.key}
                     className={field.className}
                     type="text"
                     placeholder={field.placeholder}
+                    value={field.value || ""}
+                    onChange={(e) =>
+                      handleWorkExperienceSetInputChange(
+                        set.id,
+                        field.className,
+                        e.target.value
+                      )
+                    }
                   />
                 ))}
                 <DeleteButton onClick={() => deleteworkExperienceSet(set.id)}>
@@ -795,39 +918,39 @@ const CVPageMain = () => {
 
         <Button
           onClick={() => handleCategoryClick("personalInfo", 0)}
-          active={activeButton === 0 ? "true" : "false"}
+          active={activeButton === 0}
         >
           Şəxsi Məlumatlar
         </Button>
 
         <Button
           onClick={() => handleCategoryClick("Education", 1)}
-          active={activeButton === 1 ? "true" : "false"}
+          active={activeButton === 1}
         >
           Təhsil
         </Button>
 
         <Button
           onClick={() => handleCategoryClick("Language", 2)}
-          active={activeButton === 2 ? "true" : "false"}
+          active={activeButton === 2}
         >
-          Komputer/Dil Bilikləri
+          Komputer Və Dil Bilikləri
         </Button>
 
         <Button
           onClick={() => handleCategoryClick("workExperience", 3)}
-          active={activeButton === 3 ? "true" : "false"}
+          active={activeButton === 3}
         >
           İş Təcrübəsi
         </Button>
 
         <Button
           onClick={() => handleCategoryClick("Finish", 4)}
-          active={activeButton === 4 ? "true" : "false"}
+          active={activeButton === 4}
         >
           Təstiqləmək
         </Button>
-        <Container>{renderInputs()}</Container>
+        <Container key={activeButton}>{renderInputs()}</Container>
       </div>
     </>
   );
