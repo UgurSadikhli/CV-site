@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import "./Logup.css";
@@ -20,7 +20,6 @@ const slideIn = keyframes`
     transform: translateX(0);
   }
 `;
-
 
 const Container = styled.div`
   display: flex;
@@ -82,7 +81,7 @@ const Button = styled.button`
   border-radius: 6px;
   cursor: pointer;
   font-size: 16px;
-  transition: background-color  0.6s  ease;
+  transition: background-color 0.6s ease;
 
   &:hover {
     background-color: #4fa3ff;
@@ -100,58 +99,104 @@ const Footer = styled.footer`
   width: 100%;
   font-size: 14px;
 `;
-const Logup = () => {
+
+const Logup = ({ onRegister }) => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleLogup = async (e) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      console.error("Passwords do not match");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "http://avazdg.tech:5201/api/Auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password, password }),
+        }
+      );
+
+      if (response.ok) {
+        // Registration successful, call the onRegister callback
+        onRegister();
+
+        // Redirect to the login page without storing token and user ID
+        navigate("/login");
+      } else {
+        console.error("Registration failed");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+    }
+  };
 
   const handleClick = () => {
+    // Handle navigation to login page
     navigate("/login");
   };
 
   return (
     <Container>
-    <Main>
-      <LoginContainer>
-        <HeaderImage
-          src={"./assets/img/Avaz-Logo.png"}
-          alt="Your Logo"
-          className="img-fluid"
-        />
-        <h1 className="H1LOG">Qeydiyyatdan keç</h1>
-        <br></br>
-        <Input
-          type="email"
-          id="email"
-          placeholder="Email"
-          name="email"
-          required
-        />
+      <Main>
+        <LoginContainer>
+          <HeaderImage
+            src={"./assets/img/Avaz-Logo.png"}
+            alt="Your Logo"
+            className="img-fluid"
+          />
+          <h1 className="H1LOG">Qeydiyyatdan keç</h1>
+          <br></br>
+          <form onSubmit={handleLogup}>
+            <Input
+              type="email"
+              id="email"
+              placeholder="Email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <Input
+              type="password"
+              id="password"
+              placeholder="Şifrə"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <Input
+              type="password"
+              id="confirmPassword"
+              placeholder="Təsdiq şifrə"
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+            <Button type="submit">Davam et</Button>
+          </form>
+          <button className="button-like-link" onClick={handleClick}>
+            Hesaba daxil ol
+          </button>
+        </LoginContainer>
+      </Main>
 
-        <Input
-          type="password"
-          id="password"
-          placeholder="Şifrə"
-          name="password"
-          required
-        />
-        <Input
-          type="password"
-          id="password"
-          placeholder="Şifrə"
-          name="password"
-          required
-        />
-        <Button type="submit">Davam et</Button>
-        <button className="button-like-link" onClick={handleClick}>
-          Hesaba daxil ol
-        </button>
-      </LoginContainer>
-    </Main>
-
-    <Footer>
-      &copy; 2024 AvazDG
-      <br />
-    </Footer>
-  </Container>
+      <Footer>
+        &copy; 2024 AvazDG
+        <br />
+      </Footer>
+    </Container>
   );
 };
 

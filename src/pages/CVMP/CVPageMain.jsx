@@ -16,7 +16,6 @@ const Container = styled.div`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   grid-template-columns: repeat(6, 1fr);
-
   justify-content: space-around;
   align-items: center;
   overflow-y: auto;
@@ -40,17 +39,21 @@ const BouncingImage = styled.img`
 `;
 
 const Input = styled.input`
-  width: 170px;
-  height: 35px;
-  margin-bottom: 1%;
-  padding: 2%;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 2px;
-  font-family: "Open Sans", sans-serif;
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 4px;
+  background-color: #8cb9bd;
+  font-family: Sans-serif;
   transition: border-color 0.3s ease;
+  width: 200px;
   &:hover {
-    border-color: #004e64;
+    border-color: #8cb9bd;
+  }
+  &::placeholder {
+    color: white;
+  }
+  &::focus {
+    border-color: #8cb9bd;
   }
 `;
 const ImageUploadContainer = styled.div`
@@ -232,12 +235,12 @@ const CVPageMain = () => {
     { key: 6, className: "educationStatus", placeholder: "Təhsil vəziyyəti" },
     {
       key: 7,
-      className: "educationStartDate",
+      className: "startDate",
       placeholder: "Təhsilin başlama tarixi",
     },
     {
       key: 8,
-      className: "educationEndDate",
+      className: "endDate",
       placeholder: "Təhsilin bitmə tarixi",
     },
     { key: 9, className: "graduationWork", placeholder: "Diplom işi" },
@@ -295,21 +298,6 @@ const CVPageMain = () => {
       className: "languageCertificateId",
       placeholder: "Dil sertifikatının ID-si",
     },
-    {
-      key: 4,
-      className: "computerKnowledgeName",
-      placeholder: "Komputer bacarığı adı",
-    },
-    {
-      key: 5,
-      className: "computerKnowledgeLevel",
-      placeholder: "Komputer bacarığı səviyyəti",
-    },
-    {
-      key: 6,
-      className: "computerKnowledgeCertificateId",
-      placeholder: "Komputer bacarığı sertifikatının ID-si",
-    },
   ];
 
   const [languageSets, setLanguageSets] = useState([
@@ -336,6 +324,46 @@ const CVPageMain = () => {
     setLanguageSets(updatedSets);
   };
 
+  //------------------------------------------------------------------------- Computer info duplication
+  const initialComputerLanguageFieldTemplate = [
+    {
+      key: 1,
+      className: "knowledgeName",
+      placeholder: "Komputer bacarığı adı",
+    },
+    {
+      key: 2,
+      className: "knowledgeLevel",
+      placeholder: "Komputer bacarığı səviyyəti",
+    },
+    {
+      key: 3,
+      className: "knowledgeCertificateID",
+      placeholder: "Komputer bacarığı sertifikatının ID-si",
+    },
+  ];
+  const [ComputerlanguageSets, setComputerLanguageSets] = useState([
+    { name: "Biliklər forması", fields: initialComputerLanguageFieldTemplate },
+  ]);
+  const addComputerLanguageSet = () => {
+    const newSetId = generateUniqueId();
+    const newSetName = `Biliklər forma`;
+    const newSetFields = initialComputerLanguageFieldTemplate.map((field) => ({
+      key: field.key,
+      className: `${field.className}`,
+      placeholder: `${field.placeholder}`,
+    }));
+
+    setComputerLanguageSets([
+      ...ComputerlanguageSets,
+      { id: newSetId, name: newSetName, fields: newSetFields },
+    ]);
+  };
+
+  const deleteComputerLanguageSet = (id) => {
+    const updatedSets = ComputerlanguageSets.filter((set) => set.id !== id);
+    setComputerLanguageSets(updatedSets);
+  };
   //------------------------------------------------------------------------- WorkExperience info duplication
 
   const initialWorkExperienceFieldTemplate = [
@@ -354,22 +382,22 @@ const CVPageMain = () => {
     { key: 9, className: "reasonForSeparation", placeholder: "Ayrılma səbəbi" },
     {
       key: 10,
-      className: "recommendationSurname",
+      className: "surnameAndPatronymicOfThePersonWhoCanRecommend",
       placeholder: "Tövsiyə verənın soyadı",
     },
     {
       key: 11,
-      className: "recommendationPosition",
+      className: "positionOfThePersonWhoCanRecommend",
       placeholder: "Tövsiyə verənın vəzifəsi",
     },
     {
       key: 12,
-      className: "recommendationPhone",
+      className: "contactPhoneNumberOfThePersonWhoCanRecommend",
       placeholder: "Tövsiyə verənın telefonu",
     },
     {
       key: 13,
-      className: "recommendationEmail",
+      className: "emailOfThePersonWhoCanRecommend",
       placeholder: "Tövsiyə verənın emaili",
     },
     {
@@ -410,17 +438,17 @@ const CVPageMain = () => {
       name: "",
       surname: "",
       gender: "",
-      marriageStatus: "",
+      familyStatus: "",
       citizenship: "",
-      militaryStatus: "",
+      militaryService: "",
       email: "",
       driverLicense: "",
       city: "",
       address: "",
-      cityPhone: "",
-      telephone: "",
-      linkedin: "",
-      aboutMe: "",
+      landlinePhone: "",
+      mobilePhone: "",
+      linkedInLink: "",
+      personalBio: "",
     },
     education: { educationSets },
     language: { languageSets },
@@ -472,6 +500,24 @@ const CVPageMain = () => {
       });
     });
   };
+    // Function to handle changes in Computer Language Sets
+    const handleComputerLanguageSetInputChange = (setId, fieldName, value) => {
+      setComputerLanguageSets((prevSets) => {
+        return prevSets.map((set) => {
+          if (set.id === setId) {
+            const updatedFields = set.fields.map((field) => {
+              if (field.className === fieldName) {
+                return { ...field, value };
+              }
+              return field;
+            });
+  
+            return { ...set, fields: updatedFields };
+          }
+          return set;
+        });
+      });
+    };
   // Function to handle changes in Work Experience Sets
   const handleWorkExperienceSetInputChange = (setId, fieldName, value) => {
     setworkExperienceSets((prevSets) => {
@@ -495,14 +541,19 @@ const CVPageMain = () => {
     e.preventDefault();
     try {
       const endpointUrl = "http://avazdg.tech:5201/api/CV/create-cv";
+
+      const token = localStorage.getItem('token');
+  
       const response = await fetch(endpointUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          // Include the token in the Authorization header
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({ formData }),
       });
-
+  
       if (response.ok) {
         console.log("Request successful");
       } else {
@@ -522,13 +573,13 @@ const CVPageMain = () => {
   };
 
   //----------------------------------------------------------------------------------------------------- Check initialzation
-  // const logFormData = () => {
-  //   for (const educationSet of languageSets) {
-  //     for (const field of educationSet.fields) {
-  //       console.log(`${field.placeholder}:`, field.value);
-  //     }
-  //   }
-  // };
+  const logFormData = () => {
+    for (const educationSet of languageSets) {
+      for (const field of educationSet.fields) {
+        console.log(field);
+      }
+    }
+  };
 
   //-----------------------------------------------------------------------------------------------------
   const renderInputs = () => {
@@ -579,16 +630,16 @@ const CVPageMain = () => {
               }
             />
             <Input
-              className={"TelInput"}
+              className={"mobilePhone"}
               type="tel"
               placeholder="Telefon"
-              value={formData.personalInfo.telephone}
+              value={formData.personalInfo.mobilePhone}
               onChange={(e) =>
-                handleInputChange("personalInfo", "telephone", e.target.value)
+                handleInputChange("personalInfo", "mobilePhone", e.target.value)
               }
             />
             <Input
-              className={"AdressInput"}
+              className={"address"}
               type="text"
               placeholder="Adres"
               value={formData.personalInfo.address}
@@ -597,7 +648,7 @@ const CVPageMain = () => {
               }
             />
             <Input
-              className={"CitizenShip"}
+              className={"citizenship"}
               type="text"
               placeholder="Ölkə"
               value={formData.personalInfo.citizenship}
@@ -606,29 +657,33 @@ const CVPageMain = () => {
               }
             />
             <Input
-              className={"LinePhone"}
+              className={"landlinePhone"}
               type="text"
               placeholder="Şəhər telefonu"
-              value={formData.personalInfo.cityPhone}
-              onChange={(e) =>
-                handleInputChange("personalInfo", "cityPhone", e.target.value)
-              }
-            />
-            <Input
-              className={"Military"}
-              type="text"
-              placeholder="Əsgərlik statusu"
-              value={formData.personalInfo.militaryStatus}
+              value={formData.personalInfo.landlinePhone}
               onChange={(e) =>
                 handleInputChange(
                   "personalInfo",
-                  "militaryStatus",
+                  "landlinePhone",
                   e.target.value
                 )
               }
             />
             <Input
-              className={"DriverLicense"}
+              className={"militaryService"}
+              type="text"
+              placeholder="Əsgərlik statusu"
+              value={formData.personalInfo.militaryService}
+              onChange={(e) =>
+                handleInputChange(
+                  "personalInfo",
+                  "militaryService",
+                  e.target.value
+                )
+              }
+            />
+            <Input
+              className={"driverLicense"}
               type="text"
               placeholder="Sürücülük vəsiqəsi"
               value={formData.personalInfo.driverLicense}
@@ -641,7 +696,7 @@ const CVPageMain = () => {
               }
             />
             <Input
-              className={"City"}
+              className={"city"}
               type="text"
               placeholder="Şəhər"
               value={formData.personalInfo.city}
@@ -650,25 +705,29 @@ const CVPageMain = () => {
               }
             />
             <Input
-              className={"AboutMe"}
+              className={"personalBio"}
               type="text"
               placeholder="Mənim hakqımda"
-              value={formData.personalInfo.aboutMe}
+              value={formData.personalInfo.personalBio}
               onChange={(e) =>
-                handleInputChange("personalInfo", "aboutMe", e.target.value)
+                handleInputChange("personalInfo", "personalBio", e.target.value)
               }
             />
             <Input
-              className={"Linkedin"}
+              className={"linkedInLink"}
               type="text"
               placeholder="Linkedin"
-              value={formData.personalInfo.linkedin}
+              value={formData.personalInfo.linkedInLink}
               onChange={(e) =>
-                handleInputChange("personalInfo", "linkedin", e.target.value)
+                handleInputChange(
+                  "personalInfo",
+                  "linkedInLink",
+                  e.target.value
+                )
               }
             />
             <select
-              className={"Gender"}
+              className={"gender"}
               id="gender"
               name="gender"
               value={formData.personalInfo.gender}
@@ -677,27 +736,27 @@ const CVPageMain = () => {
               }
             >
               <option value="">Cins</option>
-              <option value="female">Qadın</option>
-              <option value="male">Kişi</option>
+              <option value="Qadın">Qadın</option>
+              <option value="Kişi">Kişi</option>
             </select>
             <select
-              className={"mariageStatus"}
-              id="mariageStatus"
-              name="mariegeStatus"
-              value={formData.personalInfo.marriageStatus}
+              className={"familyStatus"}
+              id="familyStatus"
+              name="familyStatus"
+              value={formData.personalInfo.familyStatus}
               onChange={(e) =>
                 handleInputChange(
                   "personalInfo",
-                  "marriageStatus",
+                  "familyStatus",
                   e.target.value
                 )
               }
             >
               <option value="">Ailə vəziyyəti</option>
-              <option value="married">Evli</option>
-              <option value="single">Subay</option>
-              <option value="widow">Dul</option>
-              <option value="divorced">Boşanmış</option>
+              <option value="Evli">Evli</option>
+              <option value="Subay">Subay</option>
+              <option value="Dul">Dul</option>
+              <option value="Boşanmış">Boşanmış</option>
             </select>
           </>
         );
@@ -788,7 +847,32 @@ const CVPageMain = () => {
                 </DeleteButton>
               </FadeInGridItem>
             ))}
-            <AddButton onClick={addLanguageSet}>Əlavə et</AddButton>
+            <AddButton onClick={addLanguageSet}>Əlavə et dil</AddButton>
+            {ComputerlanguageSets.map((set) => (
+              <FadeInGridItem key={set.id}>
+                <h2>{set.name}</h2>
+                {set.fields.map((field) => (
+                  <Input
+                    key={field.key}
+                    className={field.className}
+                    type="text"
+                    placeholder={field.placeholder}
+                    value={field.value || ""}
+                    onChange={(e) =>
+                      handleComputerLanguageSetInputChange(
+                        set.id,
+                        field.className,
+                        e.target.value
+                      )
+                    }
+                  />
+                ))}
+                <DeleteButton onClick={() => deleteComputerLanguageSet(set.id)}>
+                  sil
+                </DeleteButton>
+              </FadeInGridItem>
+            ))}
+            <AddButton onClick={addComputerLanguageSet}>Əlavə et komp</AddButton>
           </>
         );
       case "workExperience":

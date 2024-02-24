@@ -92,13 +92,15 @@ const Footer = styled.footer`
   font-size: 14px;
 `;
 
-const Login = ({ onLogin })  => {
+const Login = ({ onLogin }) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const handleClick = () => {
     navigate("/logup");
   };
+
   const handleClick3 = async () => {
     try {
       const response = await fetch("http://avazdg.tech:5201/api/Auth/login", {
@@ -110,8 +112,22 @@ const Login = ({ onLogin })  => {
       });
 
       if (response.ok) {
+        const data = await response.json();
+        const token = data.token;
+        const userId = data.userId; // Assuming your server provides the user ID in the response
+
+        // Store the token and user ID securely (e.g., in localStorage)
+        localStorage.setItem('token', token);
+        localStorage.setItem('userId', userId);
+
         onLogin();
-        navigate("/CV");
+
+        // Check if both token and user ID are present before navigating
+        if (token && userId) {
+          navigate("/CV");
+        } else {
+          console.error("Token or user ID not found in the response");
+        }
       } else {
         console.error("Authentication failed");
       }
@@ -119,11 +135,6 @@ const Login = ({ onLogin })  => {
       console.error("Error during authentication:", error);
     }
   };
-
-  const handleClick2 = () => {
-    navigate("/CV");
-  };
-
   return (
     <Container>
       <Main>
