@@ -8,8 +8,8 @@ const Container = styled.div`
   top: 57%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 1250px;
-  height: 600px;
+  width: 80%;
+  height: 81%;
   background-color: #8cb9bd;
   padding: 1.1%;
   box-shadow: 0 4px 10px rgba(0.6, 0, 0, 0.6);
