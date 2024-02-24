@@ -430,6 +430,88 @@ const CVPageMain = () => {
     setworkExperienceSets(updatedSets);
   };
 
+  //-------------------------------------------------------------------------------------------------------- Flatern each set
+  const flattenEducationSets = (educationSets) => {
+    const flattenedData = educationSets.flatMap((educationSet) =>
+      educationSet.fields.map((field) => ({
+        className: field.className,
+        value: field.value || "",
+      }))
+    );
+
+    const transformedData = flattenedData.reduce((result, field) => {
+      result[field.className] = field.value;
+      return result;
+    }, {});
+
+    return transformedData;
+  };
+
+  const EducationtransformedData = flattenEducationSets(educationSets);
+
+  //-----------------------------
+  const flattenLanguageSets = (languageSets) => {
+    const flattenedData = languageSets.flatMap((languageSet) =>
+      languageSet.fields.map((field) => ({
+        className: field.className,
+        value: field.value || "",
+      }))
+    );
+
+    const transformedData = flattenedData.reduce((result, field) => {
+      result[field.className] = field.value;
+      return result;
+    }, {});
+
+    return transformedData;
+  };
+
+  const transformedLanguageData = flattenLanguageSets(languageSets);
+  console.log(transformedLanguageData);
+  //-----------------------------
+  const flattenComputerLanguageSets = (computerLanguageSets) => {
+    const flattenedData = computerLanguageSets.flatMap((computerLanguageSet) =>
+      computerLanguageSet.fields.map((field) => ({
+        className: field.className,
+        value: field.value || "",
+      }))
+    );
+
+    const transformedData = flattenedData.reduce((result, field) => {
+      result[field.className] = field.value;
+      return result;
+    }, {});
+
+    return transformedData;
+  };
+
+  const transformedComputerLanguageData =
+    flattenComputerLanguageSets(ComputerlanguageSets);
+  console.log(transformedComputerLanguageData);
+
+  //-----------------------------
+  const flattenWorkExperienceSets = (workExperienceSets) => {
+    const flattenedData = workExperienceSets.flatMap((workExperienceSet) =>
+      workExperienceSet.fields.map((field) => ({
+        className: field.className,
+        value: field.value || "",
+      }))
+    );
+
+    const transformedData = flattenedData.reduce((result, field) => {
+      result[field.className] = field.value;
+      return result;
+    }, {});
+
+    return transformedData;
+  };
+
+  const transformedWorkExperienceData =
+    flattenWorkExperienceSets(workExperienceSets);
+  console.log(transformedWorkExperienceData);
+
+  //-----------------------------
+
   //------------------------------------------------------------------------------ DB fetch
 
   const [formData, setFormData] = useState({
@@ -451,10 +533,10 @@ const CVPageMain = () => {
       linkedInLink: "",
       personalBio: "",
     },
-    educations: { educationSets },
-    languages: { languageSets },
-    computerKnowledges: { ComputerlanguageSets },
-    workExperiences: { workExperienceSets },
+    educations: { EducationtransformedData },
+    languages: { transformedLanguageData },
+    computerKnowledges: { transformedComputerLanguageData },
+    workExperiences: { transformedWorkExperienceData },
   });
 
   const handleInputChange = (category, fieldName, value) => {
@@ -502,24 +584,24 @@ const CVPageMain = () => {
       });
     });
   };
-    // Function to handle changes in Computer Language Sets
-    const handleComputerLanguageSetInputChange = (setId, fieldName, value) => {
-      setComputerLanguageSets((prevSets) => {
-        return prevSets.map((set) => {
-          if (set.id === setId) {
-            const updatedFields = set.fields.map((field) => {
-              if (field.className === fieldName) {
-                return { ...field, value };
-              }
-              return field;
-            });
-  
-            return { ...set, fields: updatedFields };
-          }
-          return set;
-        });
+  // Function to handle changes in Computer Language Sets
+  const handleComputerLanguageSetInputChange = (setId, fieldName, value) => {
+    setComputerLanguageSets((prevSets) => {
+      return prevSets.map((set) => {
+        if (set.id === setId) {
+          const updatedFields = set.fields.map((field) => {
+            if (field.className === fieldName) {
+              return { ...field, value };
+            }
+            return field;
+          });
+
+          return { ...set, fields: updatedFields };
+        }
+        return set;
       });
-    };
+    });
+  };
   // Function to handle changes in Work Experience Sets
   const handleWorkExperienceSetInputChange = (setId, fieldName, value) => {
     setworkExperienceSets((prevSets) => {
@@ -544,18 +626,18 @@ const CVPageMain = () => {
     try {
       const endpointUrl = "http://avazdg.tech:5201/api/CV/create-cv";
 
-      const token = localStorage.getItem('token');
-  
+      const token = localStorage.getItem("token");
+
       const response = await fetch(endpointUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           // Include the token in the Authorization header
-          "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiNDYzNjcyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVVNFUiIsImV4cCI6MTcwODgwMTM2MiwiaXNzIjoiYXZhemRnIiwiYXVkIjoiYXZhemRnIn0.PjoWz_8YVgGzgb_6SlG2e278m_GzH1OWI_1_3f5Sooc`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ formData }),
       });
-  
+
       if (response.ok) {
         console.log("Request successful");
       } else {
@@ -567,6 +649,7 @@ const CVPageMain = () => {
   };
 
   //----------------------------------------------------------------------------------------------------- Button active modification
+
   const [activeCategory, setActiveCategory] = useState(null);
 
   const handleCategoryClick = (category, index) => {
@@ -874,7 +957,9 @@ const CVPageMain = () => {
                 </DeleteButton>
               </FadeInGridItem>
             ))}
-            <AddButton onClick={addComputerLanguageSet}>Əlavə et komp</AddButton>
+            <AddButton onClick={addComputerLanguageSet}>
+              Əlavə et komp
+            </AddButton>
           </>
         );
       case "workExperience":

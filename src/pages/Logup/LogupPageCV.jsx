@@ -122,7 +122,7 @@ const Logup = ({ onRegister }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email, password, password }),
+          body: JSON.stringify({ email, password, confirmPassword }),
         }
       );
 
