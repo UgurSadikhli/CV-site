@@ -295,7 +295,7 @@ const CVPageMain = () => {
     { key: 2, className: "languageLevel", placeholder: "Dil səviyyəti" },
     {
       key: 3,
-      className: "languageCertificateId",
+      className: "languageCertificateID",
       placeholder: "Dil sertifikatının ID-si",
     },
   ];
@@ -433,8 +433,9 @@ const CVPageMain = () => {
   //------------------------------------------------------------------------------ DB fetch
 
   const [formData, setFormData] = useState({
-    personalInfo: {
-      image: "@///url/test",
+    userID: "463672",
+    personalData: {
+      personPhoto: "@///url/test",
       name: "",
       surname: "",
       gender: "",
@@ -450,9 +451,10 @@ const CVPageMain = () => {
       linkedInLink: "",
       personalBio: "",
     },
-    education: { educationSets },
-    language: { languageSets },
-    workExperience: { workExperienceSets },
+    educations: { educationSets },
+    languages: { languageSets },
+    computerKnowledges: { ComputerlanguageSets },
+    workExperiences: { workExperienceSets },
   });
 
   const handleInputChange = (category, fieldName, value) => {
@@ -549,7 +551,7 @@ const CVPageMain = () => {
         headers: {
           "Content-Type": "application/json",
           // Include the token in the Authorization header
-          "Authorization": `Bearer ${token}`,
+          "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiNDYzNjcyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVVNFUiIsImV4cCI6MTcwODgwMTM2MiwiaXNzIjoiYXZhemRnIiwiYXVkIjoiYXZhemRnIn0.PjoWz_8YVgGzgb_6SlG2e278m_GzH1OWI_1_3f5Sooc`,
         },
         body: JSON.stringify({ formData }),
       });
@@ -584,7 +586,7 @@ const CVPageMain = () => {
   //-----------------------------------------------------------------------------------------------------
   const renderInputs = () => {
     switch (activeCategory) {
-      case "personalInfo":
+      case "personalData":
         return (
           <>
             <ImageUploadContainer className="Image">
@@ -606,64 +608,64 @@ const CVPageMain = () => {
               className={"NameInput"}
               type="text"
               placeholder="Ad"
-              value={formData.personalInfo.name}
+              value={formData.personalData.name}
               onChange={(e) =>
-                handleInputChange("personalInfo", "name", e.target.value)
+                handleInputChange("personalData", "name", e.target.value)
               }
             />
             <Input
               className={"SurNameInput"}
               type="text"
               placeholder="Soyad"
-              value={formData.personalInfo.surname}
+              value={formData.personalData.surname}
               onChange={(e) =>
-                handleInputChange("personalInfo", "surname", e.target.value)
+                handleInputChange("personalData", "surname", e.target.value)
               }
             />
             <Input
               className={"EmailInput"}
               type="email"
               placeholder="Email"
-              value={formData.personalInfo.email}
+              value={formData.personalData.email}
               onChange={(e) =>
-                handleInputChange("personalInfo", "email", e.target.value)
+                handleInputChange("personalData", "email", e.target.value)
               }
             />
             <Input
               className={"mobilePhone"}
               type="tel"
               placeholder="Telefon"
-              value={formData.personalInfo.mobilePhone}
+              value={formData.personalData.mobilePhone}
               onChange={(e) =>
-                handleInputChange("personalInfo", "mobilePhone", e.target.value)
+                handleInputChange("personalData", "mobilePhone", e.target.value)
               }
             />
             <Input
               className={"address"}
               type="text"
               placeholder="Adres"
-              value={formData.personalInfo.address}
+              value={formData.personalData.address}
               onChange={(e) =>
-                handleInputChange("personalInfo", "address", e.target.value)
+                handleInputChange("personalData", "address", e.target.value)
               }
             />
             <Input
               className={"citizenship"}
               type="text"
               placeholder="Ölkə"
-              value={formData.personalInfo.citizenship}
+              value={formData.personalData.citizenship}
               onChange={(e) =>
-                handleInputChange("personalInfo", "citizenship", e.target.value)
+                handleInputChange("personalData", "citizenship", e.target.value)
               }
             />
             <Input
               className={"landlinePhone"}
               type="text"
               placeholder="Şəhər telefonu"
-              value={formData.personalInfo.landlinePhone}
+              value={formData.personalData.landlinePhone}
               onChange={(e) =>
                 handleInputChange(
-                  "personalInfo",
+                  "personalData",
                   "landlinePhone",
                   e.target.value
                 )
@@ -673,10 +675,10 @@ const CVPageMain = () => {
               className={"militaryService"}
               type="text"
               placeholder="Əsgərlik statusu"
-              value={formData.personalInfo.militaryService}
+              value={formData.personalData.militaryService}
               onChange={(e) =>
                 handleInputChange(
-                  "personalInfo",
+                  "personalData",
                   "militaryService",
                   e.target.value
                 )
@@ -686,10 +688,10 @@ const CVPageMain = () => {
               className={"driverLicense"}
               type="text"
               placeholder="Sürücülük vəsiqəsi"
-              value={formData.personalInfo.driverLicense}
+              value={formData.personalData.driverLicense}
               onChange={(e) =>
                 handleInputChange(
-                  "personalInfo",
+                  "personalData",
                   "driverLicense",
                   e.target.value
                 )
@@ -699,28 +701,28 @@ const CVPageMain = () => {
               className={"city"}
               type="text"
               placeholder="Şəhər"
-              value={formData.personalInfo.city}
+              value={formData.personalData.city}
               onChange={(e) =>
-                handleInputChange("personalInfo", "city", e.target.value)
+                handleInputChange("personalData", "city", e.target.value)
               }
             />
             <Input
               className={"personalBio"}
               type="text"
               placeholder="Mənim hakqımda"
-              value={formData.personalInfo.personalBio}
+              value={formData.personalData.personalBio}
               onChange={(e) =>
-                handleInputChange("personalInfo", "personalBio", e.target.value)
+                handleInputChange("personalData", "personalBio", e.target.value)
               }
             />
             <Input
               className={"linkedInLink"}
               type="text"
               placeholder="Linkedin"
-              value={formData.personalInfo.linkedInLink}
+              value={formData.personalData.linkedInLink}
               onChange={(e) =>
                 handleInputChange(
-                  "personalInfo",
+                  "personalData",
                   "linkedInLink",
                   e.target.value
                 )
@@ -730,9 +732,9 @@ const CVPageMain = () => {
               className={"gender"}
               id="gender"
               name="gender"
-              value={formData.personalInfo.gender}
+              value={formData.personalData.gender}
               onChange={(e) =>
-                handleInputChange("personalInfo", "gender", e.target.value)
+                handleInputChange("personalData", "gender", e.target.value)
               }
             >
               <option value="">Cins</option>
@@ -743,10 +745,10 @@ const CVPageMain = () => {
               className={"familyStatus"}
               id="familyStatus"
               name="familyStatus"
-              value={formData.personalInfo.familyStatus}
+              value={formData.personalData.familyStatus}
               onChange={(e) =>
                 handleInputChange(
-                  "personalInfo",
+                  "personalData",
                   "familyStatus",
                   e.target.value
                 )
@@ -1001,7 +1003,7 @@ const CVPageMain = () => {
         />
 
         <Button
-          onClick={() => handleCategoryClick("personalInfo", 0)}
+          onClick={() => handleCategoryClick("personalData", 0)}
           active={activeButton === 0}
         >
           Şəxsi Məlumatlar

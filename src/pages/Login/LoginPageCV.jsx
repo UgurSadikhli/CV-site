@@ -117,17 +117,17 @@ const Login = ({ onLogin }) => {
         const userId = data.userId; // Assuming your server provides the user ID in the response
 
         // Store the token and user ID securely (e.g., in localStorage)
-        localStorage.setItem('token', token);
-        localStorage.setItem('userId', userId);
+        // localStorage.setItem('token', token);
+        // localStorage.setItem('userID', userId);
 
-        onLogin();
+        // onLogin();
 
-        // Check if both token and user ID are present before navigating
-        if (token && userId) {
-          navigate("/CV");
-        } else {
-          console.error("Token or user ID not found in the response");
-        }
+        // // Check if both token and user ID are present before navigating
+        // if (token && userId) {
+        //   navigate("/CV");
+        // } else {
+        //   console.error("Token or user ID not found in the response");
+        // }
       } else {
         console.error("Authentication failed");
       }

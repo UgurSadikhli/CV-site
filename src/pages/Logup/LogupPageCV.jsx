@@ -116,7 +116,7 @@ const Logup = ({ onRegister }) => {
 
     try {
       const response = await fetch(
-        "http://avazdg.tech:5201/api/Auth/register",
+        "http://avazdg.tech:5201/api/Auth/signup",
         {
           method: "POST",
           headers: {
