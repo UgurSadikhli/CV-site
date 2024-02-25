@@ -8,20 +8,37 @@ body {
   background-size: cover;
 }
 
-.SubmitButton {
-  margin-left: 470px;
+.gender,
+.familyStatus {
+  padding: 10px;
+  border: 1px solid white;
+  color: aliceblue;
+  border-radius: 4px;
+  background-color: #8cb9bd;
+  font-family: Sans-serif;
+  transition: border-color 0.3s ease;
+  width: 221.5px;
+  &:hover {
+    border-color: #8cb9bd;
+  }
 }
 
-.Gender,
-.mariageStatus {
-  width: 170px;
-  height: 50px;
-  margin-bottom: 0.05%;
-  padding: 0.6%;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 2px;
-  font-family: "Open Sans", sans-serif;
+.startDate,
+.endDate {
+  padding: 10px;
+  border: 1px solid white;
+  color: aliceblue;
+  border-radius: 4px;
+  background-color: #8cb9bd;
+  font-family: Sans-serif;
+  transition: border-color 0.3s ease;
+  width: 200px;
+  &:hover {
+    border-color: #8cb9bd;
+  }
+  &::placeholder {
+    color: white;
+  }
 }
 .buttonDiv {
   margin-left: 10%;
@@ -65,6 +82,11 @@ body {
   animation: typing 3s steps(10, end), blink-caret 0.75s step-end infinite;
   color: #004e64;
   width: 980px;
+}
+h2 {
+  color: #004e64;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: large;
 }
 @keyframes typing {
   from {

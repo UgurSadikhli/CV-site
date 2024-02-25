@@ -1,8 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import "./CVPageMain.css";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from "date-fns";
 //------------------------------------------------------------------------- Components and Design
 
 const Container = styled.div`
@@ -96,14 +98,16 @@ const SubmitButton = styled.button`
   border: none;
   padding: 12px;
   width: 240px;
+  margin-left: 480px;
+  margin-top: 25%;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 16px;
+  font-family: Verdana;
+  font-size: 30px;
   transition: background-color 0.6s ease;
 
   &:hover {
     background-color: #4fa3ff;
-    color: #white;
   }
 `;
 const slideIn = keyframes`
@@ -149,6 +153,7 @@ const DeleteButton = styled.button`
   background-color: #ff4d4d;
   color: #fff;
   border: none;
+  font-family: Verdana;
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
@@ -166,6 +171,7 @@ const AddButton = styled.button`
   background-color: #4caf50;
   color: #fff;
   border: none;
+  font-family: Verdana;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
@@ -283,7 +289,7 @@ const CVPageMain = () => {
   ];
 
   const [educationSets, setEducationSets] = useState([
-    { name: "Təhsil forma", fields: initialFieldTemplate },
+    { name: "Təhsil", fields: initialFieldTemplate },
   ]);
 
   const generateUniqueId = () => {
@@ -292,7 +298,7 @@ const CVPageMain = () => {
 
   const addEducationSet = () => {
     const newSetId = generateUniqueId();
-    const newSetName = `Təhsil forma`;
+    const newSetName = `Təhsil`;
     const newSetFields = initialFieldTemplate.map((field) => ({
       key: field.key,
       className: `${field.className}`,
@@ -322,12 +328,12 @@ const CVPageMain = () => {
   ];
 
   const [languageSets, setLanguageSets] = useState([
-    { name: "Biliklər forması", fields: initialLanguageFieldTemplate },
+    { name: "Dil Bilikləri", fields: initialLanguageFieldTemplate },
   ]);
 
   const addLanguageSet = () => {
     const newSetId = generateUniqueId();
-    const newSetName = `Biliklər forma`;
+    const newSetName = `Dil Bilikləri`;
     const newSetFields = initialLanguageFieldTemplate.map((field) => ({
       key: field.key,
       className: `${field.className}`,
@@ -364,11 +370,14 @@ const CVPageMain = () => {
     },
   ];
   const [ComputerlanguageSets, setComputerLanguageSets] = useState([
-    { name: "Biliklər forması", fields: initialComputerLanguageFieldTemplate },
+    {
+      name: "Komputer Bilikləri",
+      fields: initialComputerLanguageFieldTemplate,
+    },
   ]);
   const addComputerLanguageSet = () => {
     const newSetId = generateUniqueId();
-    const newSetName = `Biliklər forma`;
+    const newSetName = `Komputer Bilikləri`;
     const newSetFields = initialComputerLanguageFieldTemplate.map((field) => ({
       key: field.key,
       className: `${field.className}`,
@@ -429,11 +438,11 @@ const CVPageMain = () => {
   ];
 
   const [workExperienceSets, setworkExperienceSets] = useState([
-    { name: "Is forması", fields: initialWorkExperienceFieldTemplate },
+    { name: "Iş Təcrübəsi", fields: initialWorkExperienceFieldTemplate },
   ]);
   const addworkExperienceSet = () => {
     const newSetId = generateUniqueId();
-    const newSetName = `Is forma`;
+    const newSetName = `Iş Təcrübəsi`;
     const newSetFields = initialWorkExperienceFieldTemplate.map((field) => ({
       key: field.key,
       className: `${field.className}`,
@@ -462,16 +471,16 @@ const CVPageMain = () => {
   };
 
   const educationSetsWithFlattenedData = flattenSets(educationSets);
-  console.log(educationSetsWithFlattenedData);
+  //console.log(educationSetsWithFlattenedData);
 
   const transformedLanguageData = flattenSets(languageSets);
-  console.log(transformedLanguageData);
+  //console.log(transformedLanguageData);
 
   const transformedComputerLanguageData = flattenSets(ComputerlanguageSets);
-  console.log(transformedComputerLanguageData);
+  // console.log(transformedComputerLanguageData);
 
   const transformedWorkExperienceData = flattenSets(workExperienceSets);
-  console.log(transformedWorkExperienceData);
+  //console.log(transformedWorkExperienceData);
 
   //---------------------------------------------------------------------------------------------------------- DB fetch
   const userID = localStorage.getItem("userID");
@@ -629,7 +638,7 @@ const CVPageMain = () => {
   const logFormData = () => {
     for (const educationSet of languageSets) {
       for (const field of educationSet.fields) {
-        console.log(field);
+        //console.log(field);
       }
     }
   };
@@ -820,20 +829,41 @@ const CVPageMain = () => {
               <FadeInGridItem key={set.id}>
                 <h2>{set.name}</h2>
                 {set.fields.map((field) => (
-                  <Input
-                    key={field.key}
-                    className={field.className}
-                    type="text"
-                    placeholder={field.placeholder}
-                    value={field.value || ""}
-                    onChange={(e) =>
-                      handleEducationSetInputChange(
-                        set.id,
-                        field.className,
-                        e.target.value
-                      )
-                    }
-                  />
+                  <div key={field.key}>
+                    {field.className === "startDate" ||
+                    field.className === "endDate" ? (
+                      <DatePicker
+                        key={field.key}
+                        className={field.className}
+                        selected={field.value ? new Date(field.value) : null}
+                        dateFormat="dd/MM/yyyy"
+                        placeholderText={field.placeholder}
+                        type="text"
+                        onChange={(date) =>
+                          handleEducationSetInputChange(
+                            set.id,
+                            field.className,
+                            date
+                          )
+                        }
+                      />
+                    ) : (
+                      <Input
+                        key={field.key}
+                        className={field.className}
+                        type="text"
+                        placeholder={field.placeholder}
+                        value={field.value || ""}
+                        onChange={(e) =>
+                          handleEducationSetInputChange(
+                            set.id,
+                            field.className,
+                            e.target.value
+                          )
+                        }
+                      />
+                    )}
+                  </div>
                 ))}
                 <DeleteButton onClick={() => deleteEducationSet(set.id)}>
                   sil
@@ -907,20 +937,40 @@ const CVPageMain = () => {
               <FadeInGridItem key={set.id}>
                 <h2>{set.name}</h2>
                 {set.fields.map((field) => (
-                  <Input
-                    key={field.key}
-                    className={field.className}
-                    type="text"
-                    placeholder={field.placeholder}
-                    value={field.value || ""}
-                    onChange={(e) =>
-                      handleWorkExperienceSetInputChange(
-                        set.id,
-                        field.className,
-                        e.target.value
-                      )
-                    }
-                  />
+                  <div key={field.key}>
+                    {field.className === "startDate" ||
+                    field.className === "endDate" ? (
+                      <DatePicker
+                        key={field.key}
+                        className={field.className}
+                        selected={field.value ? new Date(field.value) : null}
+                        dateFormat="dd/MM/yyyy"
+                        placeholderText={field.placeholder}
+                        onChange={(date) =>
+                          handleWorkExperienceSetInputChange(
+                            set.id,
+                            field.className,
+                            date
+                          )
+                        }
+                      />
+                    ) : (
+                      <Input
+                        key={field.key}
+                        className={field.className}
+                        type="text"
+                        placeholder={field.placeholder}
+                        value={field.value || ""}
+                        onChange={(e) =>
+                          handleWorkExperienceSetInputChange(
+                            set.id,
+                            field.className,
+                            e.target.value
+                          )
+                        }
+                      />
+                    )}
+                  </div>
                 ))}
                 <DeleteButton onClick={() => deleteworkExperienceSet(set.id)}>
                   sil
@@ -944,7 +994,11 @@ const CVPageMain = () => {
           <>
             <div className="typewriter">
               <h1>Avaz ilə CV yaradın və Karyeranızı Bizimlə İnkişaf Edin!</h1>
-              <img className="CVmainImage" src="./assets/img/WallPaper/PngItem_2159037.png" alt="" />
+              <img
+                className="CVmainImage"
+                src="./assets/img/WallPaper/PngItem_2159037.png"
+                alt=""
+              />
             </div>
           </>
         );
@@ -964,6 +1018,7 @@ const CVPageMain = () => {
 
     navigate("/login");
   };
+
   //--------------------------------------------------------------------------------------------------------------------- Main body
   return (
     <>
