@@ -526,9 +526,9 @@ const CVPageMain = () => {
   //-----------------------------
 
   //------------------------------------------------------------------------------ DB fetch
-
+  const userID = localStorage.getItem("userID");
   const [formData, setFormData] = useState({
-    userID: "463672",
+    userID: userID,
     personalData: {
       personPhoto: "@///url/test",
       name: "",
@@ -546,10 +546,10 @@ const CVPageMain = () => {
       linkedInLink: "",
       personalBio: "",
     },
-    educations: [educationSetsWithFlattenedData],
-    languages: [transformedLanguageData],
-    computerKnowledges: [transformedComputerLanguageData],
-    workExperiences: [transformedWorkExperienceData],
+    educations: educationSetsWithFlattenedData,
+    languages: transformedLanguageData,
+    computerKnowledges: transformedComputerLanguageData,
+    workExperiences: transformedWorkExperienceData,
   });
 
   const handleInputChange = (category, fieldName, value) => {
@@ -651,7 +651,7 @@ const CVPageMain = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ formData }),
+        body: JSON.stringify( formData ),
       });
   
       const responseData = await response.json();
@@ -663,6 +663,7 @@ const CVPageMain = () => {
       }
     } catch (error) {
       console.error("Error:", error);
+      console.log("CatchError: ");
     }
   };
 
@@ -1080,7 +1081,7 @@ const CVPageMain = () => {
       case "Finish":
         return (
           <>
-            <SubmitButton className="SubmitButton" onClick={logFormData}>
+            <SubmitButton className="SubmitButton" onClick={handleFormSubmit}>
               Yarat
             </SubmitButton>
           </>

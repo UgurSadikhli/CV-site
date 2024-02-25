@@ -114,7 +114,7 @@ const Login = ({ onLogin }) => {
       if (response.ok) {
         const data = await response.json();
         const token = data.token;
-        const userId = data.userId;
+        const userId = data.userID;
         localStorage.setItem("token", token);
         localStorage.setItem("userID", userId);
 
