@@ -27,7 +27,7 @@ function App() {
         <Route path="/">
           <Route index element={<Login onLogin={handleLogin} />} />
           <Route path="login" element={<Login onLogin={handleLogin} />} />
-          <Route path="logup" element={<Logup />} />
+          <Route path="register" element={<Logup />} />
           <Route path="*" element={<PageNotFound />} />
           <Route
             path="CV"

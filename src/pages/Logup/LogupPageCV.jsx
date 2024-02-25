@@ -106,6 +106,8 @@ const Logup = ({ onRegister }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+
+  
   const handleLogup = async (e) => {
     e.preventDefault();
 
@@ -127,10 +129,9 @@ const Logup = ({ onRegister }) => {
       );
 
       if (response.ok) {
-        // Registration successful, call the onRegister callback
+
         onRegister();
 
-        // Redirect to the login page without storing token and user ID
         navigate("/login");
       } else {
         console.error("Registration failed");
@@ -141,7 +142,6 @@ const Logup = ({ onRegister }) => {
   };
 
   const handleClick = () => {
-    // Handle navigation to login page
     navigate("/login");
   };
 

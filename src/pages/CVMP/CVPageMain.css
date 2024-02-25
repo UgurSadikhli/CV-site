@@ -3,7 +3,8 @@ body {
   margin: 0;
   padding: 0;
   background-color: #d9dbdc;
-
+  overflow-x: hidden;
+  overflow-y: hidden;
   background-size: cover;
 }
 
@@ -24,26 +25,53 @@ body {
 }
 .buttonDiv {
   margin-left: 10%;
+  padding-bottom: -50px;
+  margin-top: -3%;
 }
 
+.AvazDGHedder {
+  font-family: sans-serif;
+  color: white;
+  font-size: 25px;
+  margin-top: 0.7%;
+  margin-left: 1%;
+}
 .DefaultImage2 {
   height: 50px;
   width: 70px;
 }
-.typewriter h1 {
-  overflow: hidden;
-  border-right: 0.15em solid rgb(206, 35, 35);
-  white-space: nowrap;
-  letter-spacing: 0.08em;
-  animation: typing 4s steps(20, end), blink-caret 0.75s step-end infinite;
+.CVmainImage {
+  height: 300px;
+  width: 600px;
+  margin-left: 50%;
+  margin-top: 13%;
 }
 
+.optionImages {
+  width: 20px;
+  height: 20px;
+}
+.place {
+  margin-top: -44%;
+  margin-left: 95%;
+}
+.typewriter h1 {
+  margin-top: 5%;
+  margin-left: 4%;
+  overflow: hidden;
+  border-right: 0.15em solid;
+  white-space: nowrap;
+  letter-spacing: 0.08em;
+  animation: typing 3s steps(10, end), blink-caret 0.75s step-end infinite;
+  color: #004e64;
+  width: 980px;
+}
 @keyframes typing {
   from {
     width: 10%;
   }
   to {
-    width: 40%;
+    width: 70%;
   }
 }
 
@@ -53,12 +81,12 @@ body {
     border-color: transparent;
   }
   50% {
-    border-color: #004e64;
+    border-color: black;
   }
 }
 
 .fadeInAnimation {
-  animation: fadeIn 0.2s ease-in-out; /* Adjust the duration and timing function as needed */
+  animation: fadeIn 0.2s ease-in-out;
 }
 ::-webkit-scrollbar {
   width: 9px;

@@ -3,6 +3,8 @@ import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import "./CVPageMain.css";
 
+//------------------------------------------------------------------------- Components and Design
+
 const Container = styled.div`
   position: fixed;
   top: 57%;
@@ -21,23 +23,20 @@ const Container = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
 `;
-
 const bounce = keyframes`
   0%, 20%, 50%, 80%, 100% {
     transform: translateY(0);
   }
   40% {
-    transform: translateY(-30px);
+    transform: translateY(-9px);
   }
   60% {
-    transform: translateY(-15px);
+    transform: translateY(-5px);
   }
 `;
-
 const BouncingImage = styled.img`
-  animation: ${bounce} 2s 1;
+  animation: ${bounce} 1s 1;
 `;
-
 const Input = styled.input`
   padding: 10px;
   border: 1px solid white;
@@ -70,7 +69,6 @@ const ImageUploadContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
 const ImagePreview = styled.img`
   width: 100%;
   height: 100%;
@@ -78,7 +76,6 @@ const ImagePreview = styled.img`
   border-radius: 8px;
   display: block;
 `;
-
 const InputFile = styled.input`
   position: absolute;
   top: 0;
@@ -88,13 +85,11 @@ const InputFile = styled.input`
   opacity: 0;
   cursor: pointer;
 `;
-
 const UploadText = styled.div`
   color: black;
   text-align: center;
   z-index: 1;
 `;
-
 const SubmitButton = styled.button`
   background-color: #2e7eed;
   color: white;
@@ -111,7 +106,6 @@ const SubmitButton = styled.button`
     color: #white;
   }
 `;
-
 const slideIn = keyframes`
 from {
   transform: translateX(170%);
@@ -120,7 +114,6 @@ to {
   transform: translateX(0);
 }
 `;
-
 const Button = styled.button`
   padding: 10px;
   background-color: transparent;
@@ -142,7 +135,12 @@ const Button = styled.button`
     color: #0b666a;
   }
 `;
-
+const UserIcoButton = styled.img`
+  width: 30px;
+  height: 35px;
+  margin-left: 84%;
+  margin-top: 0.5%;
+`;
 const DeleteButton = styled.button`
   position: absolute;
   top: 5px;
@@ -161,7 +159,6 @@ const DeleteButton = styled.button`
     background-color: #d14848;
   }
 `;
-
 const AddButton = styled.button`
   margin-top: 1%;
   margin-left: 90%;
@@ -179,7 +176,17 @@ const AddButton = styled.button`
     background-color: #45a049;
   }
 `;
-
+const DropdownMenu = styled.div`
+  display: ${(props) => (props.isOpen ? "block" : "none")};
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  padding: 10px;
+  z-index: 1;
+`;
 const GridItem = styled.div`
   border: 1px solid #ddd;
   padding: 10px;
@@ -195,18 +202,32 @@ const fadeIn = keyframes`
     transform: translateY(0);
   }
 `;
-
 const FadeInGridItem = styled(GridItem)`
   animation: ${fadeIn} 0.4s ease-in-out;
 `;
+const HeaderContainer = styled.div`
+  display: flex;
+  padding: 0.5px 15px;
+  background-color: rgb(0, 78, 100);
+  height: 47px;
+`;
+const MenuItem = styled.div`
+  padding: 8px;
+  cursor: pointer;
+  &:hover {
+    background-color: #f1f1f1;
+  }
+`;
+//----------------------------------------------------------------------------------------------------
 
 const CVPageMain = () => {
   //----------------------------------------------------------------------------------------------------
 
+  const navigate = useNavigate();
+  const [activeButton, setActiveButton] = useState(null);
   const [image, setImage] = useState(null);
   const fileInputRef = useRef(null);
   //-----------------------------------------------------------------------------------------------------
-  const [activeButton, setActiveButton] = useState(null);
 
   const handleButtonClick = (index) => {
     setActiveButton(index);
@@ -225,7 +246,7 @@ const CVPageMain = () => {
     }
   };
 
-  //------------------------------------------------------------------------- Education info duplication
+  //------------------------------------------------------------------------------------------------------- Education info duplication
   const initialFieldTemplate = [
     { key: 1, className: "institutionName", placeholder: "İnstitut adı" },
     { key: 2, className: "facultyName", placeholder: "Fakültə adı" },
@@ -288,7 +309,7 @@ const CVPageMain = () => {
     const updatedSets = educationSets.filter((set) => set.id !== id);
     setEducationSets(updatedSets);
   };
-  //------------------------------------------------------------------------- Language info duplication
+  //------------------------------------------------------------------------------------------------------ Language info duplication
 
   const initialLanguageFieldTemplate = [
     { key: 1, className: "languageName", placeholder: "Dil adı" },
@@ -324,7 +345,7 @@ const CVPageMain = () => {
     setLanguageSets(updatedSets);
   };
 
-  //------------------------------------------------------------------------- Computer info duplication
+  //------------------------------------------------------------------------------------------------------ Computer info duplication
   const initialComputerLanguageFieldTemplate = [
     {
       key: 1,
@@ -364,7 +385,7 @@ const CVPageMain = () => {
     const updatedSets = ComputerlanguageSets.filter((set) => set.id !== id);
     setComputerLanguageSets(updatedSets);
   };
-  //------------------------------------------------------------------------- WorkExperience info duplication
+  //------------------------------------------------------------------------------------------------------- WorkExperience info duplication
 
   const initialWorkExperienceFieldTemplate = [
     { key: 1, className: "companyName", placeholder: "Şirkət adı" },
@@ -430,79 +451,7 @@ const CVPageMain = () => {
     setworkExperienceSets(updatedSets);
   };
 
-  //-------------------------------------------------------------------------------------------------------- Flatern each set
-  // const flattenEducationSets = (educationSets) => {
-  //   return educationSets.map((educationSet) => {
-  //     return educationSet.fields.reduce((result, field) => {
-  //       result[field.className] = field.value || "";
-  //       return result;
-  //     }, {});
-  //   });
-  // };
-
-  // const educationSetsWithFlattenedData = flattenEducationSets(educationSets);
-  // console.log(educationSetsWithFlattenedData);
-  // //-----------------------------
-  // const flattenLanguageSets = (languageSets) => {
-  //   const flattenedData = languageSets.flatMap((languageSet) =>
-  //     languageSet.fields.map((field) => ({
-  //       className: field.className,
-  //       value: field.value || "",
-  //     }))
-  //   );
-
-  //   const transformedData = flattenedData.reduce((result, field) => {
-  //     result[field.className] = field.value;
-  //     return result;
-  //   }, {});
-
-  //   return transformedData;
-  // };
-
-  // const transformedLanguageData = flattenLanguageSets(languageSets);
-  // console.log(transformedLanguageData);
-  // //-----------------------------
-  // const flattenComputerLanguageSets = (computerLanguageSets) => {
-  //   const flattenedData = computerLanguageSets.flatMap((computerLanguageSet) =>
-  //     computerLanguageSet.fields.map((field) => ({
-  //       className: field.className,
-  //       value: field.value || "",
-  //     }))
-  //   );
-
-  //   const transformedData = flattenedData.reduce((result, field) => {
-  //     result[field.className] = field.value;
-  //     return result;
-  //   }, {});
-
-  //   return transformedData;
-  // };
-
-  // const transformedComputerLanguageData =
-  //   flattenComputerLanguageSets(ComputerlanguageSets);
-  // console.log(transformedComputerLanguageData);
-
-  // //-----------------------------
-  // const flattenWorkExperienceSets = (workExperienceSets) => {
-  //   const flattenedData = workExperienceSets.flatMap((workExperienceSet) =>
-  //     workExperienceSet.fields.map((field) => ({
-  //       className: field.className,
-  //       value: field.value || "",
-  //     }))
-  //   );
-
-  //   const transformedData = flattenedData.reduce((result, field) => {
-  //     result[field.className] = field.value;
-  //     return result;
-  //   }, {});
-
-  //   return transformedData;
-  // };
-
-  // const transformedWorkExperienceData =
-  //   flattenWorkExperienceSets(workExperienceSets);
-  // console.log(transformedWorkExperienceData);
-
+  //-------------------------------------------------------------------------------------------------------- Adjust each set
   const flattenSets = (sets) => {
     return sets.map((set) => {
       return set.fields.reduce((result, field) => {
@@ -523,9 +472,8 @@ const CVPageMain = () => {
 
   const transformedWorkExperienceData = flattenSets(workExperienceSets);
   console.log(transformedWorkExperienceData);
-  //-----------------------------
 
-  //------------------------------------------------------------------------------ DB fetch
+  //---------------------------------------------------------------------------------------------------------- DB fetch
   const userID = localStorage.getItem("userID");
   const [formData, setFormData] = useState({
     userID: userID,
@@ -552,6 +500,7 @@ const CVPageMain = () => {
     workExperiences: transformedWorkExperienceData,
   });
 
+  //---------------------------------------------------------------------------------------------------------- Input Changes
   const handleInputChange = (category, fieldName, value) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -639,23 +588,23 @@ const CVPageMain = () => {
     try {
       const endpointUrl = "http://avazdg.tech:5201/api/CV/create-cv";
       const token = localStorage.getItem("token");
-  
+
       if (!token) {
         console.error("Token is missing");
         return;
       }
-  
+
       const response = await fetch(endpointUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify( formData ),
+        body: JSON.stringify(formData),
       });
-  
+
       const responseData = await response.json();
-  
+
       if (response.ok) {
         console.log("Request successful", responseData);
       } else {
@@ -667,7 +616,7 @@ const CVPageMain = () => {
     }
   };
 
-  //----------------------------------------------------------------------------------------------------- Button active modification
+  //--------------------------------------------------------------------------------------------------------------- Button active modification
 
   const [activeCategory, setActiveCategory] = useState(null);
 
@@ -676,7 +625,7 @@ const CVPageMain = () => {
     handleButtonClick(index);
   };
 
-  //----------------------------------------------------------------------------------------------------- Check initialzation
+  //----------------------------------------------------------------------------------------------------------------- Check initialzation {for test use only}
   const logFormData = () => {
     for (const educationSet of languageSets) {
       for (const field of educationSet.fields) {
@@ -685,7 +634,7 @@ const CVPageMain = () => {
     }
   };
 
-  //-----------------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------- Manin body rendering
   const renderInputs = () => {
     switch (activeCategory) {
       case "personalData":
@@ -897,36 +846,6 @@ const CVPageMain = () => {
       case "Language":
         return (
           <>
-            {/*------------------------------------------------Just in case------------------------------------------*/}
-
-            {/* <Input className="languageName" type="text" placeholder="Dil adı" />
-            <Input
-              className="languageLevel"
-              type="text"
-              placeholder="Dil səviyyəti"
-            />
-            <Input
-              className="languageCertificateId"
-              type="text"
-              placeholder="Dil sertifikatının ID-si"
-            />
-            <Input
-              className="computerKnowledgeName"
-              type="text"
-              placeholder="Komputer bacarığı adı"
-            />
-            <Input
-              className="computerKnowledgeLevel"
-              type="text"
-              placeholder="Komputer bacarığı səviyyəti"
-            />
-            <Input
-              className="computerKnowledgeCertificateId"
-              type="text"
-              placeholder="Komputer bacarığı sertifikatının ID-si"
-            /> */}
-            {/*-----------------------------------------------------------------------------------------------------*/}
-
             {languageSets.map((set) => (
               <FadeInGridItem key={set.id}>
                 <h2>{set.name}</h2>
@@ -984,72 +903,6 @@ const CVPageMain = () => {
       case "workExperience":
         return (
           <>
-            {/*------------------------------------------------Just in case------------------------------------------*/}
-
-            {/* <Input
-              className="companyName"
-              type="text"
-              placeholder="Şirkət adı"
-            />
-            <Input
-              className="typeOfBusiness"
-              type="text"
-              placeholder="Biznesin növü"
-            />
-            <Input className="jobTitle" type="text" placeholder="Vəzifə adı" />
-            <Input
-              className="typeOfPosition"
-              type="text"
-              placeholder="Vəzifənin növü"
-            />
-            <Input
-              className="courseOfAction"
-              type="text"
-              placeholder="Tədbirin növü"
-            />
-            <Input
-              className="keyJobResponsibilities"
-              type="text"
-              placeholder="Əsas vəzifə və cavabdehliklər"
-            />
-            <Input
-              className="startDate"
-              type="text"
-              placeholder="Başlama tarixi"
-            />
-            <Input className="endDate" type="text" placeholder="Bitmə tarixi" />
-            <Input
-              className="reasonForSeparation"
-              type="text"
-              placeholder="Ayrılma səbəbi"
-            />
-            <Input
-              className="recommendationSurname"
-              type="text"
-              placeholder="Tövsiyə verənın soyadı"
-            />
-            <Input
-              className="recommendationPosition"
-              type="text"
-              placeholder="Tövsiyə verənın vəzifəsi"
-            />
-            <Input
-              className="recommendationPhone"
-              type="text"
-              placeholder="Tövsiyə verənın telefonu"
-            />
-            <Input
-              className="recommendationEmail"
-              type="text"
-              placeholder="Tövsiyə verənın emaili"
-            />
-            <Input
-              className="additionalInformation"
-              type="text"
-              placeholder="Əlavə məlumat"
-            /> */}
-            {/*-------------------------------------------------------------------------------------------------*/}
-
             {workExperienceSets.map((set) => (
               <FadeInGridItem key={set.id}>
                 <h2>{set.name}</h2>
@@ -1090,22 +943,53 @@ const CVPageMain = () => {
         return (
           <>
             <div className="typewriter">
-              <h1>Avaz ilə CV yarat</h1>
+              <h1>Avaz ilə CV yaradın və Karyeranızı Bizimlə İnkişaf Edin!</h1>
+              <img className="CVmainImage" src="./assets/img/WallPaper/PngItem_2159037.png" alt="" />
             </div>
           </>
         );
     }
   };
-  //---------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------- Flow menue settings
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleButtonClick4 = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  //--------------------------------------------------------------------------------------------------------------------- Logout func
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userID");
+
+    navigate("/login");
+  };
+  //--------------------------------------------------------------------------------------------------------------------- Main body
   return (
     <>
-      <div className="buttonDiv">
+      <HeaderContainer>
         <BouncingImage
           className="DefaultImage2"
           src={"./assets/img/Avaz-Logo.png"}
           alt="Default"
         />
+        <p className="AvazDGHedder">Avaz DG</p>
+        <UserIcoButton
+          src="./assets/img/menu.png"
+          onClick={handleButtonClick4}
+        ></UserIcoButton>
+        <DropdownMenu className="place" isOpen={isMenuOpen}>
+          <MenuItem>
+            <img
+              onClick={handleLogout}
+              className="optionImages"
+              src="./assets/img/sign-out.png"
+            />
+          </MenuItem>
+        </DropdownMenu>
+      </HeaderContainer>
 
+      <div className="buttonDiv">
         <Button
           onClick={() => handleCategoryClick("personalData", 0)}
           active={activeButton === 0}
@@ -1140,8 +1024,8 @@ const CVPageMain = () => {
         >
           Təstiqləmək
         </Button>
-        <Container key={activeButton}>{renderInputs()}</Container>
       </div>
+      <Container key={activeButton}>{renderInputs()}</Container>
     </>
   );
 };

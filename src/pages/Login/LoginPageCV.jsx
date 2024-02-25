@@ -98,7 +98,7 @@ const Login = ({ onLogin }) => {
   const [password, setPassword] = useState("");
 
   const handleClick = () => {
-    navigate("/logup");
+    navigate("/register");
   };
 
   const handleClick3 = async () => {
@@ -143,6 +143,7 @@ const Login = ({ onLogin }) => {
           />
           <h1 className="H1LOG">Hesaba daxil ol</h1>
           <br></br>
+          <form onSubmit={handleClick3}>
           <Input
             type="email"
             id="email"
@@ -166,7 +167,7 @@ const Login = ({ onLogin }) => {
           <Button onClick={handleClick3} type="button">
             Daxil ol
           </Button>
-
+          </form>
           <button className="button-like-link" onClick={handleClick}>
             Yeni hesab yarat
           </button>
