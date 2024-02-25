@@ -431,85 +431,98 @@ const CVPageMain = () => {
   };
 
   //-------------------------------------------------------------------------------------------------------- Flatern each set
-  const flattenEducationSets = (educationSets) => {
-    const flattenedData = educationSets.flatMap((educationSet) =>
-      educationSet.fields.map((field) => ({
-        className: field.className,
-        value: field.value || "",
-      }))
-    );
+  // const flattenEducationSets = (educationSets) => {
+  //   return educationSets.map((educationSet) => {
+  //     return educationSet.fields.reduce((result, field) => {
+  //       result[field.className] = field.value || "";
+  //       return result;
+  //     }, {});
+  //   });
+  // };
 
-    const transformedData = flattenedData.reduce((result, field) => {
-      result[field.className] = field.value;
-      return result;
-    }, {});
+  // const educationSetsWithFlattenedData = flattenEducationSets(educationSets);
+  // console.log(educationSetsWithFlattenedData);
+  // //-----------------------------
+  // const flattenLanguageSets = (languageSets) => {
+  //   const flattenedData = languageSets.flatMap((languageSet) =>
+  //     languageSet.fields.map((field) => ({
+  //       className: field.className,
+  //       value: field.value || "",
+  //     }))
+  //   );
 
-    return transformedData;
+  //   const transformedData = flattenedData.reduce((result, field) => {
+  //     result[field.className] = field.value;
+  //     return result;
+  //   }, {});
+
+  //   return transformedData;
+  // };
+
+  // const transformedLanguageData = flattenLanguageSets(languageSets);
+  // console.log(transformedLanguageData);
+  // //-----------------------------
+  // const flattenComputerLanguageSets = (computerLanguageSets) => {
+  //   const flattenedData = computerLanguageSets.flatMap((computerLanguageSet) =>
+  //     computerLanguageSet.fields.map((field) => ({
+  //       className: field.className,
+  //       value: field.value || "",
+  //     }))
+  //   );
+
+  //   const transformedData = flattenedData.reduce((result, field) => {
+  //     result[field.className] = field.value;
+  //     return result;
+  //   }, {});
+
+  //   return transformedData;
+  // };
+
+  // const transformedComputerLanguageData =
+  //   flattenComputerLanguageSets(ComputerlanguageSets);
+  // console.log(transformedComputerLanguageData);
+
+  // //-----------------------------
+  // const flattenWorkExperienceSets = (workExperienceSets) => {
+  //   const flattenedData = workExperienceSets.flatMap((workExperienceSet) =>
+  //     workExperienceSet.fields.map((field) => ({
+  //       className: field.className,
+  //       value: field.value || "",
+  //     }))
+  //   );
+
+  //   const transformedData = flattenedData.reduce((result, field) => {
+  //     result[field.className] = field.value;
+  //     return result;
+  //   }, {});
+
+  //   return transformedData;
+  // };
+
+  // const transformedWorkExperienceData =
+  //   flattenWorkExperienceSets(workExperienceSets);
+  // console.log(transformedWorkExperienceData);
+
+  const flattenSets = (sets) => {
+    return sets.map((set) => {
+      return set.fields.reduce((result, field) => {
+        result[field.className] = field.value || "";
+        return result;
+      }, {});
+    });
   };
 
-  const EducationtransformedData = flattenEducationSets(educationSets);
+  const educationSetsWithFlattenedData = flattenSets(educationSets);
+  console.log(educationSetsWithFlattenedData);
 
-  //-----------------------------
-  const flattenLanguageSets = (languageSets) => {
-    const flattenedData = languageSets.flatMap((languageSet) =>
-      languageSet.fields.map((field) => ({
-        className: field.className,
-        value: field.value || "",
-      }))
-    );
-
-    const transformedData = flattenedData.reduce((result, field) => {
-      result[field.className] = field.value;
-      return result;
-    }, {});
-
-    return transformedData;
-  };
-
-  const transformedLanguageData = flattenLanguageSets(languageSets);
+  const transformedLanguageData = flattenSets(languageSets);
   console.log(transformedLanguageData);
-  //-----------------------------
-  const flattenComputerLanguageSets = (computerLanguageSets) => {
-    const flattenedData = computerLanguageSets.flatMap((computerLanguageSet) =>
-      computerLanguageSet.fields.map((field) => ({
-        className: field.className,
-        value: field.value || "",
-      }))
-    );
 
-    const transformedData = flattenedData.reduce((result, field) => {
-      result[field.className] = field.value;
-      return result;
-    }, {});
-
-    return transformedData;
-  };
-
-  const transformedComputerLanguageData =
-    flattenComputerLanguageSets(ComputerlanguageSets);
+  const transformedComputerLanguageData = flattenSets(ComputerlanguageSets);
   console.log(transformedComputerLanguageData);
 
-  //-----------------------------
-  const flattenWorkExperienceSets = (workExperienceSets) => {
-    const flattenedData = workExperienceSets.flatMap((workExperienceSet) =>
-      workExperienceSet.fields.map((field) => ({
-        className: field.className,
-        value: field.value || "",
-      }))
-    );
-
-    const transformedData = flattenedData.reduce((result, field) => {
-      result[field.className] = field.value;
-      return result;
-    }, {});
-
-    return transformedData;
-  };
-
-  const transformedWorkExperienceData =
-    flattenWorkExperienceSets(workExperienceSets);
+  const transformedWorkExperienceData = flattenSets(workExperienceSets);
   console.log(transformedWorkExperienceData);
-
   //-----------------------------
 
   //------------------------------------------------------------------------------ DB fetch
@@ -533,10 +546,10 @@ const CVPageMain = () => {
       linkedInLink: "",
       personalBio: "",
     },
-    educations: { EducationtransformedData },
-    languages: { transformedLanguageData },
-    computerKnowledges: { transformedComputerLanguageData },
-    workExperiences: { transformedWorkExperienceData },
+    educations: [educationSetsWithFlattenedData],
+    languages: [transformedLanguageData],
+    computerKnowledges: [transformedComputerLanguageData],
+    workExperiences: [transformedWorkExperienceData],
   });
 
   const handleInputChange = (category, fieldName, value) => {
@@ -625,23 +638,28 @@ const CVPageMain = () => {
     e.preventDefault();
     try {
       const endpointUrl = "http://avazdg.tech:5201/api/CV/create-cv";
-
       const token = localStorage.getItem("token");
-
+  
+      if (!token) {
+        console.error("Token is missing");
+        return;
+      }
+  
       const response = await fetch(endpointUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // Include the token in the Authorization header
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ formData }),
       });
-
+  
+      const responseData = await response.json();
+  
       if (response.ok) {
-        console.log("Request successful");
+        console.log("Request successful", responseData);
       } else {
-        console.error("Request failed");
+        console.error("Request failed", responseData);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -1062,7 +1080,7 @@ const CVPageMain = () => {
       case "Finish":
         return (
           <>
-            <SubmitButton className="SubmitButton" onClick={handleFormSubmit}>
+            <SubmitButton className="SubmitButton" onClick={logFormData}>
               Yarat
             </SubmitButton>
           </>

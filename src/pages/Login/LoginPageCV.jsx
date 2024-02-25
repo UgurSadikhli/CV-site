@@ -114,15 +114,11 @@ const Login = ({ onLogin }) => {
       if (response.ok) {
         const data = await response.json();
         const token = data.token;
-        const userId = data.userId; // Assuming your server provides the user ID in the response
-
-        // Store the token and user ID securely (e.g., in localStorage)
-        localStorage.setItem('token', token);
-        localStorage.setItem('userID', userId);
+        const userId = data.userId;
+        localStorage.setItem("token", token);
+        localStorage.setItem("userID", userId);
 
         onLogin();
-
-        // Check if both token and user ID are present before navigating
         if (token && userId) {
           navigate("/CV");
         } else {
@@ -135,6 +131,7 @@ const Login = ({ onLogin }) => {
       console.error("Error during authentication:", error);
     }
   };
+
   return (
     <Container>
       <Main>
