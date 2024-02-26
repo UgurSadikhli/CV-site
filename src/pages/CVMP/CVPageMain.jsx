@@ -19,12 +19,11 @@ const Container = styled.div`
   box-shadow: 0 4px 10px rgba(0.6, 0, 0, 0.6);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  grid-template-columns: repeat(6, 1fr);
-  justify-content: space-around;
-  align-items: center;
+
   overflow-y: auto;
   overflow-x: hidden;
 `;
+
 const bounce = keyframes`
   0%, 20%, 50%, 80%, 100% {
     transform: translateY(0);
@@ -59,7 +58,7 @@ const Input = styled.input`
 `;
 const ImageUploadContainer = styled.div`
   width: 150px;
-  height: 200px;
+  height: 190px;
   margin-bottom: 15px;
   border-radius: 8px;
   overflow: hidden;
@@ -98,7 +97,7 @@ const SubmitButton = styled.button`
   border: none;
   padding: 12px;
   width: 240px;
-  margin-left: 480px;
+  margin-left: 39%;
   margin-top: 25%;
   border-radius: 6px;
   cursor: pointer;
@@ -245,13 +244,14 @@ const CVPageMain = () => {
       const reader = new FileReader();
       reader.onload = () => {
         setImage(reader.result);
+        // Assuming your existing handleInputChange function is available
+        handleInputChange("personalData", "personPhoto", reader.result, true);
       };
       reader.readAsDataURL(file);
 
       fileInputRef.current.value = "";
     }
   };
-
   //------------------------------------------------------------------------------------------------------- Education info duplication
   const initialFieldTemplate = [
     { key: 1, className: "institutionName", placeholder: "İnstitut adı" },
@@ -320,11 +320,6 @@ const CVPageMain = () => {
   const initialLanguageFieldTemplate = [
     { key: 1, className: "languageName", placeholder: "Dil adı" },
     { key: 2, className: "languageLevel", placeholder: "Dil səviyyəti" },
-    {
-      key: 3,
-      className: "languageCertificateID",
-      placeholder: "Dil sertifikatının ID-si",
-    },
   ];
 
   const [languageSets, setLanguageSets] = useState([
@@ -362,11 +357,6 @@ const CVPageMain = () => {
       key: 2,
       className: "knowledgeLevel",
       placeholder: "Komputer bacarığı səviyyəti",
-    },
-    {
-      key: 3,
-      className: "knowledgeCertificateID",
-      placeholder: "Komputer bacarığı sertifikatının ID-si",
     },
   ];
   const [ComputerlanguageSets, setComputerLanguageSets] = useState([
@@ -487,8 +477,9 @@ const CVPageMain = () => {
   const [formData, setFormData] = useState({
     userID: userID,
     personalData: {
-      personPhoto: "@///url/test",
+      personPhoto: "",
       name: "",
+      fatherName: "",
       surname: "",
       gender: "",
       familyStatus: "",
@@ -510,14 +501,26 @@ const CVPageMain = () => {
   });
 
   //---------------------------------------------------------------------------------------------------------- Input Changes
-  const handleInputChange = (category, fieldName, value) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [category]: {
-        ...prevFormData[category],
-        [fieldName]: value,
-      },
-    }));
+  const handleInputChange = (category, fieldName, value, isImage = false) => {
+    setFormData((prevFormData) => {
+      if (isImage) {
+        return {
+          ...prevFormData,
+          [category]: {
+            ...prevFormData[category],
+            [fieldName]: value, // Assuming value is the base64 image string
+          },
+        };
+      }
+
+      return {
+        ...prevFormData,
+        [category]: {
+          ...prevFormData[category],
+          [fieldName]: value,
+        },
+      };
+    });
   };
 
   const handleEducationSetInputChange = (setId, fieldName, value) => {
@@ -636,11 +639,7 @@ const CVPageMain = () => {
 
   //----------------------------------------------------------------------------------------------------------------- Check initialzation {for test use only}
   const logFormData = () => {
-    for (const educationSet of languageSets) {
-      for (const field of educationSet.fields) {
-        //console.log(field);
-      }
-    }
+    console.log(formData);
   };
 
   //--------------------------------------------------------------------------------------------------------------------- Manin body rendering
@@ -649,177 +648,209 @@ const CVPageMain = () => {
       case "personalData":
         return (
           <>
-            <ImageUploadContainer className="Image">
-              {image ? (
-                <ImagePreview src={image} alt="User" />
-              ) : (
-                <>
-                  <UploadText>Upload Image</UploadText>
-                </>
-              )}
-              <InputFile
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
+            <div className="PersonalDataDiv0">
+              <ImageUploadContainer className="Image ">
+                {image ? (
+                  <ImagePreview src={image} alt="User" />
+                ) : (
+                  <>
+                    <UploadText>Upload Image</UploadText>
+                  </>
+                )}
+                <InputFile
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                />
+              </ImageUploadContainer>
+            </div>
+            <div className="PersonalDataDiv1">
+              <Input
+                className={"NameInput cell"}
+                type="text"
+                placeholder="Ad"
+                value={formData.personalData.name}
+                onChange={(e) =>
+                  handleInputChange("personalData", "name", e.target.value)
+                }
               />
-            </ImageUploadContainer>
-            <Input
-              className={"NameInput"}
-              type="text"
-              placeholder="Ad"
-              value={formData.personalData.name}
-              onChange={(e) =>
-                handleInputChange("personalData", "name", e.target.value)
-              }
-            />
-            <Input
-              className={"SurNameInput"}
-              type="text"
-              placeholder="Soyad"
-              value={formData.personalData.surname}
-              onChange={(e) =>
-                handleInputChange("personalData", "surname", e.target.value)
-              }
-            />
-            <Input
-              className={"EmailInput"}
-              type="email"
-              placeholder="Email"
-              value={formData.personalData.email}
-              onChange={(e) =>
-                handleInputChange("personalData", "email", e.target.value)
-              }
-            />
-            <Input
-              className={"mobilePhone"}
-              type="tel"
-              placeholder="Telefon"
-              value={formData.personalData.mobilePhone}
-              onChange={(e) =>
-                handleInputChange("personalData", "mobilePhone", e.target.value)
-              }
-            />
-            <Input
-              className={"address"}
-              type="text"
-              placeholder="Adres"
-              value={formData.personalData.address}
-              onChange={(e) =>
-                handleInputChange("personalData", "address", e.target.value)
-              }
-            />
-            <Input
-              className={"citizenship"}
-              type="text"
-              placeholder="Ölkə"
-              value={formData.personalData.citizenship}
-              onChange={(e) =>
-                handleInputChange("personalData", "citizenship", e.target.value)
-              }
-            />
-            <Input
-              className={"landlinePhone"}
-              type="text"
-              placeholder="Şəhər telefonu"
-              value={formData.personalData.landlinePhone}
-              onChange={(e) =>
-                handleInputChange(
-                  "personalData",
-                  "landlinePhone",
-                  e.target.value
-                )
-              }
-            />
-            <Input
-              className={"militaryService"}
-              type="text"
-              placeholder="Əsgərlik statusu"
-              value={formData.personalData.militaryService}
-              onChange={(e) =>
-                handleInputChange(
-                  "personalData",
-                  "militaryService",
-                  e.target.value
-                )
-              }
-            />
-            <Input
-              className={"driverLicense"}
-              type="text"
-              placeholder="Sürücülük vəsiqəsi"
-              value={formData.personalData.driverLicense}
-              onChange={(e) =>
-                handleInputChange(
-                  "personalData",
-                  "driverLicense",
-                  e.target.value
-                )
-              }
-            />
-            <Input
-              className={"city"}
-              type="text"
-              placeholder="Şəhər"
-              value={formData.personalData.city}
-              onChange={(e) =>
-                handleInputChange("personalData", "city", e.target.value)
-              }
-            />
-            <Input
-              className={"personalBio"}
-              type="text"
-              placeholder="Mənim hakqımda"
-              value={formData.personalData.personalBio}
-              onChange={(e) =>
-                handleInputChange("personalData", "personalBio", e.target.value)
-              }
-            />
-            <Input
-              className={"linkedInLink"}
-              type="text"
-              placeholder="Linkedin"
-              value={formData.personalData.linkedInLink}
-              onChange={(e) =>
-                handleInputChange(
-                  "personalData",
-                  "linkedInLink",
-                  e.target.value
-                )
-              }
-            />
-            <select
-              className={"gender"}
-              id="gender"
-              name="gender"
-              value={formData.personalData.gender}
-              onChange={(e) =>
-                handleInputChange("personalData", "gender", e.target.value)
-              }
-            >
-              <option value="">Cins</option>
-              <option value="Qadın">Qadın</option>
-              <option value="Kişi">Kişi</option>
-            </select>
-            <select
-              className={"familyStatus"}
-              id="familyStatus"
-              name="familyStatus"
-              value={formData.personalData.familyStatus}
-              onChange={(e) =>
-                handleInputChange(
-                  "personalData",
-                  "familyStatus",
-                  e.target.value
-                )
-              }
-            >
-              <option value="">Ailə vəziyyəti</option>
-              <option value="Evli">Evli</option>
-              <option value="Subay">Subay</option>
-              <option value="Dul">Dul</option>
-              <option value="Boşanmış">Boşanmış</option>
-            </select>
+              <Input
+                className={"FatherNameInput cell"}
+                type="text"
+                placeholder="Ata adı"
+                value={formData.personalData.fatherName}
+                onChange={(e) =>
+                  handleInputChange(
+                    "personalData",
+                    "fatherName",
+                    e.target.value
+                  )
+                }
+              />
+              <Input
+                className={"SurNameInput cell"}
+                type="text"
+                placeholder="Soyad"
+                value={formData.personalData.surname}
+                onChange={(e) =>
+                  handleInputChange("personalData", "surname", e.target.value)
+                }
+              />
+              <Input
+                className={"EmailInput cell"}
+                type="email"
+                placeholder="Email"
+                value={formData.personalData.email}
+                onChange={(e) =>
+                  handleInputChange("personalData", "email", e.target.value)
+                }
+              />
+              <Input
+                className={"mobilePhone cell"}
+                type="tel"
+                placeholder="Telefon"
+                value={formData.personalData.mobilePhone}
+                onChange={(e) =>
+                  handleInputChange(
+                    "personalData",
+                    "mobilePhone",
+                    e.target.value
+                  )
+                }
+              />
+              <Input
+                className={"address cell"}
+                type="text"
+                placeholder="Adres"
+                value={formData.personalData.address}
+                onChange={(e) =>
+                  handleInputChange("personalData", "address", e.target.value)
+                }
+              />
+              <Input
+                className={"citizenship cell"}
+                type="text"
+                placeholder="Ölkə"
+                value={formData.personalData.citizenship}
+                onChange={(e) =>
+                  handleInputChange(
+                    "personalData",
+                    "citizenship",
+                    e.target.value
+                  )
+                }
+              />
+              <Input
+                className={"landlinePhone cell"}
+                type="text"
+                placeholder="Şəhər telefonu"
+                value={formData.personalData.landlinePhone}
+                onChange={(e) =>
+                  handleInputChange(
+                    "personalData",
+                    "landlinePhone",
+                    e.target.value
+                  )
+                }
+              />
+              <Input
+                className={"militaryService cell"}
+                type="text"
+                placeholder="Əsgərlik statusu"
+                value={formData.personalData.militaryService}
+                onChange={(e) =>
+                  handleInputChange(
+                    "personalData",
+                    "militaryService",
+                    e.target.value
+                  )
+                }
+              />
+            </div>
+            <div className="PersonalDataDiv2">
+              <Input
+                className={"driverLicense cell"}
+                type="text"
+                placeholder="Sürücülük vəsiqəsi"
+                value={formData.personalData.driverLicense}
+                onChange={(e) =>
+                  handleInputChange(
+                    "personalData",
+                    "driverLicense",
+                    e.target.value
+                  )
+                }
+              />
+              <Input
+                className={"city cell"}
+                type="text"
+                placeholder="Şəhər"
+                value={formData.personalData.city}
+                onChange={(e) =>
+                  handleInputChange("personalData", "city", e.target.value)
+                }
+              />
+
+              <Input
+                className={"linkedInLink cell"}
+                type="text"
+                placeholder="Linkedin"
+                value={formData.personalData.linkedInLink}
+                onChange={(e) =>
+                  handleInputChange(
+                    "personalData",
+                    "linkedInLink",
+                    e.target.value
+                  )
+                }
+              />
+              <select
+                className={"gender cell"}
+                id="gender"
+                name="gender"
+                value={formData.personalData.gender}
+                onChange={(e) =>
+                  handleInputChange("personalData", "gender", e.target.value)
+                }
+              >
+                <option value="">Cins</option>
+                <option value="Qadın">Qadın</option>
+                <option value="Kişi">Kişi</option>
+              </select>
+              <select
+                className={"familyStatus cell"}
+                id="familyStatus"
+                name="familyStatus"
+                value={formData.personalData.familyStatus}
+                onChange={(e) =>
+                  handleInputChange(
+                    "personalData",
+                    "familyStatus",
+                    e.target.value
+                  )
+                }
+              >
+                <option value="">Ailə vəziyyəti</option>
+                <option value="Evli">Evli</option>
+                <option value="Subay">Subay</option>
+                <option value="Dul">Dul</option>
+                <option value="Boşanmış">Boşanmış</option>
+              </select>
+              <Input
+                className={"personalBio cell2"}
+                type="text"
+                placeholder="Mənim hakqımda"
+                value={formData.personalData.personalBio}
+                onChange={(e) =>
+                  handleInputChange(
+                    "personalData",
+                    "personalBio",
+                    e.target.value
+                  )
+                }
+              />
+            </div>
           </>
         );
       case "Education":
@@ -880,54 +911,98 @@ const CVPageMain = () => {
               <FadeInGridItem key={set.id}>
                 <h2>{set.name}</h2>
                 {set.fields.map((field) => (
-                  <Input
-                    key={field.key}
-                    className={field.className}
-                    type="text"
-                    placeholder={field.placeholder}
-                    value={field.value || ""}
-                    onChange={(e) =>
-                      handleLanguageSetInputChange(
-                        set.id,
-                        field.className,
-                        e.target.value
-                      )
-                    }
-                  />
+                  <div key={field.key}>
+                    {field.key === 2 && field.className === "languageLevel" ? (
+                      <select
+                        key={field.key}
+                        className={field.className}
+                        value={field.value || ""}
+                        onChange={(e) =>
+                          handleLanguageSetInputChange(
+                            set.id,
+                            field.className,
+                            e.target.value
+                          )
+                        }
+                      >
+                        <option value="">Dil bacarığı səviyyəti</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                      </select>
+                    ) : (
+                      <Input
+                        key={field.key}
+                        className={field.className}
+                        type="text"
+                        placeholder={field.placeholder}
+                        value={field.value || ""}
+                        onChange={(e) =>
+                          handleLanguageSetInputChange(
+                            set.id,
+                            field.className,
+                            e.target.value
+                          )
+                        }
+                      />
+                    )}
+                  </div>
                 ))}
                 <DeleteButton onClick={() => deleteLanguageSet(set.id)}>
                   sil
                 </DeleteButton>
               </FadeInGridItem>
             ))}
-            <AddButton onClick={addLanguageSet}>Əlavə et dil</AddButton>
+            <AddButton onClick={addLanguageSet}>Əlavə et</AddButton>
+
             {ComputerlanguageSets.map((set) => (
               <FadeInGridItem key={set.id}>
                 <h2>{set.name}</h2>
                 {set.fields.map((field) => (
-                  <Input
-                    key={field.key}
-                    className={field.className}
-                    type="text"
-                    placeholder={field.placeholder}
-                    value={field.value || ""}
-                    onChange={(e) =>
-                      handleComputerLanguageSetInputChange(
-                        set.id,
-                        field.className,
-                        e.target.value
-                      )
-                    }
-                  />
+                  <div key={field.key}>
+                    {field.key === 2 && field.className === "knowledgeLevel" ? (
+                      <select
+                        key={field.key}
+                        className={field.className}
+                        value={field.value || ""}
+                        onChange={(e) =>
+                          handleComputerLanguageSetInputChange(
+                            set.id,
+                            field.className,
+                            e.target.value
+                          )
+                        }
+                      >
+                        <option value="">Komputer bacarığı səviyyəti</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                      </select>
+                    ) : (
+                      <Input
+                        key={field.key}
+                        className={field.className}
+                        type="text"
+                        placeholder={field.placeholder}
+                        value={field.value || ""}
+                        onChange={(e) =>
+                          handleComputerLanguageSetInputChange(
+                            set.id,
+                            field.className,
+                            e.target.value
+                          )
+                        }
+                      />
+                    )}
+                  </div>
                 ))}
                 <DeleteButton onClick={() => deleteComputerLanguageSet(set.id)}>
                   sil
                 </DeleteButton>
               </FadeInGridItem>
             ))}
-            <AddButton onClick={addComputerLanguageSet}>
-              Əlavə et komp
-            </AddButton>
+
+            <AddButton onClick={addComputerLanguageSet}>Əlavə et</AddButton>
           </>
         );
       case "workExperience":
@@ -984,7 +1059,7 @@ const CVPageMain = () => {
       case "Finish":
         return (
           <>
-            <SubmitButton className="SubmitButton" onClick={handleFormSubmit}>
+            <SubmitButton className="SubmitButton" onClick={logFormData}>
               Yarat
             </SubmitButton>
           </>
@@ -993,7 +1068,8 @@ const CVPageMain = () => {
         return (
           <>
             <div className="typewriter">
-              <h1>Avaz ilə CV yaradın və Karyeranızı Bizimlə İnkişaf Edin!</h1>
+              <h1>AVAZ ilə cv yaradın və karyeranızı bizimlə inkişaf edin!</h1>
+
               <img
                 className="CVmainImage"
                 src="./assets/img/WallPaper/PngItem_2159037.png"

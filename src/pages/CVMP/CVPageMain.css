@@ -9,7 +9,7 @@ body {
 }
 
 .gender,
-.familyStatus {
+.familyStatus,.knowledgeLevel,.languageLevel {
   padding: 10px;
   border: 1px solid white;
   color: aliceblue;
@@ -53,10 +53,12 @@ body {
   margin-top: 0.7%;
   margin-left: 1%;
 }
+
 .DefaultImage2 {
   height: 50px;
   width: 70px;
 }
+
 .CVmainImage {
   height: 300px;
   width: 600px;
@@ -72,6 +74,7 @@ body {
   margin-top: -44%;
   margin-left: 95%;
 }
+
 .typewriter h1 {
   margin-top: 5%;
   margin-left: 4%;
@@ -124,4 +127,45 @@ h2 {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: black;
+}
+
+.PersonalDataDiv1 {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: -19.5%;
+  margin-left: 15%;
+}
+.PersonalDataDiv2 {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 0.5%;
+  margin-left: 15%;
+}
+.PersonalDataDiv0 {
+  display: flex;
+  flex-wrap: wrap;
+}
+.cell {
+  flex: 1 0 10%; /* Two columns, adjust width as needed */
+  margin: 15px; /* Adjust margin for spacing between cells */
+  border: 1px solid #ddd; /* Add borders for better visibility */
+  padding: 10px; /* Add padding for spacing inside cells */
+  text-align: center; /* Center content inside cells */
+}
+.cell2 {
+  flex: 0 0 95%; /* Two columns, adjust width as needed */
+  margin: 15px; /* Adjust margin for spacing between cells */
+  border: 1px solid #ddd; /* Add borders for better visibility */
+  padding: 10px; /* Add padding for spacing inside cells */
+  text-align: center; /* Center content inside cells */
+  height: 100px;
+}
+
+.Image {
+  margin: 15px; /* Adjust margin for spacing between cells */
+  border: 1px solid #ddd; /* Add borders for better visibility */
+  padding: 10px; /* Add padding for spacing inside cells */
+  text-align: center; /* Center content inside cells */
+  margin-top: 50px;
+  margin-left: 0.5%;
 }
