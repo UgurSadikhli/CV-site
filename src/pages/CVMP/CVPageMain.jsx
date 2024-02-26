@@ -464,16 +464,13 @@ const CVPageMain = () => {
   console.log(educationSetsWithFlattenedData);
 
   const transformedLanguageData = flattenSets(languageSets);
-  const transformedLanguageDatajsonData = JSON.stringify(
-    transformedLanguageData
-  );
-  console.log(transformedLanguageDatajsonData);
+  //console.log(transformedLanguageData);
 
   const transformedComputerLanguageData = flattenSets(ComputerlanguageSets);
-  console.log(transformedComputerLanguageData);
+  //console.log(transformedComputerLanguageData);
 
   const transformedWorkExperienceData = flattenSets(workExperienceSets);
-  console.log(transformedWorkExperienceData);
+  //console.log(transformedWorkExperienceData);
 
   //---------------------------------------------------------------------------------------------------------- DB fetch
   const userID = localStorage.getItem("userID");
@@ -498,7 +495,7 @@ const CVPageMain = () => {
       personalBio: "",
     },
     educations: educationSetsWithFlattenedData,
-    languages: transformedLanguageDatajsonData,
+    languages: transformedLanguageData,
     computerKnowledges: transformedComputerLanguageData,
     workExperiences: transformedWorkExperienceData,
   });
@@ -543,6 +540,7 @@ const CVPageMain = () => {
       });
     });
   };
+
   // Function to handle changes in Language Sets
   const handleLanguageSetInputChange = (setId, fieldName, value) => {
     setLanguageSets((prevSets) => {
@@ -600,6 +598,18 @@ const CVPageMain = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+
+    // console.log(transformedLanguageData);
+    // console.log(transformedLanguageData);
+    // console.log(transformedWorkExperienceData);
+
+    formData.educations = educationSetsWithFlattenedData;
+    formData.languages = educationSetsWithFlattenedData;
+    formData.computerKnowledges = educationSetsWithFlattenedData;
+    formData.workExperiences = educationSetsWithFlattenedData;
+    console.log(educationSetsWithFlattenedData);
+    console.log("form");
+    console.log(formData);
     try {
       const endpointUrl = "http://avazdg.tech:5201/api/CV/create-cv";
       const token = localStorage.getItem("token");
