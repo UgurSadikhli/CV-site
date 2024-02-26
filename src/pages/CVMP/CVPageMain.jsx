@@ -604,11 +604,10 @@ const CVPageMain = () => {
     // console.log(transformedWorkExperienceData);
 
     formData.educations = educationSetsWithFlattenedData;
-    formData.languages = educationSetsWithFlattenedData;
-    formData.computerKnowledges = educationSetsWithFlattenedData;
-    formData.workExperiences = educationSetsWithFlattenedData;
-    console.log(educationSetsWithFlattenedData);
-    console.log("form");
+    formData.languages = transformedLanguageData;
+    formData.computerKnowledges = transformedComputerLanguageData;
+    formData.workExperiences = transformedWorkExperienceData;
+
     console.log(formData);
     try {
       const endpointUrl = "http://avazdg.tech:5201/api/CV/create-cv";
