@@ -461,16 +461,19 @@ const CVPageMain = () => {
   };
 
   const educationSetsWithFlattenedData = flattenSets(educationSets);
-  //console.log(educationSetsWithFlattenedData);
+  console.log(educationSetsWithFlattenedData);
 
   const transformedLanguageData = flattenSets(languageSets);
-  //console.log(transformedLanguageData);
+  const transformedLanguageDatajsonData = JSON.stringify(
+    transformedLanguageData
+  );
+  console.log(transformedLanguageDatajsonData);
 
   const transformedComputerLanguageData = flattenSets(ComputerlanguageSets);
-  // console.log(transformedComputerLanguageData);
+  console.log(transformedComputerLanguageData);
 
   const transformedWorkExperienceData = flattenSets(workExperienceSets);
-  //console.log(transformedWorkExperienceData);
+  console.log(transformedWorkExperienceData);
 
   //---------------------------------------------------------------------------------------------------------- DB fetch
   const userID = localStorage.getItem("userID");
@@ -495,7 +498,7 @@ const CVPageMain = () => {
       personalBio: "",
     },
     educations: educationSetsWithFlattenedData,
-    languages: transformedLanguageData,
+    languages: transformedLanguageDatajsonData,
     computerKnowledges: transformedComputerLanguageData,
     workExperiences: transformedWorkExperienceData,
   });
@@ -508,7 +511,7 @@ const CVPageMain = () => {
           ...prevFormData,
           [category]: {
             ...prevFormData[category],
-            [fieldName]: value, // Assuming value is the base64 image string
+            [fieldName]: value,
           },
         };
       }
@@ -1059,7 +1062,7 @@ const CVPageMain = () => {
       case "Finish":
         return (
           <>
-            <SubmitButton className="SubmitButton" onClick={logFormData}>
+            <SubmitButton className="SubmitButton" onClick={handleFormSubmit}>
               Yarat
             </SubmitButton>
           </>
