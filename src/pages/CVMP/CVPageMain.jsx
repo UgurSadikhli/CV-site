@@ -5,6 +5,7 @@ import "./CVPageMain.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
+import jsPDF from "jspdf";
 //------------------------------------------------------------------------- Components and Design
 
 const Container = styled.div`
@@ -19,7 +20,9 @@ const Container = styled.div`
   box-shadow: 0 4px 10px rgba(0.6, 0, 0, 0.6);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
   overflow-y: auto;
   overflow-x: hidden;
 `;
@@ -51,9 +54,6 @@ const Input = styled.input`
   }
   &::placeholder {
     color: white;
-  }
-  &::focus {
-    border-color: #8cb9bd;
   }
 `;
 const ImageUploadContainer = styled.div`
@@ -132,10 +132,6 @@ const Button = styled.button`
   transition: border-bottom 0.3s ease, color 0.3s ease;
   &:hover {
     border-bottom: 2.4px solid #8cb9bd;
-  }
-  &:focus {
-    outline: none;
-    color: #0b666a;
   }
 `;
 const UserIcoButton = styled.img`
@@ -461,7 +457,7 @@ const CVPageMain = () => {
   };
 
   const educationSetsWithFlattenedData = flattenSets(educationSets);
-  console.log(educationSetsWithFlattenedData);
+  //console.log(educationSetsWithFlattenedData);
 
   const transformedLanguageData = flattenSets(languageSets);
   //console.log(transformedLanguageData);
@@ -599,10 +595,6 @@ const CVPageMain = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    // console.log(transformedLanguageData);
-    // console.log(transformedLanguageData);
-    // console.log(transformedWorkExperienceData);
-
     formData.educations = educationSetsWithFlattenedData;
     formData.languages = transformedLanguageData;
     formData.computerKnowledges = transformedComputerLanguageData;
@@ -648,7 +640,18 @@ const CVPageMain = () => {
     setActiveCategory(category);
     handleButtonClick(index);
   };
+  //--------------------------------------------------------------------------------------------------------------- PDF
 
+  const generatePdf = () => {
+    // Create a new instance of jsPDF
+    const pdfDoc = new jsPDF();
+
+    // Add content to the PDF
+    pdfDoc.text("Hello, this is a PDF!", 10, 10);
+
+    // Save the PDF to a file or open in a new tab
+    pdfDoc.save("generated-pdf.pdf");
+  };
   //----------------------------------------------------------------------------------------------------------------- Check initialzation {for test use only}
   const logFormData = () => {
     console.log(formData);
@@ -780,6 +783,7 @@ const CVPageMain = () => {
                 }
               />
             </div>
+
             <div className="PersonalDataDiv2">
               <Input
                 className={"driverLicense cell"}
@@ -817,6 +821,7 @@ const CVPageMain = () => {
                   )
                 }
               />
+
               <select
                 className={"gender cell"}
                 id="gender"
@@ -830,6 +835,7 @@ const CVPageMain = () => {
                 <option value="Qadın">Qadın</option>
                 <option value="Kişi">Kişi</option>
               </select>
+
               <select
                 className={"familyStatus cell"}
                 id="familyStatus"
@@ -849,6 +855,7 @@ const CVPageMain = () => {
                 <option value="Dul">Dul</option>
                 <option value="Boşanmış">Boşanmış</option>
               </select>
+
               <Input
                 className={"personalBio cell2"}
                 type="text"

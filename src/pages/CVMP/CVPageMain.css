@@ -9,18 +9,17 @@ body {
 }
 
 .gender,
-.familyStatus,.knowledgeLevel,.languageLevel {
-  padding: 10px;
-  border: 1px solid white;
+.familyStatus,
+.knowledgeLevel,
+.languageLevel {
+  padding: 0px;
+  border: 1px solid aliceblue;
   color: aliceblue;
   border-radius: 4px;
   background-color: #8cb9bd;
   font-family: Sans-serif;
   transition: border-color 0.3s ease;
-  width: 221.5px;
-  &:hover {
-    border-color: #8cb9bd;
-  }
+  width: 200px;
 }
 
 .startDate,
@@ -132,29 +131,39 @@ h2 {
 .PersonalDataDiv1 {
   display: flex;
   flex-wrap: wrap;
-  margin-top: -19.5%;
+  margin-top: -260px;
   margin-left: 15%;
 }
 .PersonalDataDiv2 {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 0.5%;
+  margin-top: -0.3%;
   margin-left: 15%;
 }
 .PersonalDataDiv0 {
   display: flex;
   flex-wrap: wrap;
+  margin-left: -55%;
 }
+.PersonalDataDiv1 {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: -255px;
+  margin-left: 15%;
+}
+
 .cell {
-  flex: 1 0 10%; /* Two columns, adjust width as needed */
-  margin: 15px; /* Adjust margin for spacing between cells */
-  border: 1px solid #ddd; /* Add borders for better visibility */
-  padding: 10px; /* Add padding for spacing inside cells */
-  text-align: center; /* Center content inside cells */
+  flex: 1 0 24%; /* Three columns, each taking 33.33% width */
+  margin: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  box-sizing: border-box; /* Include padding and border in the total width */
+  text-align: center;
+  height: 40px;
 }
 .cell2 {
   flex: 0 0 95%; /* Two columns, adjust width as needed */
-  margin: 15px; /* Adjust margin for spacing between cells */
+  margin: 10px; /* Adjust margin for spacing between cells */
   border: 1px solid #ddd; /* Add borders for better visibility */
   padding: 10px; /* Add padding for spacing inside cells */
   text-align: center; /* Center content inside cells */
@@ -167,5 +176,5 @@ h2 {
   padding: 10px; /* Add padding for spacing inside cells */
   text-align: center; /* Center content inside cells */
   margin-top: 50px;
-  margin-left: 0.5%;
+  margin-left: -270px;
 }
