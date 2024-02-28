@@ -14,19 +14,21 @@ body {
 .languageLevel {
   padding: 0px;
   border: 1px solid aliceblue;
-  color: aliceblue;
+  color: #6e949a;
   border-radius: 4px;
   background-color: #8cb9bd;
   font-family: Sans-serif;
   transition: border-color 0.3s ease;
   width: 200px;
 }
-
+option {
+  color: white;
+}
 .startDate,
 .endDate {
   padding: 10px;
   border: 1px solid white;
-  color: aliceblue;
+  color: white;
   border-radius: 4px;
   background-color: #8cb9bd;
   font-family: Sans-serif;
@@ -36,7 +38,7 @@ body {
     border-color: #8cb9bd;
   }
   &::placeholder {
-    color: white;
+    color: #6e949a;
   }
 }
 .buttonDiv {
@@ -158,8 +160,7 @@ h2 {
   text-align: center; /* Center content inside cells */
   height: 15%;
 }
-.gridInPerInfo {
-}
+
 .Image {
   margin: 15px; /* Adjust margin for spacing between cells */
   border: 1px solid #ddd; /* Add borders for better visibility */

@@ -49,13 +49,15 @@ const Input = styled.input`
   border-radius: 4px;
   background-color: #8cb9bd;
   font-family: Sans-serif;
-  transition: border-color 0.3s ease;
+  color: white;
+  font-size: 15px;
+  transition: border-color 0.4s ease;
   width: 200px;
   &:hover {
     border-color: #8cb9bd;
   }
   &::placeholder {
-    color: white;
+    color: #6e949a;
   }
 `;
 const ImageUploadContainer = styled.div`
@@ -93,24 +95,49 @@ const UploadText = styled.div`
   text-align: center;
   z-index: 1;
 `;
+
+const progressBarAnimation = keyframes`
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+`;
+
 const SubmitButton = styled.button`
   background-color: #2e7eed;
   color: white;
   border: none;
   padding: 12px;
   width: 240px;
-  margin-left: 39%;
   margin-top: 25%;
   border-radius: 6px;
-  cursor: pointer;
+  cursor: ${(props) =>
+    props.loading
+      ? "not-allowed"
+      : "pointer"}; /* Disable pointer events during loading */
   font-family: Verdana;
   font-size: 30px;
-  transition: background-color 0.6s ease;
+  position: relative;
 
   &:hover {
+    background-color: ${(props) => (props.loading ? "#2e7eed" : "#4fa3ff")};
+  }
+
+  /* Progress bar styles */
+  .progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: ${(props) => (props.loading ? "100%" : "0%")};
+    height: 100%;
     background-color: #4fa3ff;
+    border-radius: 6px;
+    animation: ${progressBarAnimation} 2s ease-in-out; /* Adjust the duration as needed */
   }
 `;
+
 const slideIn = keyframes`
 from {
   transform: translateX(170%);
@@ -224,6 +251,10 @@ const MenuItem = styled.div`
 //----------------------------------------------------------------------------------------------------
 
 const CVPageMain = () => {
+  //-------------------------------------------------------------------------------------Button progressBar
+
+  const [loading, setLoading] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   //----------------------------------------------------------------------------------------------------
 
   const navigate = useNavigate();
@@ -594,46 +625,6 @@ const CVPageMain = () => {
     });
   };
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-
-    formData.educations = educationSetsWithFlattenedData;
-    formData.languages = transformedLanguageData;
-    formData.computerKnowledges = transformedComputerLanguageData;
-    formData.workExperiences = transformedWorkExperienceData;
-
-    console.log(formData);
-    try {
-      const endpointUrl = "http://avazdg.tech:5201/api/CV/create-cv";
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        console.error("Token is missing");
-        return;
-      }
-
-      const response = await fetch(endpointUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const responseData = await response.json();
-
-      if (response.ok) {
-        console.log("Request successful", responseData);
-      } else {
-        console.error("Request failed", responseData);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      console.log("CatchError: ");
-    }
-  };
-
   //--------------------------------------------------------------------------------------------------------------- Button active modification
 
   const [activeCategory, setActiveCategory] = useState(null);
@@ -658,7 +649,93 @@ const CVPageMain = () => {
   const logFormData = () => {
     console.log(formData);
   };
+  //----------------------------------------------------------------------------------------------------------------- SubmitButton state changers
 
+  const [massage, setMessage] = useState(false);
+  useEffect(() => {
+    let formSubmittedTimeoutId;
+
+    if (formSubmitted) {
+      formSubmittedTimeoutId = setTimeout(() => {
+        setFormSubmitted(false);
+      }, 3000);
+    }
+
+    return () => {
+      clearTimeout(formSubmittedTimeoutId);
+    };
+  }, [formSubmitted]);
+
+  useEffect(() => {
+    let timeoutId;
+
+    if (loading) {
+      timeoutId = setTimeout(() => {
+        if (massage === "Error") {
+          setLoading(false);
+          alert("Your session is end, please reauthorize");
+        } else {
+          setLoading(false);
+        }
+      }, 3000);
+    }
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [loading]);
+
+  //----------------------------------------------------------------------------------------------------------------- handleFormSubmit main fetch
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    formData.educations = educationSetsWithFlattenedData;
+    formData.languages = transformedLanguageData;
+    formData.computerKnowledges = transformedComputerLanguageData;
+    formData.workExperiences = transformedWorkExperienceData;
+
+    console.log(formData);
+    try {
+      const endpointUrl = "http://avazdg.tech:5201/api/CV/create-cv";
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        setFormSubmitted(true);
+        setMessage("Error");
+        console.error("Token is missing");
+        return;
+      }
+
+      const response = await fetch(endpointUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const responseData = await response.json();
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      if (response.ok) {
+        setFormSubmitted(true);
+        setMessage("Done");
+        console.log("Request successful", responseData);
+      } else {
+        setFormSubmitted(true);
+        setMessage("Error");
+        console.error("Request failed", responseData);
+      }
+    } catch (error) {
+      setFormSubmitted(true);
+      setMessage("Error");
+      console.error("Error:", error);
+      console.log("CatchError: ");
+    }
+  };
   //--------------------------------------------------------------------------------------------------------------------- Manin body rendering
   const renderInputs = () => {
     switch (activeCategory) {
@@ -833,7 +910,7 @@ const CVPageMain = () => {
                     handleInputChange("personalData", "gender", e.target.value)
                   }
                 >
-                  <option value="">Cins</option>
+                  <option   value="">Cins</option>
                   <option value="Qadın">Qadın</option>
                   <option value="Kişi">Kişi</option>
                 </select>
@@ -948,9 +1025,10 @@ const CVPageMain = () => {
                         }
                       >
                         <option value="">Dil bacarığı səviyyəti</option>
-                        <option value="beginner">Beginner</option>
-                        <option value="intermediate">Intermediate</option>
-                        <option value="advanced">Advanced</option>
+                        <option value="Əla">Əla</option>
+                        <option value="Yaxşı">Yaxşı</option>
+                        <option value="Orta">Orta</option>
+                        <option value="Pis">Pis</option>
                       </select>
                     ) : (
                       <Input
@@ -996,9 +1074,10 @@ const CVPageMain = () => {
                         }
                       >
                         <option value="">Komputer bacarığı səviyyəti</option>
-                        <option value="beginner">Beginner</option>
-                        <option value="intermediate">Intermediate</option>
-                        <option value="advanced">Advanced</option>
+                        <option value="Əla">Əla</option>
+                        <option value="Yaxşı">Yaxşı</option>
+                        <option value="Orta">Orta</option>
+                        <option value="Pis">Pis</option>
                       </select>
                     ) : (
                       <Input
@@ -1081,8 +1160,9 @@ const CVPageMain = () => {
       case "Finish":
         return (
           <>
-            <SubmitButton className="SubmitButton" onClick={handleFormSubmit}>
-              Yarat
+            <SubmitButton loading={loading} onClick={handleFormSubmit}>
+              {formSubmitted ? massage : "Yarat"}
+              {loading && <div className="progress-bar"></div>}
             </SubmitButton>
           </>
         );
