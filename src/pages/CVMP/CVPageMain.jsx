@@ -21,7 +21,9 @@ const Container = styled.div`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   display: flex;
+  flex-direction: row-reverse;
   flex-wrap: wrap;
+  align-items: flex-start;
   justify-content: space-around;
   overflow-y: auto;
   overflow-x: hidden;
