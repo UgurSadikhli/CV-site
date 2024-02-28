@@ -665,8 +665,7 @@ const CVPageMain = () => {
       case "personalData":
         return (
           <>
-          <div className="gridInPerInfo">
-            <div className="PersonalDataDiv0">
+            <div className="gridInPerInfo">
               <ImageUploadContainer className="Image ">
                 {image ? (
                   <ImagePreview src={image} alt="User" />
@@ -682,197 +681,197 @@ const CVPageMain = () => {
                   onChange={handleImageUpload}
                 />
               </ImageUploadContainer>
-            </div>
-            <div className="PersonalDataDiv1">
-              <Input
-                className={"NameInput cell"}
-                type="text"
-                placeholder="Ad"
-                value={formData.personalData.name}
-                onChange={(e) =>
-                  handleInputChange("personalData", "name", e.target.value)
-                }
-              />
-              <Input
-                className={"FatherNameInput cell"}
-                type="text"
-                placeholder="Ata adı"
-                value={formData.personalData.fatherName}
-                onChange={(e) =>
-                  handleInputChange(
-                    "personalData",
-                    "fatherName",
-                    e.target.value
-                  )
-                }
-              />
-              <Input
-                className={"SurNameInput cell"}
-                type="text"
-                placeholder="Soyad"
-                value={formData.personalData.surname}
-                onChange={(e) =>
-                  handleInputChange("personalData", "surname", e.target.value)
-                }
-              />
-              <Input
-                className={"EmailInput cell"}
-                type="email"
-                placeholder="Email"
-                value={formData.personalData.email}
-                onChange={(e) =>
-                  handleInputChange("personalData", "email", e.target.value)
-                }
-              />
-              <Input
-                className={"mobilePhone cell"}
-                type="tel"
-                placeholder="Telefon"
-                value={formData.personalData.mobilePhone}
-                onChange={(e) =>
-                  handleInputChange(
-                    "personalData",
-                    "mobilePhone",
-                    e.target.value
-                  )
-                }
-              />
-              <Input
-                className={"address cell"}
-                type="text"
-                placeholder="Adres"
-                value={formData.personalData.address}
-                onChange={(e) =>
-                  handleInputChange("personalData", "address", e.target.value)
-                }
-              />
-              <Input
-                className={"citizenship cell"}
-                type="text"
-                placeholder="Ölkə"
-                value={formData.personalData.citizenship}
-                onChange={(e) =>
-                  handleInputChange(
-                    "personalData",
-                    "citizenship",
-                    e.target.value
-                  )
-                }
-              />
-              <Input
-                className={"landlinePhone cell"}
-                type="text"
-                placeholder="Şəhər telefonu"
-                value={formData.personalData.landlinePhone}
-                onChange={(e) =>
-                  handleInputChange(
-                    "personalData",
-                    "landlinePhone",
-                    e.target.value
-                  )
-                }
-              />
-              <Input
-                className={"militaryService cell"}
-                type="text"
-                placeholder="Əsgərlik statusu"
-                value={formData.personalData.militaryService}
-                onChange={(e) =>
-                  handleInputChange(
-                    "personalData",
-                    "militaryService",
-                    e.target.value
-                  )
-                }
-              />
-            </div>
 
-            <div className="PersonalDataDiv2">
-              <Input
-                className={"driverLicense cell"}
-                type="text"
-                placeholder="Sürücülük vəsiqəsi"
-                value={formData.personalData.driverLicense}
-                onChange={(e) =>
-                  handleInputChange(
-                    "personalData",
-                    "driverLicense",
-                    e.target.value
-                  )
-                }
-              />
-              <Input
-                className={"city cell"}
-                type="text"
-                placeholder="Şəhər"
-                value={formData.personalData.city}
-                onChange={(e) =>
-                  handleInputChange("personalData", "city", e.target.value)
-                }
-              />
+              <div className="PersonalDataDiv1">
+                <Input
+                  className={"NameInput cell"}
+                  type="text"
+                  placeholder="Ad"
+                  value={formData.personalData.name}
+                  onChange={(e) =>
+                    handleInputChange("personalData", "name", e.target.value)
+                  }
+                />
+                <Input
+                  className={"FatherNameInput cell"}
+                  type="text"
+                  placeholder="Ata adı"
+                  value={formData.personalData.fatherName}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "personalData",
+                      "fatherName",
+                      e.target.value
+                    )
+                  }
+                />
+                <Input
+                  className={"SurNameInput cell"}
+                  type="text"
+                  placeholder="Soyad"
+                  value={formData.personalData.surname}
+                  onChange={(e) =>
+                    handleInputChange("personalData", "surname", e.target.value)
+                  }
+                />
+                <Input
+                  className={"EmailInput cell"}
+                  type="email"
+                  placeholder="Email"
+                  value={formData.personalData.email}
+                  onChange={(e) =>
+                    handleInputChange("personalData", "email", e.target.value)
+                  }
+                />
+                <Input
+                  className={"mobilePhone cell"}
+                  type="tel"
+                  placeholder="Telefon"
+                  value={formData.personalData.mobilePhone}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "personalData",
+                      "mobilePhone",
+                      e.target.value
+                    )
+                  }
+                />
+                <Input
+                  className={"address cell"}
+                  type="text"
+                  placeholder="Adres"
+                  value={formData.personalData.address}
+                  onChange={(e) =>
+                    handleInputChange("personalData", "address", e.target.value)
+                  }
+                />
+                <Input
+                  className={"citizenship cell"}
+                  type="text"
+                  placeholder="Ölkə"
+                  value={formData.personalData.citizenship}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "personalData",
+                      "citizenship",
+                      e.target.value
+                    )
+                  }
+                />
+                <Input
+                  className={"landlinePhone cell"}
+                  type="text"
+                  placeholder="Şəhər telefonu"
+                  value={formData.personalData.landlinePhone}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "personalData",
+                      "landlinePhone",
+                      e.target.value
+                    )
+                  }
+                />
+                <Input
+                  className={"militaryService cell"}
+                  type="text"
+                  placeholder="Əsgərlik statusu"
+                  value={formData.personalData.militaryService}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "personalData",
+                      "militaryService",
+                      e.target.value
+                    )
+                  }
+                />
+              </div>
 
-              <Input
-                className={"linkedInLink cell"}
-                type="text"
-                placeholder="Linkedin"
-                value={formData.personalData.linkedInLink}
-                onChange={(e) =>
-                  handleInputChange(
-                    "personalData",
-                    "linkedInLink",
-                    e.target.value
-                  )
-                }
-              />
+              <div className="PersonalDataDiv2">
+                <Input
+                  className={"driverLicense cell"}
+                  type="text"
+                  placeholder="Sürücülük vəsiqəsi"
+                  value={formData.personalData.driverLicense}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "personalData",
+                      "driverLicense",
+                      e.target.value
+                    )
+                  }
+                />
+                <Input
+                  className={"city cell"}
+                  type="text"
+                  placeholder="Şəhər"
+                  value={formData.personalData.city}
+                  onChange={(e) =>
+                    handleInputChange("personalData", "city", e.target.value)
+                  }
+                />
 
-              <select
-                className={"gender cell"}
-                id="gender"
-                name="gender"
-                value={formData.personalData.gender}
-                onChange={(e) =>
-                  handleInputChange("personalData", "gender", e.target.value)
-                }
-              >
-                <option value="">Cins</option>
-                <option value="Qadın">Qadın</option>
-                <option value="Kişi">Kişi</option>
-              </select>
+                <Input
+                  className={"linkedInLink cell"}
+                  type="text"
+                  placeholder="Linkedin"
+                  value={formData.personalData.linkedInLink}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "personalData",
+                      "linkedInLink",
+                      e.target.value
+                    )
+                  }
+                />
 
-              <select
-                className={"familyStatus cell"}
-                id="familyStatus"
-                name="familyStatus"
-                value={formData.personalData.familyStatus}
-                onChange={(e) =>
-                  handleInputChange(
-                    "personalData",
-                    "familyStatus",
-                    e.target.value
-                  )
-                }
-              >
-                <option value="">Ailə vəziyyəti</option>
-                <option value="Evli">Evli</option>
-                <option value="Subay">Subay</option>
-                <option value="Dul">Dul</option>
-                <option value="Boşanmış">Boşanmış</option>
-              </select>
+                <select
+                  className={"gender cell"}
+                  id="gender"
+                  name="gender"
+                  value={formData.personalData.gender}
+                  onChange={(e) =>
+                    handleInputChange("personalData", "gender", e.target.value)
+                  }
+                >
+                  <option value="">Cins</option>
+                  <option value="Qadın">Qadın</option>
+                  <option value="Kişi">Kişi</option>
+                </select>
 
-              <Input
-                className={"personalBio cell2"}
-                type="text"
-                placeholder="Mənim hakqımda"
-                value={formData.personalData.personalBio}
-                onChange={(e) =>
-                  handleInputChange(
-                    "personalData",
-                    "personalBio",
-                    e.target.value
-                  )
-                }
-              />
-            </div>
+                <select
+                  className={"familyStatus cell"}
+                  id="familyStatus"
+                  name="familyStatus"
+                  value={formData.personalData.familyStatus}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "personalData",
+                      "familyStatus",
+                      e.target.value
+                    )
+                  }
+                >
+                  <option value="">Ailə vəziyyəti</option>
+                  <option value="Evli">Evli</option>
+                  <option value="Subay">Subay</option>
+                  <option value="Dul">Dul</option>
+                  <option value="Boşanmış">Boşanmış</option>
+                </select>
+
+                <Input
+                  className={"personalBio cell2"}
+                  type="text"
+                  placeholder="Mənim hakqımda"
+                  value={formData.personalData.personalBio}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "personalData",
+                      "personalBio",
+                      e.target.value
+                    )
+                  }
+                />
+              </div>
             </div>
           </>
         );

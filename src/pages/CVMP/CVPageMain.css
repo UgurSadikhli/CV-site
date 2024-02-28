@@ -137,7 +137,7 @@ h2 {
 .PersonalDataDiv1 {
   display: flex;
   flex-wrap: wrap;
-  margin-top: -21%;
+  margin-top: -20%;
   margin-left: 15%;
 }
 
@@ -165,6 +165,5 @@ h2 {
   border: 1px solid #ddd; /* Add borders for better visibility */
   padding: 10px; /* Add padding for spacing inside cells */
   text-align: center; /* Center content inside cells */
-
-  margin-left: -270%;
+  margin-top: 5%;
 }
