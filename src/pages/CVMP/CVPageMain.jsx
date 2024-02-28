@@ -665,6 +665,7 @@ const CVPageMain = () => {
       case "personalData":
         return (
           <>
+          <div className="gridInPerInfo">
             <div className="PersonalDataDiv0">
               <ImageUploadContainer className="Image ">
                 {image ? (
@@ -871,6 +872,7 @@ const CVPageMain = () => {
                   )
                 }
               />
+            </div>
             </div>
           </>
         );
