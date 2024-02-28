@@ -76,14 +76,13 @@ body {
 
 .typewriter h1 {
   margin-top: 5%;
-  margin-left: 4%;
+  margin-left: 1%;
   overflow: hidden;
   border-right: 0.15em solid;
   white-space: nowrap;
-  letter-spacing: 0.08em;
-  animation: typing 3s steps(10, end), blink-caret 0.75s step-end infinite;
+  letter-spacing: 1.5px;
+  animation: typing 3s steps(25, end), blink-caret 0.7s step-end infinite;
   color: #004e64;
-  width: 980px;
 }
 h2 {
   color: #004e64;
@@ -92,10 +91,10 @@ h2 {
 }
 @keyframes typing {
   from {
-    width: 10%;
+    width: 0%;
   }
   to {
-    width: 70%;
+    width: 100%;
   }
 }
 
@@ -131,7 +130,7 @@ h2 {
 .PersonalDataDiv1 {
   display: flex;
   flex-wrap: wrap;
-  margin-top: -260px;
+
   margin-left: 15%;
 }
 .PersonalDataDiv2 {
@@ -155,20 +154,20 @@ h2 {
 
 .cell {
   flex: 1 0 24%; /* Three columns, each taking 33.33% width */
-  margin: 10px;
+  margin: 2%;
   border: 1px solid #ddd;
-  padding: 10px;
+  padding: 1%;
   box-sizing: border-box; /* Include padding and border in the total width */
   text-align: center;
-  height: 40px;
+  height: 15%;
 }
 .cell2 {
   flex: 0 0 95%; /* Two columns, adjust width as needed */
-  margin: 10px; /* Adjust margin for spacing between cells */
+  margin: 2%; /* Adjust margin for spacing between cells */
   border: 1px solid #ddd; /* Add borders for better visibility */
-  padding: 10px; /* Add padding for spacing inside cells */
+  padding: 1%; /* Add padding for spacing inside cells */
   text-align: center; /* Center content inside cells */
-  height: 100px;
+  height: 15%;
 }
 
 .Image {
