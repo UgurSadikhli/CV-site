@@ -20,10 +20,7 @@ const Container = styled.div`
   box-shadow: 0 4px 10px rgba(0.6, 0, 0, 0.6);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  display: flex;
-  flex-direction: row-reverse;
-  flex-wrap: wrap;
-  align-items: flex-start;
+
   justify-content: space-around;
   overflow-y: auto;
   overflow-x: hidden;
@@ -57,7 +54,7 @@ const Input = styled.input`
     border-color: #8cb9bd;
   }
   &::placeholder {
-    color: #6e949a;
+    color: white;
   }
 `;
 const ImageUploadContainer = styled.div`
@@ -201,7 +198,7 @@ const AddButton = styled.button`
   font-size: 16px;
   font-weight: bold;
   transition: background-color 0.3s ease-in-out;
-
+  width: 130px;
   &:hover {
     background-color: #45a049;
   }
@@ -352,12 +349,12 @@ const CVPageMain = () => {
   ];
 
   const [languageSets, setLanguageSets] = useState([
-    { name: "Dil Bilikləri", fields: initialLanguageFieldTemplate },
+    { name: "Dil", fields: initialLanguageFieldTemplate },
   ]);
 
   const addLanguageSet = () => {
     const newSetId = generateUniqueId();
-    const newSetName = `Dil Bilikləri`;
+    const newSetName = `Dil`;
     const newSetFields = initialLanguageFieldTemplate.map((field) => ({
       key: field.key,
       className: `${field.className}`,
@@ -390,13 +387,13 @@ const CVPageMain = () => {
   ];
   const [ComputerlanguageSets, setComputerLanguageSets] = useState([
     {
-      name: "Komputer Bilikləri",
+      name: "Komputer",
       fields: initialComputerLanguageFieldTemplate,
     },
   ]);
   const addComputerLanguageSet = () => {
     const newSetId = generateUniqueId();
-    const newSetName = `Komputer Bilikləri`;
+    const newSetName = `Komputer`;
     const newSetFields = initialComputerLanguageFieldTemplate.map((field) => ({
       key: field.key,
       className: `${field.className}`,
@@ -758,7 +755,6 @@ const CVPageMain = () => {
                   onChange={handleImageUpload}
                 />
               </ImageUploadContainer>
-
               <div className="PersonalDataDiv1">
                 <Input
                   className={"NameInput cell"}
@@ -910,7 +906,7 @@ const CVPageMain = () => {
                     handleInputChange("personalData", "gender", e.target.value)
                   }
                 >
-                  <option   value="">Cins</option>
+                  <option value="">Cins</option>
                   <option value="Qadın">Qadın</option>
                   <option value="Kişi">Kişi</option>
                 </select>
@@ -1006,153 +1002,167 @@ const CVPageMain = () => {
       case "Language":
         return (
           <>
-            {languageSets.map((set) => (
-              <FadeInGridItem key={set.id}>
-                <h2>{set.name}</h2>
-                {set.fields.map((field) => (
-                  <div key={field.key}>
-                    {field.key === 2 && field.className === "languageLevel" ? (
-                      <select
-                        key={field.key}
-                        className={field.className}
-                        value={field.value || ""}
-                        onChange={(e) =>
-                          handleLanguageSetInputChange(
-                            set.id,
-                            field.className,
-                            e.target.value
-                          )
-                        }
-                      >
-                        <option value="">Dil bacarığı səviyyəti</option>
-                        <option value="Əla">Əla</option>
-                        <option value="Yaxşı">Yaxşı</option>
-                        <option value="Orta">Orta</option>
-                        <option value="Pis">Pis</option>
-                      </select>
-                    ) : (
-                      <Input
-                        key={field.key}
-                        className={field.className}
-                        type="text"
-                        placeholder={field.placeholder}
-                        value={field.value || ""}
-                        onChange={(e) =>
-                          handleLanguageSetInputChange(
-                            set.id,
-                            field.className,
-                            e.target.value
-                          )
-                        }
-                      />
-                    )}
-                  </div>
+            <div className="LanguageDiv">
+              <div className="LanguageKnowledgeDiv">
+                {languageSets.map((set) => (
+                  <FadeInGridItem key={set.id}>
+                    <h2>{set.name}</h2>
+                    {set.fields.map((field) => (
+                      <div key={field.key}>
+                        {field.key === 2 &&
+                        field.className === "languageLevel" ? (
+                          <select
+                            key={field.key}
+                            className={field.className}
+                            value={field.value || ""}
+                            onChange={(e) =>
+                              handleLanguageSetInputChange(
+                                set.id,
+                                field.className,
+                                e.target.value
+                              )
+                            }
+                          >
+                            <option value="">Dil bacarığı səviyyəti</option>
+                            <option value="Əla">Əla</option>
+                            <option value="Yaxşı">Yaxşı</option>
+                            <option value="Orta">Orta</option>
+                            <option value="Pis">Pis</option>
+                          </select>
+                        ) : (
+                          <Input
+                            key={field.key}
+                            className={field.className}
+                            type="text"
+                            placeholder={field.placeholder}
+                            value={field.value || ""}
+                            onChange={(e) =>
+                              handleLanguageSetInputChange(
+                                set.id,
+                                field.className,
+                                e.target.value
+                              )
+                            }
+                          />
+                        )}
+                      </div>
+                    ))}
+                    <DeleteButton onClick={() => deleteLanguageSet(set.id)}>
+                      sil
+                    </DeleteButton>
+                  </FadeInGridItem>
                 ))}
-                <DeleteButton onClick={() => deleteLanguageSet(set.id)}>
-                  sil
-                </DeleteButton>
-              </FadeInGridItem>
-            ))}
-            <AddButton onClick={addLanguageSet}>Əlavə et</AddButton>
+                <AddButton onClick={addLanguageSet}>Əlavə et</AddButton>
+              </div>
 
-            {ComputerlanguageSets.map((set) => (
-              <FadeInGridItem key={set.id}>
-                <h2>{set.name}</h2>
-                {set.fields.map((field) => (
-                  <div key={field.key}>
-                    {field.key === 2 && field.className === "knowledgeLevel" ? (
-                      <select
-                        key={field.key}
-                        className={field.className}
-                        value={field.value || ""}
-                        onChange={(e) =>
-                          handleComputerLanguageSetInputChange(
-                            set.id,
-                            field.className,
-                            e.target.value
-                          )
-                        }
-                      >
-                        <option value="">Komputer bacarığı səviyyəti</option>
-                        <option value="Əla">Əla</option>
-                        <option value="Yaxşı">Yaxşı</option>
-                        <option value="Orta">Orta</option>
-                        <option value="Pis">Pis</option>
-                      </select>
-                    ) : (
-                      <Input
-                        key={field.key}
-                        className={field.className}
-                        type="text"
-                        placeholder={field.placeholder}
-                        value={field.value || ""}
-                        onChange={(e) =>
-                          handleComputerLanguageSetInputChange(
-                            set.id,
-                            field.className,
-                            e.target.value
-                          )
-                        }
-                      />
-                    )}
-                  </div>
+              <div className="ComputerLanguageKnowledgeDiv">
+                {ComputerlanguageSets.map((set) => (
+                  <FadeInGridItem key={set.id}>
+                    <h2>{set.name}</h2>
+                    {set.fields.map((field) => (
+                      <div key={field.key}>
+                        {field.key === 2 &&
+                        field.className === "knowledgeLevel" ? (
+                          <select
+                            key={field.key}
+                            className={field.className}
+                            value={field.value || ""}
+                            onChange={(e) =>
+                              handleComputerLanguageSetInputChange(
+                                set.id,
+                                field.className,
+                                e.target.value
+                              )
+                            }
+                          >
+                            <option value="">
+                              Komputer bacarığı səviyyəti
+                            </option>
+                            <option value="Əla">Əla</option>
+                            <option value="Yaxşı">Yaxşı</option>
+                            <option value="Orta">Orta</option>
+                            <option value="Pis">Pis</option>
+                          </select>
+                        ) : (
+                          <Input
+                            key={field.key}
+                            className={field.className}
+                            type="text"
+                            placeholder={field.placeholder}
+                            value={field.value || ""}
+                            onChange={(e) =>
+                              handleComputerLanguageSetInputChange(
+                                set.id,
+                                field.className,
+                                e.target.value
+                              )
+                            }
+                          />
+                        )}
+                      </div>
+                    ))}
+                    <DeleteButton
+                      onClick={() => deleteComputerLanguageSet(set.id)}
+                    >
+                      sil
+                    </DeleteButton>
+                  </FadeInGridItem>
                 ))}
-                <DeleteButton onClick={() => deleteComputerLanguageSet(set.id)}>
-                  sil
-                </DeleteButton>
-              </FadeInGridItem>
-            ))}
 
-            <AddButton onClick={addComputerLanguageSet}>Əlavə et</AddButton>
+                <AddButton onClick={addComputerLanguageSet}>Əlavə et</AddButton>
+              </div>
+            </div>
           </>
         );
       case "workExperience":
         return (
           <>
-            {workExperienceSets.map((set) => (
-              <FadeInGridItem key={set.id}>
-                <h2>{set.name}</h2>
-                {set.fields.map((field) => (
-                  <div key={field.key}>
-                    {field.className === "startDate" ||
-                    field.className === "endDate" ? (
-                      <DatePicker
-                        key={field.key}
-                        className={field.className}
-                        selected={field.value ? new Date(field.value) : null}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText={field.placeholder}
-                        onChange={(date) =>
-                          handleWorkExperienceSetInputChange(
-                            set.id,
-                            field.className,
-                            date
-                          )
-                        }
-                      />
-                    ) : (
-                      <Input
-                        key={field.key}
-                        className={field.className}
-                        type="text"
-                        placeholder={field.placeholder}
-                        value={field.value || ""}
-                        onChange={(e) =>
-                          handleWorkExperienceSetInputChange(
-                            set.id,
-                            field.className,
-                            e.target.value
-                          )
-                        }
-                      />
-                    )}
-                  </div>
-                ))}
-                <DeleteButton onClick={() => deleteworkExperienceSet(set.id)}>
-                  sil
-                </DeleteButton>
-              </FadeInGridItem>
-            ))}
+            <div className="workExperienceDiv">
+              {workExperienceSets.map((set) => (
+                <FadeInGridItem key={set.id}>
+                  <h2>{set.name}</h2>
+                  {set.fields.map((field) => (
+                    <div key={field.key}>
+                      {field.className === "startDate" ||
+                      field.className === "endDate" ? (
+                        <DatePicker
+                          key={field.key}
+                          className={field.className}
+                          selected={field.value ? new Date(field.value) : null}
+                          dateFormat="dd/MM/yyyy"
+                          placeholderText={field.placeholder}
+                          onChange={(date) =>
+                            handleWorkExperienceSetInputChange(
+                              set.id,
+                              field.className,
+                              date
+                            )
+                          }
+                        />
+                      ) : (
+                        <Input
+                          key={field.key}
+                          className={field.className}
+                          type="text"
+                          placeholder={field.placeholder}
+                          value={field.value || ""}
+                          onChange={(e) =>
+                            handleWorkExperienceSetInputChange(
+                              set.id,
+                              field.className,
+                              e.target.value
+                            )
+                          }
+                        />
+                      )}
+                    </div>
+                  ))}
+                  <DeleteButton onClick={() => deleteworkExperienceSet(set.id)}>
+                    sil
+                  </DeleteButton>
+                </FadeInGridItem>
+              ))}
+            </div>
             <AddButton onClick={addworkExperienceSet}>Əlavə et</AddButton>
           </>
         );

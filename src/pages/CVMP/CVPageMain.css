@@ -13,17 +13,15 @@ body {
 .knowledgeLevel,
 .languageLevel {
   padding: 0px;
-  border: 1px solid aliceblue;
-  color: #6e949a;
+  border: 1px solid white;
+  color: white;
   border-radius: 4px;
   background-color: #8cb9bd;
   font-family: Sans-serif;
   transition: border-color 0.3s ease;
   width: 200px;
 }
-option {
-  color: white;
-}
+
 .startDate,
 .endDate {
   padding: 10px;
@@ -38,7 +36,7 @@ option {
     border-color: #8cb9bd;
   }
   &::placeholder {
-    color: #6e949a;
+    color: white;
   }
 }
 .buttonDiv {
@@ -158,7 +156,7 @@ h2 {
   border: 1px solid #ddd; /* Add borders for better visibility */
   padding: 1%; /* Add padding for spacing inside cells */
   text-align: center; /* Center content inside cells */
-  height: 15%;
+  height: 80px;
 }
 
 .Image {
@@ -167,4 +165,20 @@ h2 {
   padding: 10px; /* Add padding for spacing inside cells */
   text-align: center; /* Center content inside cells */
   margin-top: 5%;
+}
+
+.LanguageDiv {
+  display: flex;
+  flex-direction: row;
+}
+.workExperienceDiv {
+  display: block;
+}
+.LanguageKnowledgeDiv {
+  width: 35%;
+  margin-left: 4%;
+}
+.ComputerLanguageKnowledgeDiv {
+  width: 35%;
+  margin-left: 20%;
 }
