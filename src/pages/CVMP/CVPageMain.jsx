@@ -109,6 +109,7 @@ const SubmitButton = styled.button`
   padding: 12px;
   width: 240px;
   margin-top: 25%;
+  margin-left: 40%;
   border-radius: 6px;
   cursor: ${(props) =>
     props.loading
@@ -129,9 +130,9 @@ const SubmitButton = styled.button`
     left: 0;
     width: ${(props) => (props.loading ? "100%" : "0%")};
     height: 100%;
-    background-color: #4fa3ff;
+    background-color: ${(props) => props.backgroundColor || "#2e7eed"};
     border-radius: 6px;
-    animation: ${progressBarAnimation} 2s ease-in-out; /* Adjust the duration as needed */
+    animation: ${progressBarAnimation} 3s ease-in-out; /* Adjust the duration as needed */
   }
 `;
 
@@ -218,6 +219,7 @@ const GridItem = styled.div`
   border: 1px solid #ddd;
   padding: 10px;
   position: relative;
+  margin: 1%;
 `;
 const fadeIn = keyframes`
   from {
@@ -632,15 +634,36 @@ const CVPageMain = () => {
   };
   //--------------------------------------------------------------------------------------------------------------- PDF
 
-  const generatePdf = () => {
-    // Create a new instance of jsPDF
-    const pdfDoc = new jsPDF();
+  const generatePDF = () => {
+    const pdf = new jsPDF();
 
-    // Add content to the PDF
-    pdfDoc.text("Hello, this is a PDF!", 10, 10);
-
-    // Save the PDF to a file or open in a new tab
-    pdfDoc.save("generated-pdf.pdf");
+    // Personal Data
+    const imgData = formData.personalData.personPhoto;
+    pdf.addImage(imgData, "PNG", 10, 0, 40, 40);
+    pdf.text(`Name: ${formData.personalData.name}`, 10, 60);
+    pdf.text(`Father's Name: ${formData.personalData.fatherName}`, 10, 70);
+    pdf.text(`Surname: ${formData.personalData.surname}`, 10, 80);
+    pdf.text(`Gender: ${formData.personalData.gender}`, 10, 90);
+    pdf.text(`Family Status: ${formData.personalData.familyStatus}`, 10, 100);
+    pdf.text(`Citizenship: ${formData.personalData.citizenship}`, 10, 110);
+    pdf.text(
+      `Military Service: ${formData.personalData.militaryService}`,
+      10,
+      120
+    );
+    pdf.text(`Email: ${formData.personalData.email}`, 10, 130);
+    pdf.text(
+      `Driver's License: ${formData.personalData.driverLicense}`,
+      10,
+      140
+    );
+    pdf.text(`City: ${formData.personalData.city}`, 10, 150);
+    pdf.text(`Address: ${formData.personalData.address}`, 10, 160);
+    pdf.text(`Landline Phone: ${formData.personalData.landlinePhone}`, 10, 170);
+    pdf.text(`Mobile Phone: ${formData.personalData.mobilePhone}`, 10, 180);
+    pdf.text(`LinkedIn: ${formData.personalData.linkedInLink}`, 10, 190);
+    pdf.text(`Personal Bio: ${formData.personalData.personalBio}`, 10, 200);
+    pdf.save("CV.pdf");
   };
   //----------------------------------------------------------------------------------------------------------------- Check initialzation {for test use only}
   const logFormData = () => {
@@ -668,11 +691,19 @@ const CVPageMain = () => {
 
     if (loading) {
       timeoutId = setTimeout(() => {
-        if (massage === "Error") {
+        if (massage === "Gəza") {
           setLoading(false);
-          alert("Your session is end, please reauthorize");
+          alert(
+            "Sizin sessiyanız sona çatıb, xahiş edirik sistemə təkrar daxil olun."
+          );
+          setMessage("");
+        }
+        if (massage === "Yaradıldı") {
+          setLoading(false);
+          setMessage("");
         } else {
           setLoading(false);
+          setMessage("");
         }
       }, 3000);
     }
@@ -700,7 +731,7 @@ const CVPageMain = () => {
 
       if (!token) {
         setFormSubmitted(true);
-        setMessage("Error");
+        setMessage("Gəza");
         console.error("Token is missing");
         return;
       }
@@ -719,11 +750,11 @@ const CVPageMain = () => {
 
       if (response.ok) {
         setFormSubmitted(true);
-        setMessage("Done");
+        setMessage("Yaradıldı");
         console.log("Request successful", responseData);
       } else {
         setFormSubmitted(true);
-        setMessage("Error");
+        setMessage("Gəza");
         console.error("Request failed", responseData);
       }
     } catch (error) {
@@ -799,7 +830,7 @@ const CVPageMain = () => {
                 <Input
                   className={"mobilePhone cell"}
                   type="tel"
-                  placeholder="Telefon"
+                  placeholder="+994551234567"
                   value={formData.personalData.mobilePhone}
                   onChange={(e) =>
                     handleInputChange(
@@ -844,10 +875,10 @@ const CVPageMain = () => {
                     )
                   }
                 />
-                <Input
+
+                <select
                   className={"militaryService cell"}
-                  type="text"
-                  placeholder="Əsgərlik statusu"
+                  name="militaryService"
                   value={formData.personalData.militaryService}
                   onChange={(e) =>
                     handleInputChange(
@@ -856,14 +887,22 @@ const CVPageMain = () => {
                       e.target.value
                     )
                   }
-                />
+                >
+                  <option value="">Əsgərlik statusu</option>
+                  <option value="Hərbi mükəlləfiyyətli">
+                    Hərbi mükəlləfiyyətli
+                  </option>
+                  <option value="Hərbi mükəlləfiyyətsiz">
+                    Hərbi mükəlləfiyyətsiz
+                  </option>
+                </select>
               </div>
 
               <div className="PersonalDataDiv2">
-                <Input
+                <select
                   className={"driverLicense cell"}
-                  type="text"
-                  placeholder="Sürücülük vəsiqəsi"
+                  id="driverLicense"
+                  name="driverLicense"
                   value={formData.personalData.driverLicense}
                   onChange={(e) =>
                     handleInputChange(
@@ -872,7 +911,12 @@ const CVPageMain = () => {
                       e.target.value
                     )
                   }
-                />
+                >
+                  <option value="">Sürücülük vəsiqəsi</option>
+                  <option value="Var">Var</option>
+                  <option value="Yox">Yox</option>
+                </select>
+
                 <Input
                   className={"city cell"}
                   type="text"
@@ -954,46 +998,48 @@ const CVPageMain = () => {
             {educationSets.map((set) => (
               <FadeInGridItem key={set.id}>
                 <h2>{set.name}</h2>
-                {set.fields.map((field) => (
-                  <div key={field.key}>
-                    {field.className === "startDate" ||
-                    field.className === "endDate" ? (
-                      <DatePicker
-                        key={field.key}
-                        className={field.className}
-                        selected={field.value ? new Date(field.value) : null}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText={field.placeholder}
-                        type="text"
-                        onChange={(date) =>
-                          handleEducationSetInputChange(
-                            set.id,
-                            field.className,
-                            date
-                          )
-                        }
-                      />
-                    ) : (
-                      <Input
-                        key={field.key}
-                        className={field.className}
-                        type="text"
-                        placeholder={field.placeholder}
-                        value={field.value || ""}
-                        onChange={(e) =>
-                          handleEducationSetInputChange(
-                            set.id,
-                            field.className,
-                            e.target.value
-                          )
-                        }
-                      />
-                    )}
-                  </div>
-                ))}
-                <DeleteButton onClick={() => deleteEducationSet(set.id)}>
-                  sil
-                </DeleteButton>
+                <div className="EducationDivLayout">
+                  {set.fields.map((field) => (
+                    <div key={field.key}>
+                      {field.className === "startDate" ||
+                      field.className === "endDate" ? (
+                        <DatePicker
+                          key={field.key}
+                          className={field.className}
+                          selected={field.value ? new Date(field.value) : null}
+                          dateFormat="dd/MM/yyyy"
+                          placeholderText={field.placeholder}
+                          type="text"
+                          onChange={(date) =>
+                            handleEducationSetInputChange(
+                              set.id,
+                              field.className,
+                              date
+                            )
+                          }
+                        />
+                      ) : (
+                        <Input
+                          key={field.key}
+                          className={field.className}
+                          type="text"
+                          placeholder={field.placeholder}
+                          value={field.value || ""}
+                          onChange={(e) =>
+                            handleEducationSetInputChange(
+                              set.id,
+                              field.className,
+                              e.target.value
+                            )
+                          }
+                        />
+                      )}
+                    </div>
+                  ))}
+                  <DeleteButton onClick={() => deleteEducationSet(set.id)}>
+                    sil
+                  </DeleteButton>
+                </div>
               </FadeInGridItem>
             ))}
             <AddButton onClick={addEducationSet}>Əlavə et</AddButton>
@@ -1121,45 +1167,51 @@ const CVPageMain = () => {
               {workExperienceSets.map((set) => (
                 <FadeInGridItem key={set.id}>
                   <h2>{set.name}</h2>
-                  {set.fields.map((field) => (
-                    <div key={field.key}>
-                      {field.className === "startDate" ||
-                      field.className === "endDate" ? (
-                        <DatePicker
-                          key={field.key}
-                          className={field.className}
-                          selected={field.value ? new Date(field.value) : null}
-                          dateFormat="dd/MM/yyyy"
-                          placeholderText={field.placeholder}
-                          onChange={(date) =>
-                            handleWorkExperienceSetInputChange(
-                              set.id,
-                              field.className,
-                              date
-                            )
-                          }
-                        />
-                      ) : (
-                        <Input
-                          key={field.key}
-                          className={field.className}
-                          type="text"
-                          placeholder={field.placeholder}
-                          value={field.value || ""}
-                          onChange={(e) =>
-                            handleWorkExperienceSetInputChange(
-                              set.id,
-                              field.className,
-                              e.target.value
-                            )
-                          }
-                        />
-                      )}
-                    </div>
-                  ))}
-                  <DeleteButton onClick={() => deleteworkExperienceSet(set.id)}>
-                    sil
-                  </DeleteButton>
+                  <div className="workExperienceDivLayout">
+                    {set.fields.map((field) => (
+                      <div key={field.key}>
+                        {field.className === "startDate" ||
+                        field.className === "endDate" ? (
+                          <DatePicker
+                            key={field.key}
+                            className={field.className}
+                            selected={
+                              field.value ? new Date(field.value) : null
+                            }
+                            dateFormat="dd/MM/yyyy"
+                            placeholderText={field.placeholder}
+                            onChange={(date) =>
+                              handleWorkExperienceSetInputChange(
+                                set.id,
+                                field.className,
+                                date
+                              )
+                            }
+                          />
+                        ) : (
+                          <Input
+                            key={field.key}
+                            className={field.className}
+                            type="text"
+                            placeholder={field.placeholder}
+                            value={field.value || ""}
+                            onChange={(e) =>
+                              handleWorkExperienceSetInputChange(
+                                set.id,
+                                field.className,
+                                e.target.value
+                              )
+                            }
+                          />
+                        )}
+                      </div>
+                    ))}
+                    <DeleteButton
+                      onClick={() => deleteworkExperienceSet(set.id)}
+                    >
+                      sil
+                    </DeleteButton>
+                  </div>
                 </FadeInGridItem>
               ))}
             </div>
@@ -1170,7 +1222,17 @@ const CVPageMain = () => {
       case "Finish":
         return (
           <>
-            <SubmitButton loading={loading} onClick={handleFormSubmit}>
+            <SubmitButton
+              loading={loading}
+              backgroundColor={
+                massage === "Gəza"
+                  ? "#ff0000"
+                  : massage === "Yaradıldı"
+                  ? "green"
+                  : null
+              }
+              onClick={handleFormSubmit}
+            >
               {formSubmitted ? massage : "Yarat"}
               {loading && <div className="progress-bar"></div>}
             </SubmitButton>
