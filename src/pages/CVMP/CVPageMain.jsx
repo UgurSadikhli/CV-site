@@ -133,6 +133,7 @@ const SubmitButton = styled.button`
     background-color: ${(props) => props.backgroundColor || "#2e7eed"};
     border-radius: 6px;
     animation: ${progressBarAnimation} 3s ease-in-out; /* Adjust the duration as needed */
+    opacity: 0.5;
   }
 `;
 
@@ -691,7 +692,7 @@ const CVPageMain = () => {
 
     if (loading) {
       timeoutId = setTimeout(() => {
-        if (massage === "Gəza") {
+        if (massage === "Qəza") {
           setLoading(false);
           alert(
             "Sizin sessiyanız sona çatıb, xahiş edirik sistemə təkrar daxil olun."
@@ -711,7 +712,7 @@ const CVPageMain = () => {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [loading]);
+  }, [loading, massage]);
 
   //----------------------------------------------------------------------------------------------------------------- handleFormSubmit main fetch
 
@@ -731,7 +732,7 @@ const CVPageMain = () => {
 
       if (!token) {
         setFormSubmitted(true);
-        setMessage("Gəza");
+        setMessage("Qəza");
         console.error("Token is missing");
         return;
       }
@@ -754,7 +755,7 @@ const CVPageMain = () => {
         console.log("Request successful", responseData);
       } else {
         setFormSubmitted(true);
-        setMessage("Gəza");
+        setMessage("Qəza");
         console.error("Request failed", responseData);
       }
     } catch (error) {
@@ -1225,7 +1226,7 @@ const CVPageMain = () => {
             <SubmitButton
               loading={loading}
               backgroundColor={
-                massage === "Gəza"
+                massage === "Qəza"
                   ? "#ff0000"
                   : massage === "Yaradıldı"
                   ? "green"
