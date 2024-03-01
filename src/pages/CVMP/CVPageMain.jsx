@@ -93,15 +93,6 @@ const UploadText = styled.div`
   z-index: 1;
 `;
 
-const progressBarAnimation = keyframes`
-  from {
-    width: 0%;
-  }
-  to {
-    width: 100%;
-  }
-`;
-
 const SubmitButton = styled.button`
   background-color: #2e7eed;
   color: white;
@@ -111,10 +102,7 @@ const SubmitButton = styled.button`
   margin-top: 25%;
   margin-left: 40%;
   border-radius: 6px;
-  cursor: ${(props) =>
-    props.loading
-      ? "not-allowed"
-      : "pointer"}; /* Disable pointer events during loading */
+  cursor: pointer; /* Disable pointer events during loading */
   font-family: Verdana;
   font-size: 30px;
   position: relative;
@@ -122,18 +110,6 @@ const SubmitButton = styled.button`
   &:hover {
     background-color: ${(props) => (props.loading ? "#2e7eed" : "#4fa3ff")};
   }
-
-  /* Progress bar styles */
-  .progress-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: ${(props) => (props.loading ? "100%" : "0%")};
-    height: 100%;
-    background-color: ${(props) => props.backgroundColor || "#2e7eed"};
-    border-radius: 6px;
-    animation: ${progressBarAnimation} 3s ease-in-out; /* Adjust the duration as needed */
-    opacity: 0.5;
   }
 `;
 
@@ -252,9 +228,6 @@ const MenuItem = styled.div`
 
 const CVPageMain = () => {
   //-------------------------------------------------------------------------------------Button progressBar
-
-  const [loading, setLoading] = useState(false);
-  const [formSubmitted, setFormSubmitted] = useState(false);
   //----------------------------------------------------------------------------------------------------
 
   const navigate = useNavigate();
@@ -664,6 +637,7 @@ const CVPageMain = () => {
     pdf.text(`Mobile Phone: ${formData.personalData.mobilePhone}`, 10, 180);
     pdf.text(`LinkedIn: ${formData.personalData.linkedInLink}`, 10, 190);
     pdf.text(`Personal Bio: ${formData.personalData.personalBio}`, 10, 200);
+
     pdf.save("CV.pdf");
   };
   //----------------------------------------------------------------------------------------------------------------- Check initialzation {for test use only}
@@ -672,53 +646,10 @@ const CVPageMain = () => {
   };
   //----------------------------------------------------------------------------------------------------------------- SubmitButton state changers
 
-  const [massage, setMessage] = useState(false);
-  useEffect(() => {
-    let formSubmittedTimeoutId;
-
-    if (formSubmitted) {
-      formSubmittedTimeoutId = setTimeout(() => {
-        setFormSubmitted(false);
-      }, 3000);
-    }
-
-    return () => {
-      clearTimeout(formSubmittedTimeoutId);
-    };
-  }, [formSubmitted]);
-
-  useEffect(() => {
-    let timeoutId;
-
-    if (loading) {
-      timeoutId = setTimeout(() => {
-        if (massage === "Qəza") {
-          setLoading(false);
-          alert(
-            "Sizin sessiyanız sona çatıb, xahiş edirik sistemə təkrar daxil olun."
-          );
-          setMessage("");
-        }
-        if (massage === "Yaradıldı") {
-          setLoading(false);
-          setMessage("");
-        } else {
-          setLoading(false);
-          setMessage("");
-        }
-      }, 3000);
-    }
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [loading, massage]);
-
   //----------------------------------------------------------------------------------------------------------------- handleFormSubmit main fetch
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
     formData.educations = educationSetsWithFlattenedData;
     formData.languages = transformedLanguageData;
@@ -731,8 +662,9 @@ const CVPageMain = () => {
       const token = localStorage.getItem("token");
 
       if (!token) {
-        setFormSubmitted(true);
-        setMessage("Qəza");
+        alert(
+          "Sizin sesiyanız sona catdı, xaiş edirik sistemə yenidən daxil olun!"
+        );
         console.error("Token is missing");
         return;
       }
@@ -750,17 +682,14 @@ const CVPageMain = () => {
       await new Promise((resolve) => setTimeout(resolve, 3000));
 
       if (response.ok) {
-        setFormSubmitted(true);
-        setMessage("Yaradıldı");
+        alert("CV uğurla yaradıldı");
         console.log("Request successful", responseData);
       } else {
-        setFormSubmitted(true);
-        setMessage("Qəza");
+        alert("Qəza baş verdi!");
         console.error("Request failed", responseData);
       }
     } catch (error) {
-      setFormSubmitted(true);
-      setMessage("Error");
+      alert("Qəza baş verdi!");
       console.error("Error:", error);
       console.log("CatchError: ");
     }
@@ -777,7 +706,7 @@ const CVPageMain = () => {
                   <ImagePreview src={image} alt="User" />
                 ) : (
                   <>
-                    <UploadText>Upload Image</UploadText>
+                    <UploadText>Şəkil yüklə</UploadText>
                   </>
                 )}
                 <InputFile
@@ -979,7 +908,7 @@ const CVPageMain = () => {
                 <Input
                   className={"personalBio cell2"}
                   type="text"
-                  placeholder="Mənim hakqımda"
+                  placeholder="Mənim haqqımda"
                   value={formData.personalData.personalBio}
                   onChange={(e) =>
                     handleInputChange(
@@ -1223,20 +1152,7 @@ const CVPageMain = () => {
       case "Finish":
         return (
           <>
-            <SubmitButton
-              loading={loading}
-              backgroundColor={
-                massage === "Qəza"
-                  ? "#ff0000"
-                  : massage === "Yaradıldı"
-                  ? "green"
-                  : null
-              }
-              onClick={handleFormSubmit}
-            >
-              {formSubmitted ? massage : "Yarat"}
-              {loading && <div className="progress-bar"></div>}
-            </SubmitButton>
+            <SubmitButton onClick={handleFormSubmit}>CV Yarat</SubmitButton>
           </>
         );
       default:

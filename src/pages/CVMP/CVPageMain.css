@@ -22,12 +22,14 @@ body {
   font-size: 15px;
   background-color: #8cb9bd;
   transition: border-color 0.3s ease;
-  width: 200px;
 }
 .knowledgeLevel,
 .languageLevel {
   margin: 1.5%;
+  font-size: smaller;
+  padding: 1%;
 }
+
 .startDate,
 .endDate {
   padding: 10px;
@@ -38,6 +40,7 @@ body {
   font-family: Sans-serif;
   font-size: 15px;
   transition: border-color 0.3s ease;
+  height: 15%;
   width: 200px;
   &:hover {
     border-color: #8cb9bd;
@@ -83,13 +86,14 @@ body {
 
 .typewriter h1 {
   margin-top: 5%;
-  margin-left: 1%;
+  margin-left: 1.5%;
   overflow: hidden;
   border-right: 0.15em solid;
   white-space: nowrap;
   letter-spacing: 1.7px;
-  animation: typing 3s steps(25, end), blink-caret 0.7s step-end infinite;
+  animation: typing 4s steps(50, end), blink-caret 0.7s step-end infinite;
   color: #004e64;
+  width: 72%;
 }
 h2 {
   color: #004e64;
@@ -101,7 +105,7 @@ h2 {
     width: 0%;
   }
   to {
-    width: 100%;
+    width: 72%;
   }
 }
 
@@ -156,6 +160,7 @@ h2 {
   box-sizing: border-box; /* Include padding and border in the total width */
   text-align: center;
   height: 15%;
+  width: 200px;
 }
 .cell2 {
   flex: 0 0 95%; /* Two columns, adjust width as needed */
