@@ -38,7 +38,6 @@ const bounce = keyframes`
 `;
 const BouncingImage = styled.img`
   animation: ${bounce} 1s 1;
-  
 `;
 const Input = styled.input`
   padding: 10px;
@@ -214,10 +213,9 @@ const FadeInGridItem = styled(GridItem)`
 `;
 const HeaderContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  padding: 10px 20px 10px 20px;
+  padding: 0.5px 15px;
   background-color: rgb(0, 78, 100);
-  height: 50px;
+  height: 47px;
 `;
 const MenuItem = styled.div`
   padding: 8px;
