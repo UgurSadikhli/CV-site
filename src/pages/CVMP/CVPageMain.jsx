@@ -658,7 +658,8 @@ const CVPageMain = () => {
 
     console.log(formData);
     try {
-      const endpointUrl = "http://avazdg.tech:5201/api/CV/create-cv";
+      const endpointUrl = "https://avazdg.tech:7201/api/CV/create-cv";
+
       const token = localStorage.getItem("token");
 
       if (!token) {

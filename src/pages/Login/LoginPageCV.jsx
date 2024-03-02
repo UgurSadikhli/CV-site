@@ -103,7 +103,7 @@ const Login = ({ onLogin }) => {
 
   const handleClick3 = async () => {
     try {
-      const response = await fetch("http://avazdg.tech:5201/api/Auth/login", {
+      const response = await fetch("https://avazdg.tech:7201/api/Auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -144,29 +144,29 @@ const Login = ({ onLogin }) => {
           <h1 className="H1LOG">Hesaba daxil ol</h1>
           <br></br>
           <form onSubmit={handleClick3}>
-          <Input
-            type="email"
-            id="email"
-            placeholder="Email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+            <Input
+              type="email"
+              id="email"
+              placeholder="Email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
 
-          <Input
-            type="password"
-            id="password"
-            placeholder="Şifrə"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+            <Input
+              type="password"
+              id="password"
+              placeholder="Şifrə"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
 
-          <Button onClick={handleClick3} type="button">
-            Daxil ol
-          </Button>
+            <Button onClick={handleClick3} type="button">
+              Daxil ol
+            </Button>
           </form>
           <button className="button-like-link" onClick={handleClick}>
             Yeni hesab yarat

@@ -27,7 +27,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #2f72be; 
+  background-color: #2f72be;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -114,7 +114,7 @@ const Logup = ({ onRegister }) => {
     }
 
     try {
-      const response = await fetch("http://avazdg.tech:5201/api/Auth/signup", {
+      const response = await fetch("https://avazdg.tech:7201/api/Auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
