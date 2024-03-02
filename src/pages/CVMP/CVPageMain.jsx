@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import "./CVPageMain.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { format } from "date-fns";
 import jsPDF from "jspdf";
 //------------------------------------------------------------------------- Components and Design
 
@@ -45,7 +44,7 @@ const Input = styled.input`
   border: 1px solid white;
   border-radius: 4px;
   background-color: #8cb9bd;
-  font-family: Sans-serif;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
   color: white;
   font-size: 15px;
   transition: border-color 0.4s ease;
@@ -91,6 +90,7 @@ const UploadText = styled.div`
   color: black;
   text-align: center;
   z-index: 1;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
 `;
 
 const SubmitButton = styled.button`
@@ -999,7 +999,7 @@ const CVPageMain = () => {
                               )
                             }
                           >
-                            <option value="">Dil bacarığı səviyyəti</option>
+                            <option value="">Dil bacarığı səviyyəsi</option>
                             <option value="Əla">Əla</option>
                             <option value="Yaxşı">Yaxşı</option>
                             <option value="Orta">Orta</option>
@@ -1052,7 +1052,7 @@ const CVPageMain = () => {
                             }
                           >
                             <option value="">
-                              Komputer bacarığı səviyyəti
+                              Komputer bacarığı səviyyəsi
                             </option>
                             <option value="Əla">Əla</option>
                             <option value="Yaxşı">Yaxşı</option>
@@ -1152,7 +1152,7 @@ const CVPageMain = () => {
       case "Finish":
         return (
           <>
-            <SubmitButton onClick={handleFormSubmit}>CV Yarat</SubmitButton>
+            <SubmitButton onClick={handleFormSubmit}>Yarat</SubmitButton>
           </>
         );
       default:

@@ -11,7 +11,7 @@ import CV from "./pages/CVMP/CVPageMain";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleLogin = () => {
     setIsAuthenticated(true);

@@ -18,7 +18,7 @@ body {
   border: 1px solid white;
   color: white;
   border-radius: 4px;
-  font-family: Sans-serif;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
   font-size: 15px;
   background-color: #8cb9bd;
   transition: border-color 0.3s ease;
@@ -37,7 +37,7 @@ body {
   color: white;
   border-radius: 4px;
   background-color: #8cb9bd;
-  font-family: Sans-serif;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
   font-size: 15px;
   transition: border-color 0.3s ease;
   height: 15%;
@@ -153,29 +153,27 @@ h2 {
 }
 
 .cell {
-  flex: 1 0 24%; /* Three columns, each taking 33.33% width */
+  flex: 1 0 24%; 
   margin: 2%;
   border: 1px solid white;
   padding: 1%;
-  box-sizing: border-box; /* Include padding and border in the total width */
+  box-sizing: border-box; 
   text-align: center;
-  height: 15%;
-  width: 200px;
 }
 .cell2 {
-  flex: 0 0 95%; /* Two columns, adjust width as needed */
-  margin: 2%; /* Adjust margin for spacing between cells */
-  border: 1px solid white; /* Add borders for better visibility */
-  padding: 1%; /* Add padding for spacing inside cells */
-  text-align: center; /* Center content inside cells */
+  flex: 0 0 95%;
+  margin: 2%; 
+  border: 1px solid white; 
+  padding: 1%;
+  text-align: center; 
   height: 80px;
 }
 
 .Image {
-  margin: 15px; /* Adjust margin for spacing between cells */
-  border: 1px solid #ddd; /* Add borders for better visibility */
-  padding: 10px; /* Add padding for spacing inside cells */
-  text-align: center; /* Center content inside cells */
+  margin: 15px; 
+  border: 1px solid #ddd; 
+  padding: 10px; 
+  text-align: center;
   margin-top: 5%;
 }
 
