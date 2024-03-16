@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import "./Login.css";
 
+
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -120,7 +121,10 @@ const Login = ({ onLogin }) => {
 
         onLogin();
         if (token && userId) {
+         
           navigate("/CV");
+          
+        
         } else {
           console.error("Token or user ID not found in the response");
         }
@@ -164,7 +168,7 @@ const Login = ({ onLogin }) => {
               required
             />
 
-            <Button onClick={handleClick3} type="button">
+            <Button type="submit">
               Daxil ol
             </Button>
           </form>

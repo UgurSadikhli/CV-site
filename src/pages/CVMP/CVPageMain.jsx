@@ -695,6 +695,47 @@ const CVPageMain = () => {
       console.log("CatchError: ");
     }
   };
+  //----------------------------------------------------------------------------------------------------------------- Get data by fetch
+
+  const getData = async (e) => {
+    e.preventDefault();
+
+    try {
+      const endpointUrl = "https://avazdg.tech:7201/api/CV/{cvId}";
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        alert(
+          "Sizin sesiyanız sona catdı, xaiş edirik sistemə yenidən daxil olun!"
+        );
+        console.error("Token is missing");
+        return;
+      }
+
+      const response = await fetch(endpointUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        formData = responseData;
+        // formData.personalData.name= responseData
+        // formData.educations = educationSetsWithFlattenedData;
+        // formData.languages = transformedLanguageData;
+        // formData.computerKnowledges = transformedComputerLanguageData;
+        // formData.workExperiences = transformedWorkExperienceData;
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+    }
+  };
+
   //--------------------------------------------------------------------------------------------------------------------- Manin body rendering
   const renderInputs = () => {
     switch (activeCategory) {
@@ -721,7 +762,11 @@ const CVPageMain = () => {
                 <Input
                   className={"NameInput cell"}
                   type="text"
-                  placeholder="Ad"
+                  placeholder={
+                    formData.personalData.name === ""
+                      ? "Ad"
+                      : formData.personalData.name
+                  }
                   value={formData.personalData.name}
                   onChange={(e) =>
                     handleInputChange("personalData", "name", e.target.value)
@@ -1154,6 +1199,7 @@ const CVPageMain = () => {
         return (
           <>
             <SubmitButton onClick={handleFormSubmit}>Yarat</SubmitButton>
+            <button onClick={getData}>Initialize</button>
           </>
         );
       default:
