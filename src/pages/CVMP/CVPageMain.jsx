@@ -5,6 +5,9 @@ import "./CVPageMain.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import jsPDF from "jspdf";
+import DeleteButton from "../../components/DeleteButton/DeleteButton";
+import SubmitButton from "../../components/SubmitButton/SubmitButton";
+import MenuButton from "../../components/MenuButton/MenuButton";
 //------------------------------------------------------------------------- Components and Design
 
 const Container = styled.div`
@@ -16,7 +19,7 @@ const Container = styled.div`
   height: 81%;
   background-color: #8cb9bd;
   padding: 1.1%;
-  box-shadow: 0 4px 10px rgba(0.6, 0, 0, 0.6);
+  box-shadow: 0 4px 10px rgba(0.7, 0.1, 0, 0.6);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 
@@ -24,7 +27,6 @@ const Container = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
 `;
-
 const bounce = keyframes`
   0%, 20%, 50%, 80%, 100% {
     transform: translateY(0);
@@ -93,25 +95,25 @@ const UploadText = styled.div`
   font-family: "Trebuchet MS", Helvetica, sans-serif;
 `;
 
-const SubmitButton = styled.button`
-  background-color: #2e7eed;
-  color: white;
-  border: none;
-  padding: 12px;
-  width: 240px;
-  margin-top: 25%;
-  margin-left: 40%;
-  border-radius: 6px;
-  cursor: pointer; /* Disable pointer events during loading */
-  font-family: Verdana;
-  font-size: 30px;
-  position: relative;
+// const SubmitButton = styled.button`
+//   background-color: #2e7eed;
+//   color: white;
+//   border: none;
+//   padding: 12px;
+//   width: 240px;
+//   margin-top: 25%;
+//   margin-left: 40%;
+//   border-radius: 6px;
+//   cursor: pointer; /* Disable pointer events during loading */
+//   font-family: Verdana;
+//   font-size: 30px;
+//   position: relative;
 
-  &:hover {
-    background-color: ${(props) => (props.loading ? "#2e7eed" : "#4fa3ff")};
-  }
-  }
-`;
+//   &:hover {
+//     background-color: ${(props) => (props.loading ? "#2e7eed" : "#4fa3ff")};
+//   }
+//   }
+// `;
 
 const slideIn = keyframes`
 from {
@@ -144,25 +146,25 @@ const UserIcoButton = styled.img`
   margin-left: 84%;
   margin-top: 0.5%;
 `;
-const DeleteButton = styled.button`
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  padding: 8px 16px;
-  background-color: #ff4d4d;
-  color: #fff;
-  border: none;
-  font-family: Verdana;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  transition: background-color 0.3s ease-in-out;
+// const DeleteButton = styled.button`
+//   position: absolute;
+//   top: 5px;
+//   right: 5px;
+//   padding: 8px 16px;
+//   background-color: #ff4d4d;
+//   color: #fff;
+//   border: none;
+//   font-family: Verdana;
+//   border-radius: 5px;
+//   cursor: pointer;
+//   font-size: 14px;
+//   font-weight: bold;
+//   transition: background-color 0.3s ease-in-out;
 
-  &:hover {
-    background-color: #d14848;
-  }
-`;
+//   &:hover {
+//     background-color: #d14848;
+//   }
+// `;
 const AddButton = styled.button`
   margin-top: 1%;
   margin-left: 90%;
@@ -971,7 +973,7 @@ const CVPageMain = () => {
       case "Education":
         return (
           <>
-            {educationSets.map((set) => (
+            {educationSets.map((set, index) => (
               <FadeInGridItem key={set.id}>
                 <h2>{set.name}</h2>
                 <div className="EducationDivLayout">
@@ -1012,12 +1014,15 @@ const CVPageMain = () => {
                       )}
                     </div>
                   ))}
-                  <DeleteButton onClick={() => deleteEducationSet(set.id)}>
-                    sil
-                  </DeleteButton>
+                  {index !== 0 && (
+                    <DeleteButton onClick={() => deleteEducationSet(set.id)}>
+                      sil
+                    </DeleteButton>
+                  )}
                 </div>
               </FadeInGridItem>
             ))}
+
             <AddButton onClick={addEducationSet}>Əlavə et</AddButton>
           </>
         );
@@ -1026,7 +1031,7 @@ const CVPageMain = () => {
           <>
             <div className="LanguageDiv">
               <div className="LanguageKnowledgeDiv">
-                {languageSets.map((set) => (
+                {languageSets.map((set, index) => (
                   <FadeInGridItem key={set.id}>
                     <h2>{set.name}</h2>
                     {set.fields.map((field) => (
@@ -1069,16 +1074,18 @@ const CVPageMain = () => {
                         )}
                       </div>
                     ))}
-                    <DeleteButton onClick={() => deleteLanguageSet(set.id)}>
-                      sil
-                    </DeleteButton>
+                    {index !== 0 && (
+                      <DeleteButton onClick={() => deleteLanguageSet(set.id)}>
+                        sil
+                      </DeleteButton>
+                    )}
                   </FadeInGridItem>
                 ))}
                 <AddButton onClick={addLanguageSet}>Əlavə et</AddButton>
               </div>
 
               <div className="ComputerLanguageKnowledgeDiv">
-                {ComputerlanguageSets.map((set) => (
+                {ComputerlanguageSets.map((set, index) => (
                   <FadeInGridItem key={set.id}>
                     <h2>{set.name}</h2>
                     {set.fields.map((field) => (
@@ -1123,11 +1130,13 @@ const CVPageMain = () => {
                         )}
                       </div>
                     ))}
-                    <DeleteButton
-                      onClick={() => deleteComputerLanguageSet(set.id)}
-                    >
-                      sil
-                    </DeleteButton>
+                    {index !== 0 && (
+                      <DeleteButton
+                        onClick={() => deleteComputerLanguageSet(set.id)}
+                      >
+                        sil
+                      </DeleteButton>
+                    )}
                   </FadeInGridItem>
                 ))}
 
@@ -1140,7 +1149,7 @@ const CVPageMain = () => {
         return (
           <>
             <div className="workExperienceDiv">
-              {workExperienceSets.map((set) => (
+              {workExperienceSets.map((set, index) => (
                 <FadeInGridItem key={set.id}>
                   <h2>{set.name}</h2>
                   <div className="workExperienceDivLayout">
@@ -1182,16 +1191,18 @@ const CVPageMain = () => {
                         )}
                       </div>
                     ))}
-                    <DeleteButton
-                      onClick={() => deleteworkExperienceSet(set.id)}
-                    >
-                      sil
-                    </DeleteButton>
+                    {index !== 0 && (
+                      <DeleteButton
+                        onClick={() => deleteworkExperienceSet(set.id)}
+                      >
+                        sil
+                      </DeleteButton>
+                    )}
                   </div>
                 </FadeInGridItem>
               ))}
+              <AddButton onClick={addworkExperienceSet}>Əlavə et</AddButton>
             </div>
-            <AddButton onClick={addworkExperienceSet}>Əlavə et</AddButton>
           </>
         );
 
@@ -1199,7 +1210,7 @@ const CVPageMain = () => {
         return (
           <>
             <SubmitButton onClick={handleFormSubmit}>Yarat</SubmitButton>
-            <button onClick={getData}>Initialize</button>
+            {/*<button onClick={getData}>Initialize</button> */}
           </>
         );
       default:
@@ -1243,19 +1254,7 @@ const CVPageMain = () => {
           alt="Default"
         />
         <p className="AvazDGHedder">Avaz DG</p>
-        <UserIcoButton
-          src="./assets/img/menu.png"
-          onClick={handleButtonClick4}
-        ></UserIcoButton>
-        <DropdownMenu className="place" isOpen={isMenuOpen}>
-          <MenuItem>
-            <img
-              onClick={handleLogout}
-              className="optionImages"
-              src="./assets/img/sign-out.png"
-            />
-          </MenuItem>
-        </DropdownMenu>
+       <MenuButton onClick={handleLogout}/>
       </HeaderContainer>
 
       <div className="buttonDiv">
@@ -1293,6 +1292,7 @@ const CVPageMain = () => {
         >
           Təstiqləmək
         </Button>
+     
       </div>
       <Container key={activeButton}>{renderInputs()}</Container>
     </>

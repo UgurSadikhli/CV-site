@@ -102,7 +102,8 @@ const Login = ({ onLogin }) => {
     navigate("/register");
   };
 
-  const handleClick3 = async () => {
+  const handleClick3 = async (e) => {
+    e.preventDefault();
     try {
       const response = await fetch("https://avazdg.tech:7201/api/Auth/login", {
         method: "POST",
