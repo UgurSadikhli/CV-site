@@ -1,0 +1,57 @@
+.button-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 12px;
+  gap: 4px;
+  height: 35px;
+  width: 145px;
+  border: none;
+  background-color: #4caf50;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: 1%;
+  margin-left: 86%;
+}
+
+.lable-add {
+  line-height: 22px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+  font-family: Verdana;
+  letter-spacing: 1px;
+}
+
+.button-add:hover {
+  background: #2e7d30;
+}
+
+.button-add:hover .svg-icon {
+  animation: rotate 1.3s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(40deg);
+  }
+
+  50% {
+    transform: rotate(0deg);
+  }
+
+  75% {
+    transform: rotate(-30deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+.svgAdd {
+  color: #fff;
+}

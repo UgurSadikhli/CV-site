@@ -130,6 +130,7 @@ const Logup = ({ onRegister }) => {
         console.error("Registration failed");
       }
     } catch (error) {
+
       console.error("Error during registration:", error);
     }
   };

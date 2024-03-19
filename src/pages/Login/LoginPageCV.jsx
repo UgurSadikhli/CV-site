@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import "./Login.css";
 
-
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -119,20 +118,19 @@ const Login = ({ onLogin }) => {
         const userId = data.userID;
         localStorage.setItem("token", token);
         localStorage.setItem("userID", userId);
-
         onLogin();
         if (token && userId) {
-         
           navigate("/CV");
-          
-        
         } else {
+    
           console.error("Token or user ID not found in the response");
         }
       } else {
+
         console.error("Authentication failed");
       }
     } catch (error) {
+
       console.error("Error during authentication:", error);
     }
   };
@@ -169,9 +167,7 @@ const Login = ({ onLogin }) => {
               required
             />
 
-            <Button type="submit">
-              Daxil ol
-            </Button>
+            <Button type="submit">Daxil ol</Button>
           </form>
           <button className="button-like-link" onClick={handleClick}>
             Yeni hesab yarat

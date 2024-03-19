@@ -1,13 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import "./CVPageMain.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import jsPDF from "jspdf";
+//import jsPDF from "jspdf";
 import DeleteButton from "../../components/DeleteButton/DeleteButton";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import MenuButton from "../../components/MenuButton/MenuButton";
+import AddButton from "../../components/AddButton/AddButton";
 //------------------------------------------------------------------------- Components and Design
 
 const Container = styled.div`
@@ -140,12 +141,13 @@ const Button = styled.button`
     border-bottom: 2.4px solid #8cb9bd;
   }
 `;
-const UserIcoButton = styled.img`
-  width: 30px;
-  height: 35px;
-  margin-left: 84%;
-  margin-top: 0.5%;
-`;
+// const UserIcoButton = styled.img`
+//   width: 30px;
+//   height: 35px;
+//   margin-left: 84%;
+//   margin-top: 0.5%;
+// `;
+
 // const DeleteButton = styled.button`
 //   position: absolute;
 //   top: 5px;
@@ -165,35 +167,36 @@ const UserIcoButton = styled.img`
 //     background-color: #d14848;
 //   }
 // `;
-const AddButton = styled.button`
-  margin-top: 1%;
-  margin-left: 90%;
-  padding: 12px 24px;
-  background-color: #4caf50;
-  color: #fff;
-  border: none;
-  font-family: Verdana;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  transition: background-color 0.3s ease-in-out;
-  width: 130px;
-  &:hover {
-    background-color: #45a049;
-  }
-`;
-const DropdownMenu = styled.div`
-  display: ${(props) => (props.isOpen ? "block" : "none")};
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  padding: 10px;
-  z-index: 1;
-`;
+
+// const AddButton = styled.button`
+//   margin-top: 1%;
+//   margin-left: 90%;
+//   padding: 12px 24px;
+//   background-color: #4caf50;
+//   color: #fff;
+//   border: none;
+//   font-family: Verdana;
+//   border-radius: 5px;
+//   cursor: pointer;
+//   font-size: 16px;
+//   font-weight: bold;
+//   transition: background-color 0.3s ease-in-out;
+//   width: 130px;
+//   &:hover {
+//     background-color: #45a049;
+//   }
+// `;
+// const DropdownMenu = styled.div`
+//   display: ${(props) => (props.isOpen ? "block" : "none")};
+//   position: absolute;
+//   top: 100%;
+//   left: 0;
+//   background-color: #fff;
+//   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+//   border-radius: 6px;
+//   padding: 10px;
+//   z-index: 1;
+// `;
 const GridItem = styled.div`
   border: 1px solid #ddd;
   padding: 10px;
@@ -219,13 +222,13 @@ const HeaderContainer = styled.div`
   background-color: rgb(0, 78, 100);
   height: 47px;
 `;
-const MenuItem = styled.div`
-  padding: 8px;
-  cursor: pointer;
-  &:hover {
-    background-color: #f1f1f1;
-  }
-`;
+// const MenuItem = styled.div`
+//   padding: 8px;
+//   cursor: pointer;
+//   &:hover {
+//     background-color: #f1f1f1;
+//   }
+// `;
 //----------------------------------------------------------------------------------------------------
 
 const CVPageMain = () => {
@@ -610,42 +613,42 @@ const CVPageMain = () => {
   };
   //--------------------------------------------------------------------------------------------------------------- PDF
 
-  const generatePDF = () => {
-    const pdf = new jsPDF();
+  // const generatePDF = () => {
+  //   const pdf = new jsPDF();
 
-    // Personal Data
-    const imgData = formData.personalData.personPhoto;
-    pdf.addImage(imgData, "PNG", 10, 0, 40, 40);
-    pdf.text(`Name: ${formData.personalData.name}`, 10, 60);
-    pdf.text(`Father's Name: ${formData.personalData.fatherName}`, 10, 70);
-    pdf.text(`Surname: ${formData.personalData.surname}`, 10, 80);
-    pdf.text(`Gender: ${formData.personalData.gender}`, 10, 90);
-    pdf.text(`Family Status: ${formData.personalData.familyStatus}`, 10, 100);
-    pdf.text(`Citizenship: ${formData.personalData.citizenship}`, 10, 110);
-    pdf.text(
-      `Military Service: ${formData.personalData.militaryService}`,
-      10,
-      120
-    );
-    pdf.text(`Email: ${formData.personalData.email}`, 10, 130);
-    pdf.text(
-      `Driver's License: ${formData.personalData.driverLicense}`,
-      10,
-      140
-    );
-    pdf.text(`City: ${formData.personalData.city}`, 10, 150);
-    pdf.text(`Address: ${formData.personalData.address}`, 10, 160);
-    pdf.text(`Landline Phone: ${formData.personalData.landlinePhone}`, 10, 170);
-    pdf.text(`Mobile Phone: ${formData.personalData.mobilePhone}`, 10, 180);
-    pdf.text(`LinkedIn: ${formData.personalData.linkedInLink}`, 10, 190);
-    pdf.text(`Personal Bio: ${formData.personalData.personalBio}`, 10, 200);
+  //   // Personal Data
+  //   const imgData = formData.personalData.personPhoto;
+  //   pdf.addImage(imgData, "PNG", 10, 0, 40, 40);
+  //   pdf.text(`Name: ${formData.personalData.name}`, 10, 60);
+  //   pdf.text(`Father's Name: ${formData.personalData.fatherName}`, 10, 70);
+  //   pdf.text(`Surname: ${formData.personalData.surname}`, 10, 80);
+  //   pdf.text(`Gender: ${formData.personalData.gender}`, 10, 90);
+  //   pdf.text(`Family Status: ${formData.personalData.familyStatus}`, 10, 100);
+  //   pdf.text(`Citizenship: ${formData.personalData.citizenship}`, 10, 110);
+  //   pdf.text(
+  //     `Military Service: ${formData.personalData.militaryService}`,
+  //     10,
+  //     120
+  //   );
+  //   pdf.text(`Email: ${formData.personalData.email}`, 10, 130);
+  //   pdf.text(
+  //     `Driver's License: ${formData.personalData.driverLicense}`,
+  //     10,
+  //     140
+  //   );
+  //   pdf.text(`City: ${formData.personalData.city}`, 10, 150);
+  //   pdf.text(`Address: ${formData.personalData.address}`, 10, 160);
+  //   pdf.text(`Landline Phone: ${formData.personalData.landlinePhone}`, 10, 170);
+  //   pdf.text(`Mobile Phone: ${formData.personalData.mobilePhone}`, 10, 180);
+  //   pdf.text(`LinkedIn: ${formData.personalData.linkedInLink}`, 10, 190);
+  //   pdf.text(`Personal Bio: ${formData.personalData.personalBio}`, 10, 200);
 
-    pdf.save("CV.pdf");
-  };
+  //   pdf.save("CV.pdf");
+  // };
   //----------------------------------------------------------------------------------------------------------------- Check initialzation {for test use only}
-  const logFormData = () => {
-    console.log(formData);
-  };
+  // const logFormData = () => {
+  //   console.log(formData);
+  // };
   //----------------------------------------------------------------------------------------------------------------- SubmitButton state changers
 
   //----------------------------------------------------------------------------------------------------------------- handleFormSubmit main fetch
@@ -699,44 +702,44 @@ const CVPageMain = () => {
   };
   //----------------------------------------------------------------------------------------------------------------- Get data by fetch
 
-  const getData = async (e) => {
-    e.preventDefault();
+  // const getData = async (e) => {
+  //   e.preventDefault();
 
-    try {
-      const endpointUrl = "https://avazdg.tech:7201/api/CV/{cvId}";
-      const token = localStorage.getItem("token");
+  //   try {
+  //     const endpointUrl = "https://avazdg.tech:7201/api/CV/{cvId}";
+  //     const token = localStorage.getItem("token");
 
-      if (!token) {
-        alert(
-          "Sizin sesiyanız sona catdı, xaiş edirik sistemə yenidən daxil olun!"
-        );
-        console.error("Token is missing");
-        return;
-      }
+  //     if (!token) {
+  //       alert(
+  //         "Sizin sesiyanız sona catdı, xaiş edirik sistemə yenidən daxil olun!"
+  //       );
+  //       console.error("Token is missing");
+  //       return;
+  //     }
 
-      const response = await fetch(endpointUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      });
+  //     const response = await fetch(endpointUrl, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //       body: JSON.stringify(formData),
+  //     });
 
-      const responseData = await response.json();
+  //     const responseData = await response.json();
 
-      if (response.ok) {
-        formData = responseData;
-        // formData.personalData.name= responseData
-        // formData.educations = educationSetsWithFlattenedData;
-        // formData.languages = transformedLanguageData;
-        // formData.computerKnowledges = transformedComputerLanguageData;
-        // formData.workExperiences = transformedWorkExperienceData;
-      }
-    } catch (error) {
-      console.error("Error occurred:", error);
-    }
-  };
+  //     if (response.ok) {
+  //       formData = responseData;
+  //       // formData.personalData.name= responseData
+  //       // formData.educations = educationSetsWithFlattenedData;
+  //       // formData.languages = transformedLanguageData;
+  //       // formData.computerKnowledges = transformedComputerLanguageData;
+  //       // formData.workExperiences = transformedWorkExperienceData;
+  //     }
+  //   } catch (error) {
+  //     console.error("Error occurred:", error);
+  //   }
+  // };
 
   //--------------------------------------------------------------------------------------------------------------------- Manin body rendering
   const renderInputs = () => {
@@ -1230,12 +1233,6 @@ const CVPageMain = () => {
     }
   };
   //--------------------------------------------------------------------------------------------------------------------- Flow menue settings
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const handleButtonClick4 = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
   //--------------------------------------------------------------------------------------------------------------------- Logout func
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -1254,7 +1251,7 @@ const CVPageMain = () => {
           alt="Default"
         />
         <p className="AvazDGHedder">Avaz DG</p>
-       <MenuButton onClick={handleLogout}/>
+        <MenuButton onClick={handleLogout} />
       </HeaderContainer>
 
       <div className="buttonDiv">
@@ -1292,7 +1289,6 @@ const CVPageMain = () => {
         >
           Təstiqləmək
         </Button>
-     
       </div>
       <Container key={activeButton}>{renderInputs()}</Container>
     </>
