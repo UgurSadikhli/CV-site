@@ -6,18 +6,18 @@ const AddButton = ({ onClick }) => {
     onClick();
   };
   return (
-    <button class="button-add" onClick={handleClick}>
+    <button className="button-add" onClick={handleClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="25"
         viewBox="0 0 20 20"
         height="25"
         fill="none"
-        class="svg-icon"
+        className="svg-icon"
       >
         <g
-          stroke-width="1.5"
-          stroke-linecap="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
           stroke="#fff"
           className="svgAdd"
         >
@@ -26,7 +26,7 @@ const AddButton = ({ onClick }) => {
           <path d="m7.5 9.99998h5"></path>
         </g>
       </svg>
-      <span class="lable-add">Əlavə et</span>
+      <span className="lable-add">Əlavə et</span>
     </button>
   );
 };
