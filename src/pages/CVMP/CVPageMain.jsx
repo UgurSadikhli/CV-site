@@ -988,7 +988,7 @@ const CVPageMain = () => {
                           key={field.key}
                           className={field.className}
                           selected={field.value ? new Date(field.value) : null}
-                          dateFormat="dd/MM/yyyy"
+                          dateFormat="dd/mm/yyyy"
                           placeholderText={field.placeholder}
                           type="text"
                           onChange={(date) =>
@@ -1257,7 +1257,7 @@ const CVPageMain = () => {
       <div className="buttonDiv">
         <Button
           onClick={() => handleCategoryClick("personalData", 0)}
-          active={activeButton === 0}
+         
         >
           Şəxsi Məlumatlar
         </Button>
