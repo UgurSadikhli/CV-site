@@ -1,5 +1,8 @@
 #STEPS TO RUN PROJECT
 
+### `npm install`
+This installs all the node_modules which are essential to run the the project.
+
 ### `npm start`
 
 Runs the app in the development mode.\
