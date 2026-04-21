@@ -1,4 +1,4 @@
-###STEPS TO RUN PROJECT
+### `ESSENTIAL STEPS TO RUN PROJECT`
 
 ### `npm install`
 This installs all the node_modules which are essential to run the the project.
